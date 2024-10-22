@@ -11,7 +11,7 @@ LDFLAGS = -L/opt/homebrew/Cellar/sfml/2.6.1/lib -lsfml-graphics -lsfml-window -l
 TARGET = main
 
 # Define the source files
-SRCS = Super_Mario_Game.cpp
+SRCS = main.cpp
 
 # Define the object files
 OBJS = $(SRCS:.cpp=.o)
