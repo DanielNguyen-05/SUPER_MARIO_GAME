@@ -11,7 +11,7 @@ LDFLAGS = -L/opt/homebrew/Cellar/sfml/2.6.1/lib -lsfml-graphics -lsfml-window -l
 TARGET = main
 
 # Define the source files
-SRCS = main.cpp
+SRCS = $(wildcard src/*.cpp)  # Automatically find all .cpp files in src
 
 # Define the object files
 OBJS = $(SRCS:.cpp=.o)
