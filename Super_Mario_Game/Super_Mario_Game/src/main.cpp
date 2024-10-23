@@ -1,4 +1,5 @@
 #include "Start.h"
+#include "Button.h"
 
 int main() {
     // Create the main window
@@ -7,29 +8,31 @@ int main() {
 
     // Create an instance of the Start class
     Start startScreen;
+    Button myButton;
 
-    // Main game loop
+
+    // Main loop
     while (window.isOpen()) {
-        // Process events
+        // Event handling
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
-                window.close(); // Close the window when the user clicks the close button
+                window.close();
             }
-            // Start the game when any key is pressed
-            if (event.type == sf::Event::KeyPressed && !startScreen.isGameStarted()) {
-                // Here you can switch to your main game logic
-                // For example: change game state or load the first level
+            if (event.type == sf::Event::MouseButtonPressed) {
+                startScreen.handleMouseClick(window);
             }
         }
 
-        // Clear the window before drawing
+        // Clear the window
         window.clear();
 
         // Draw the start screen
-        startScreen.draw(window);
+        startScreen.render(&window);
+        myButton.render(&window);
 
-        // Display the content of the window
+
+        // Display the window
         window.display();
     }
 
