@@ -2,14 +2,14 @@
 
 Start::Start() {
     // Load background image
-    if (!backgroundTexture.loadFromFile("assets/backgrounds/02.png")) {
+    if (!backgroundTexture.loadFromFile("./assets/backgrounds/02.png")) {
         cerr << "Failed to load background image!" << "\n";
     } else {
         backgroundSprite.setTexture(backgroundTexture);
     }
 
     // Load font
-    if (!font.loadFromFile("assets/fonts/Super_Mario_Bros.ttf")) {
+    if (!font.loadFromFile("./assets/fonts/Super_Mario_Bros.ttf")) {
         cerr << "Failed to load font!" << "\n";
     }
 
@@ -27,7 +27,7 @@ void Start::render(sf::RenderTarget* target) {
 
     // Load font and display welcome text
     sf::Font font;
-    if (!font.loadFromFile("assets/fonts/Super_Mario_Bros.ttf")) {
+    if (!font.loadFromFile("./assets/fonts/Super_Mario_Bros.ttf")) {
         cerr << "Failed to load font!" << "\n";
     } else {
         sf::Text text("WELCOME TO SUPER MARIO GAME !!!", font, 30);
