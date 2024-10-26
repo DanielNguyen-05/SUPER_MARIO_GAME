@@ -1,4 +1,4 @@
-#include "Start.h"
+#include "../Header/Start.h"
 
 Start::Start() {
     // Load background image

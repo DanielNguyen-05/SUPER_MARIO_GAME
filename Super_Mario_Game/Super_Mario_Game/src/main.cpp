@@ -1,5 +1,5 @@
-#include "Start.h"
-#include "Button.h"
+#include "../Header/Start.h"
+#include "../Header/Button.h"
 
 int main() {
     // Create the main window
