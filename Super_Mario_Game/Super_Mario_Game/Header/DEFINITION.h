@@ -25,10 +25,9 @@ typedef enum { QUESTION, STONE, BRONZE, SMASH, ROCK } block_t;
 
 typedef enum { BLACK, SMASHED, TURTLE, SHELL } enemy_t;
 
-
 struct player {
     string name;
-    string score;
+    string score; // to be easily when read from file
     string level;
     int lifes;
     float enemiesSpeed;
