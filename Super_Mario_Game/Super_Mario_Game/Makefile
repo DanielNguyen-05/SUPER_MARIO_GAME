@@ -7,6 +7,9 @@ CXXFLAGS = -std=c++11 -I/opt/homebrew/Cellar/sfml/2.6.1/include
 # Define the linker flags
 LDFLAGS = -L/opt/homebrew/Cellar/sfml/2.6.1/lib -lsfml-graphics -lsfml-window -lsfml-system
 
+# Define the linker flags
+LDFLAGS = -L/opt/homebrew/Cellar/sfml/2.6.1/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+
 # Define the target executable
 TARGET = main
 

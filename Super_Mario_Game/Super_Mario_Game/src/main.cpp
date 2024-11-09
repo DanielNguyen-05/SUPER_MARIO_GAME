@@ -1,40 +1,26 @@
-#include "../Header/Start.h"
-#include "../Header/Button.h"
+#include "../Header/DEFINITION.h"
+#include "../Header/MainMenu.h"
 
 int main() {
-    // Create the main window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Super Mario Game");
-    window.setFramerateLimit(60);
+    /***		Hide Console open when run the game			***/
+    /***			Open Startup Game Window			***/
+    RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Super Mario Game");
+    window.setFramerateLimit(45); // Limit the framerate to a maximum fixed frequency.
 
-    // Create an instance of the Start class
-    Start startScreen;
-    Button myButton;
+    MainMenu menu;  // Create Menu 
 
-
-    // Main loop
+    /***			Game Loop			***/
     while (window.isOpen()) {
-        // Event handling
-        sf::Event event;
+        Event event;
+        /***			Events Loop				***/
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            }
-            if (event.type == sf::Event::MouseButtonPressed) {
-                startScreen.handleMouseClick(window);
-            }
+            // Close the game when Cross button right most the form clicked
+            if (event.type == Event::Closed) window.close();
+            menu.handleAllEvents(event); // Handle all Events for the Game
         }
-
-        // Clear the window
         window.clear();
-
-        // Draw the start screen
-        startScreen.render(&window);
-        myButton.render(&window);
-
-
-        // Display the window
+        menu.drawAll(window); // Draw all the Game components
         window.display();
     }
-
     return 0;
 }
