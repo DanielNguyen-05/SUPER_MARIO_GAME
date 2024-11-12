@@ -1,0 +1,13 @@
+{
+  "configurations": [
+    {
+      "name": "Win32",
+      "includePath": [
+        "${workspaceFolder}/Super_Mario_Game/include",
+        "${workspaceFolder}/Super_Mario_Game/lib"
+      ],
+      "compilerPath": "C:/msys64/ucrt64/bin/g++.exe"
+    }
+  ],
+  "version": 4
+}
