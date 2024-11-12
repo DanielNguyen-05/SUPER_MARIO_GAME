@@ -16,8 +16,8 @@ ifeq ($(UNAME_S), Darwin)  # Darwin là tên hệ điều hành của macOS
     CXXFLAGS = -std=c++11 -I/opt/homebrew/Cellar/sfml/2.6.1/include
     LDFLAGS = -L/opt/homebrew/Cellar/sfml/2.6.1/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 else ifeq ($(OS), Windows_NT)  # Windows_NT là tên hệ điều hành của Windows trong Makefile
-    CXXFLAGS = -std=c++11 -I./include
-    LDFLAGS = -L./lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+    CXXFLAGS = -std=c++11 -I../include
+    LDFLAGS = -L../lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 endif
 
 # Default rule to build the target
