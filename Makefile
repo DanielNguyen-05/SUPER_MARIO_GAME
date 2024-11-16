@@ -14,12 +14,12 @@ CXXFLAGS := -std=c++11
 
 # Include SFML headers (use the appropriate folder based on OS)
 ifeq ($(shell uname), Darwin)  # macOS
-    SFML_INCLUDE := ./source/include/mac/SFML
+    SFML_INCLUDE := ./source/include/mac/
     SFML_LIB := ./source/lib/mac
     LDFLAGS := -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -rpath $(SFML_LIB)
     CXXFLAGS += -I$(SFML_INCLUDE)
 else ifeq ($(OS), Windows_NT)  # Windows
-    SFML_INCLUDE := ./source/include/windows/SFML
+    SFML_INCLUDE := ./source/include/windows/
     SFML_LIB := ./source/lib/windows
     LDFLAGS := -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
     CXXFLAGS += -I$(SFML_INCLUDE)
