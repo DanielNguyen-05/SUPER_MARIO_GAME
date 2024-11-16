@@ -1,4 +1,4 @@
-#include "../Header/Menu.h"
+#include "../header/Menu.h"
 
 // Set Back Text Properties
 void Menu::setBackText() {

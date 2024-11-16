@@ -1,5 +1,5 @@
 #pragma once
-#include "../Header/DEFINITION.h"
+#include "DEFINITION.h"
 
 class Characters {
 protected:

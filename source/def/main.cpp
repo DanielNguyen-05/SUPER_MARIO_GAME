@@ -1,5 +1,5 @@
-#include "../Header/DEFINITION.h"
-#include "../Header/MainMenu.h"
+#include "../header/DEFINITION.h"
+#include "../header/MainMenu.h"
 
 int main()
 {

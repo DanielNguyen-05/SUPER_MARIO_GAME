@@ -1,4 +1,4 @@
-#include "../Header/MainMenu.h"
+#include "../header/MainMenu.h"
 
 MainMenu::MainMenu() {
     // Set initial values

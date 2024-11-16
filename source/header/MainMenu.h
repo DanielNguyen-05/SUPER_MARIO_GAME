@@ -1,6 +1,6 @@
 #pragma once
-#include "../Header/DEFINITION.h"
-#include "../Header/Menu.h"
+#include "DEFINITION.h"
+#include "Menu.h"
 // #include "../Header/PlayerNameMenu.h"
 // #include "../Header/HowToPlayMenu.h"
 // #include "../Header/HighScoreMenu.h"

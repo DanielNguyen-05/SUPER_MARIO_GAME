@@ -1,4 +1,4 @@
-#include "../Header/Start.h"
+#include "../header/Start.h"
 
 Start::Start()
 {
@@ -26,7 +26,7 @@ Start::Start()
     gameStarted = false;
 }
 
-void Start::render(sf::RenderTarget *target)
+void Start::render(sf::RenderTarget* target)
 {
     // Draw the background
     target->draw(backgroundSprite);
@@ -56,7 +56,7 @@ bool Start::isGameStarted() const
     return gameStarted;
 }
 
-void Start::handleMouseClick(sf::RenderWindow &window)
+void Start::handleMouseClick(sf::RenderWindow& window)
 {
     if (playButton.isMouseOver(window))
     {

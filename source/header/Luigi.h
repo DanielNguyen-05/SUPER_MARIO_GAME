@@ -1,6 +1,6 @@
 #pragma once
 #include "Characters.h"
-#include "../Header/DEFINITION.h"
+#include "DEFINITION.h"
 
 class Luigi : public Characters {
 private:
