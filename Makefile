@@ -2,7 +2,7 @@ BUILD_DIR := build
 SRCS := $(wildcard source/def/*.cpp)
 OBJS := $(SRCS:source/def/%.cpp=$(BUILD_DIR)/%.o)
 
-TARGET := ./source/run.exe
+TARGET := ./source/lib/run.exe
 
 CXX := g++
 CXXFLAGS := -std=c++11 -I./source/include
@@ -11,7 +11,7 @@ CXXFLAGS := -std=c++11 -I./source/include
 ifeq ($(shell uname), Darwin)  # macOS
     LDFLAGS := -L/usr/local/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 else ifeq ($(OS), Windows_NT)  # Windows
-    LDFLAGS := -L./source/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -mwindows
+    LDFLAGS := -L./source/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 endif
 
 all: $(TARGET)
