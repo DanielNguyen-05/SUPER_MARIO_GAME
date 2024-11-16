@@ -153,10 +153,10 @@ void MainMenu::mainMenuHandleSelection() {
         //     highScore.show();
         //     break;
         // case 3:
-        //     options.show();
+        //     credits.show();
         //     break;
         // case 4:
-        //     credits.show();
+        //     options.show();
         //     break;
     case 5:
         exit(0);
