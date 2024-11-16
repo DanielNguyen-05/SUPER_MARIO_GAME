@@ -5,18 +5,27 @@ BUILD_DIR := build
 SRCS := $(wildcard source/def/*.cpp)
 OBJS := $(SRCS:source/def/%.cpp=$(BUILD_DIR)/%.o)
 
-# Define the target executable (không cần .exe trên macOS)
+# Define the target executable (add .exe for Windows)
 TARGET := source/lib/run
 
 # Define the compiler and flags
 CXX := g++
-CXXFLAGS := -std=c++11 -I./source/include -I/opt/homebrew/include
+CXXFLAGS := -std=c++11
 
-# Define the linker flags
+# Define the linker flags for macOS and Windows
 ifeq ($(shell uname), Darwin)  # macOS
-    LDFLAGS := -L/opt/homebrew/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+    # SFML for Mac (handle spaces in directory names by enclosing in quotes)
+    SFML_INCLUDE := ./source/include/mac/SFML
+    SFML_LIB := ./source/lib/mac
+    LDFLAGS := -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -rpath $(SFML_LIB)
+    CXXFLAGS += -I$(SFML_INCLUDE)
 else ifeq ($(OS), Windows_NT)  # Windows
-    LDFLAGS := -L./source/lib/windows -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+    # SFML for Windows (handle spaces in directory names by enclosing in quotes)
+    SFML_INCLUDE := ./source/include/windows/SFML
+    SFML_LIB := ./source/lib/windows
+    LDFLAGS := -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+    CXXFLAGS += -I$(SFML_INCLUDE)
+    TARGET := source/lib/run.exe  # Ensure the target has a .exe extension
 endif
 
 # Default target
@@ -34,7 +43,7 @@ $(BUILD_DIR)/%.o: source/def/%.cpp
 
 # Run the program
 run: $(TARGET)
-	./$(TARGET)
+	@./$(TARGET)
 
 # Clean up
 clean:
