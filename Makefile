@@ -9,7 +9,7 @@ CXXFLAGS := -std=c++11 -I./source/include
 
 # Platform-specific flags
 ifeq ($(shell uname), Darwin)  # macOS
-    LDFLAGS := -L/usr/local/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+    LDFLAGS := -L./source/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 else ifeq ($(OS), Windows_NT)  # Windows
     LDFLAGS := -L./source/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 endif
