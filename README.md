@@ -15,10 +15,14 @@
 
 ---
 
-<h2 style="display: flex; align-items: center; margin: 0;">
-  <span style="margin-right: 10px; position: relative; top: -10px;">Tutorial</span>
-  <img src="./assets/vscode.svg" alt="VSCode Logo" style="width: 35px;">
-</h2>
+<table>
+  <tr>
+    <td style="vertical-align: top; font-size: 1.5em; font-weight: bold;">Tutorial</td>
+    <td>
+      <img src="./assets/vscode.svg" alt="VSCode Logo" style="width: 35px;">
+    </td>
+  </tr>
+</table>
 
 <div style="display: flex; align-items: center; margin-top: 10px;">
   <img src="./assets/windows.svg" alt="Windows Logo" style="width: 35px; margin-right: 10px;">
