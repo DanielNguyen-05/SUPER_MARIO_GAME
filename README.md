@@ -1,5 +1,5 @@
 # SUPER MARIO BROS
-![](https://raw.githubusercontent.com/DanielNguyen-05/SUPER_MARIO_GAME/refs/heads/main/assets/icon.svg?token=GHSAT0AAAAAAC2EDGJ5C2D4DQHIZD2ARTN6ZZZS25Q)
+![](./assets/icon.svg)
 
 ![](https://img.shields.io/github/release/pandao/editor.md.svg)
 
