@@ -12,12 +12,22 @@ TARGET := source/lib/run
 CXX := g++
 CXXFLAGS := -std=c++11
 
-# Include SFML headers (use the appropriate folder based on OS)
+# Include SFML headers and libraries based on OS
 ifeq ($(shell uname), Darwin)  # macOS
-    SFML_INCLUDE := ./source/include/mac/
-    SFML_LIB := ./source/lib/mac
-    LDFLAGS := -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -rpath $(SFML_LIB)
-    CXXFLAGS += -I$(SFML_INCLUDE)
+    # Check if SFML is installed via Homebrew
+    ifeq ($(shell brew list sfml),) 
+        # SFML not installed via Homebrew, use SFML in repo
+        SFML_INCLUDE := ./source/include/mac/
+        SFML_LIB := ./source/lib/mac
+        LDFLAGS := -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -rpath $(SFML_LIB)
+        CXXFLAGS += -I$(SFML_INCLUDE)
+    else
+        # SFML installed via Homebrew
+        SFML_INCLUDE := /opt/homebrew/include
+        SFML_LIB := /opt/homebrew/lib
+        LDFLAGS := -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+        CXXFLAGS += -I$(SFML_INCLUDE)
+    endif
 else ifeq ($(OS), Windows_NT)  # Windows
     SFML_INCLUDE := ./source/include/windows/
     SFML_LIB := ./source/lib/windows
