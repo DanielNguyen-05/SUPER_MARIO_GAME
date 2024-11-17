@@ -13,20 +13,20 @@
 - Ngo An Binh - 23127330  
 - Dao Hoang Duc Manh - 23127417
 
-<h2 style="display: flex; align-items: center;">
-  <span style="margin-right: 10px;">Tutorial</span>
-  <img src="https://raw.githubusercontent.com/DanielNguyen-05/SUPER_MARIO_GAME/refs/heads/main/assets/vscode.svg?token=GHSAT0AAAAAAC2EDGJ4Y6BBSZNYMN27CUQEZZZRKDA" 
-       style="width: 35px;">
+<h2>
+  <span>Tutorial</span>
+  <img src="./assets/vscode.svg" alt="VSCode Logo" style="width: 35px; vertical-align: middle; margin-left: 10px;">
 </h2>
 
-<div style="display: flex; align-items: center; margin-bottom: 10px;">
-  <img src="https://raw.githubusercontent.com/DanielNguyen-05/SUPER_MARIO_GAME/refs/heads/main/assets/windows.svg?token=GHSAT0AAAAAAC2EDGJ4KI6M5GUF5CXVK6VKZZZRJRA" 
-       style="width: 35px; margin-right: 10px;">
+<div style="margin-bottom: 10px; display: flex; align-items: center;">
+  <img src="./assets/windows.svg" alt="Windows Logo" style="width: 35px; margin-right: 10px;">
   <strong style="font-size: 1.2em;">WINDOWS</strong>
 </div>
+
 <p style="margin-top: 10px;">
-  <strong>Note</strong>: If you want to play the game only, see <em>step 5</em>.
+  <strong>Note:</strong> If you want to play the game only, see <em>step 5</em>.
 </p>
+
 
 1. Install a [C++ compiler](https://code.visualstudio.com/docs/cpp/config-mingw "C++ compiler"). ( using [MSYS2](https://www.msys2.org/ "MSYS2") )
 2. Install [Make](https://packages.msys2.org/packages/make "Make"). ( to run *makefile* )
