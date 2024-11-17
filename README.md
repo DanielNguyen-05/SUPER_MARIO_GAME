@@ -58,7 +58,7 @@
 **The terminal may display the following**
 1. `make: Nothing to be done for 'all'` — This means the program has already been built.
 
-## Dislaimer
+## Disclaimer
 This game is a non-commercial, educational project created solely for learning and teaching purposes. All intellectual property rights of the original game and its assets belong to their respective owners. This project does not aim to infringe on any copyrights and is not intended for distribution or sale. No financial profit is being made from this project. If you are the copyright holder and have concerns about this use, please contact us to address them promptly. 
 
 ## Contact via
