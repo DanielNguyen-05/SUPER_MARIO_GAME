@@ -46,7 +46,6 @@
 **The terminal may display the following**
 1. `make: Nothing to be done for 'all'` — This means the program has already been built.
 
-----
 
 <table>
   <tr>
