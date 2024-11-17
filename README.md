@@ -13,19 +13,13 @@
 - Ngo An Binh - 23127330  
 - Dao Hoang Duc Manh - 23127417
 
-<h2>
-  <span>Tutorial</span>
-  <img src="./assets/vscode.svg" alt="VSCode Logo" style="width: 35px; vertical-align: middle; margin-left: 10px;">
-</h2>
+# Tutorial ![VSCode Logo](./assets/vscode.svg)
 
-<div style="margin-bottom: 10px; display: flex; align-items: center;">
-  <img src="./assets/windows.svg" alt="Windows Logo" style="width: 35px; margin-right: 10px;">
-  <strong style="font-size: 1.2em;">WINDOWS</strong>
-</div>
+![Windows Logo](./assets/windows.svg) **WINDOWS**
 
-<p style="margin-top: 10px;">
-  <strong>Note:</strong> If you want to play the game only, see <em>step 5</em>.
-</p>
+---
+
+**Note**: If you want to play the game only, see *step 5*.
 
 
 1. Install a [C++ compiler](https://code.visualstudio.com/docs/cpp/config-mingw "C++ compiler"). ( using [MSYS2](https://www.msys2.org/ "MSYS2") )
