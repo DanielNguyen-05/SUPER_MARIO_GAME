@@ -23,7 +23,9 @@
     </td>
   </tr>
 </table>
----
+
+----
+
 <table>
   <tr>
     <td style="vertical-align: top; font-size: 1.2em; font-weight: bold;">WINDOWS</td>
