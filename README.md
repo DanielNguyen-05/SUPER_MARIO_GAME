@@ -15,7 +15,10 @@
 
 ---
 
-# Tutorial <img src="./assets/vscode.svg" alt="VSCode Logo" style="width: 35px; vertical-align: baseline; margin-left: 10px; margin-bottom: -5px;">
+<h2 style="display: flex; align-items: center; margin-bottom: 0;">
+  <span style="margin-right: 10px; margin-top: -5px;">Tutorial</span>
+  <img src="./assets/vscode.svg" alt="VSCode Logo" style="width: 35px;">
+</h2>
 
 <div style="display: flex; align-items: center; margin-top: 10px;">
   <img src="./assets/windows.svg" alt="Windows Logo" style="width: 35px; margin-right: 10px;">
