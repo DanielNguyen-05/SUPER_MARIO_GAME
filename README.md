@@ -13,8 +13,6 @@
 - Ngo An Binh - 23127330  
 - Dao Hoang Duc Manh - 23127417
 
----
-
 <table>
   <tr>
     <td style="vertical-align: top; font-size: 1.5em; font-weight: bold;">BUILD TUTORIAL</td>
