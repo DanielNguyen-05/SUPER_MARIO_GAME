@@ -7,7 +7,7 @@
 ## Project Details
 [CS202-FinalProject_SuperMario](https://docs.google.com/document/d/1N59hDBAQYoavpiW9zewu9_QKwtMipv-ZIDnmylP1gEg/edit?tab=t.0#heading=h.pdkhz280o558 "CS202-FinalProject_SuperMario")
 
-##Contributors
+## Contributors
 
 Nguyen Hai Dang - 23127165
 Ngo An Binh - 23127330
