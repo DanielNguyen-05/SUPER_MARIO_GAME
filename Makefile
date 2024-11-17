@@ -33,7 +33,7 @@ else ifeq ($(OS), Windows_NT)  # Windows
     SFML_LIB := ./source/lib/windows
     LDFLAGS := -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
     CXXFLAGS += -I$(SFML_INCLUDE)
-    TARGET := source/lib/windows/run.exe  # Ensure the target has a .exe extension
+    TARGET := source/lib/run.exe  # Ensure the target has a .exe extension
 endif
 
 # Default target
