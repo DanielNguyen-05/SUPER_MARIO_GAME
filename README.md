@@ -13,9 +13,12 @@
 - Ngo An Binh - 23127330  
 - Dao Hoang Duc Manh - 23127417
 
-# Tutorial ![VSCode Logo](./assets/vscode.svg)
+# Tutorial <img src="./assets/vscode.svg" alt="VSCode Logo" style="width: 35px; vertical-align: middle;">
 
-![Windows Logo](./assets/windows.svg) **WINDOWS**
+<div style="display: flex; align-items: center; margin-top: 10px;">
+  <img src="./assets/windows.svg" alt="Windows Logo" style="width: 35px; margin-right: 10px;">
+  <strong style="font-size: 1.2em;">WINDOWS</strong>
+</div>
 
 ---
 
