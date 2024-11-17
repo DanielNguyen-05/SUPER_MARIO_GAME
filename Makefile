@@ -17,8 +17,8 @@ ifeq ($(shell uname), Darwin)  # macOS
     # Check if SFML is installed via Homebrew
     ifeq ($(shell brew list sfml),) 
         # SFML not installed via Homebrew, use SFML in repo
-        SFML_INCLUDE := ./source/include/mac/
-        SFML_LIB := ./source/lib/mac
+        SFML_INCLUDE := ./source/include
+        SFML_LIB := ./source/lib
         LDFLAGS := -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -rpath $(SFML_LIB)
         CXXFLAGS += -I$(SFML_INCLUDE)
     else
@@ -29,8 +29,8 @@ ifeq ($(shell uname), Darwin)  # macOS
         CXXFLAGS += -I$(SFML_INCLUDE)
     endif
 else ifeq ($(OS), Windows_NT)  # Windows
-    SFML_INCLUDE := ./source/include/windows/
-    SFML_LIB := ./source/lib/windows
+    SFML_INCLUDE := ./source/include
+    SFML_LIB := ./source/lib
     LDFLAGS := -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
     CXXFLAGS += -I$(SFML_INCLUDE)
     TARGET := source/lib/run.exe  # Ensure the target has a .exe extension
