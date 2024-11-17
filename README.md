@@ -24,10 +24,14 @@
   </tr>
 </table>
 
-<div style="display: flex; align-items: center; margin-top: 10px;">
-  <img src="./assets/windows.svg" alt="Windows Logo" style="width: 35px; margin-right: 10px;">
-  <strong style="font-size: 1.2em;">WINDOWS</strong>
-</div>
+<table>
+  <tr>
+    <td style="vertical-align: top; font-size: 1.2em; font-weight: bold;">WINDOWS</td>
+    <td>
+      <img src="./assets/windows.svg" alt="Windows Logo" style="width: 35px;">
+    </td>
+  </tr>
+</table>
 
 **Note**: If you want to play the game only, see *step 5*.
 
