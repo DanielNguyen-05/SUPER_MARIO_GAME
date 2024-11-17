@@ -17,13 +17,13 @@
 
 <table>
   <tr>
-    <td style="vertical-align: top; font-size: 1.5em; font-weight: bold;">Tutorial</td>
+    <td style="vertical-align: top; font-size: 1.5em; font-weight: bold;">BUILD TUTORIAL</td>
     <td>
       <img src="./assets/vscode.svg" alt="VSCode Logo" style="width: 35px;">
     </td>
   </tr>
 </table>
-
+---
 <table>
   <tr>
     <td style="vertical-align: top; font-size: 1.2em; font-weight: bold;">WINDOWS</td>
