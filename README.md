@@ -41,8 +41,8 @@ Dao Hoang Duc Manh - 23127417
 
 <div style="display: flex; align-items: center;">
     <img src="https://raw.githubusercontent.com/DanielNguyen-05/SUPER_MARIO_GAME/refs/heads/main/assets/apple.svg?token=GHSAT0AAAAAAC2EDGJ5VTNEFE2VH6MZMOPSZZZSQ4A" 
-         style="width: 35px; margin-right: 10px; position: relative; top: 5px;" alt="Apple Logo">
-    <span style="font-weight: bold; font-size: 1.2em; position: relative; top: 5px;">MacOS</span>
+         style="width: 35px; margin-right: 10px;" alt="Apple Logo">
+    <span style="font-weight: bold; font-size: 1.2em;">MacOS</span>
 </div>
 <p style="margin-top: 10px;">
     <strong>Note</strong>: If you want to play the game only, see <em>step 5</em>.
