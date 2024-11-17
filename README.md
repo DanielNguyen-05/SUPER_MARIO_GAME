@@ -13,14 +13,14 @@
 - Ngo An Binh - 23127330  
 - Dao Hoang Duc Manh - 23127417
 
-# Tutorial <img src="./assets/vscode.svg" alt="VSCode Logo" style="width: 35px; vertical-align: middle;">
+---
+
+# Tutorial <img src="./assets/vscode.svg" alt="VSCode Logo" style="width: 35px; vertical-align: baseline; margin-left: 10px; margin-bottom: -5px;">
 
 <div style="display: flex; align-items: center; margin-top: 10px;">
   <img src="./assets/windows.svg" alt="Windows Logo" style="width: 35px; margin-right: 10px;">
   <strong style="font-size: 1.2em;">WINDOWS</strong>
 </div>
-
----
 
 **Note**: If you want to play the game only, see *step 5*.
 
