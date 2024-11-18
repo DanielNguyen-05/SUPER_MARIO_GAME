@@ -27,7 +27,7 @@ public:
 
     // Public properties
     bool jumping, onGround, dying;
-    float speed[2];
+    float speed[3];
     sf::Sprite marioSprite;
     marioState_t marioState;
 
