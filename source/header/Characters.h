@@ -4,10 +4,14 @@
 class Characters {
 protected:
     vector<Characters> characters;
+    int lives;
     int changeStateCounter;
     bool goRight, goUp, goLeft, goDown, damaging;
-    float acceleration[3], startJumpPosition;
+    float acceleration[2], startJumpPosition;
+    int lives;  // Số mạng của nhân vật (cố định là 3)
+    bool respawnFromCheckpoint;  // Kiểm tra nếu Mario cần hồi sinh từ checkpoint
 
+    sf::Vector2f checkpointPosition;  // Vị trí checkpoint của Mario
     sf::Clock timer1, timer2, changeStateTimer;
     area characterArea;
     sf::SoundBuffer jumpBuffer, damageBuffer, dieBuffer;
@@ -36,9 +40,10 @@ protected:
     virtual void die(); // Animation of Dying
 
 public:
+    int livesLeft;
     sf::Texture characterTexture;
     bool jumping, onGround, PoweringUpToBig, PoweringUpToSuper, dying, stuck, dead;
-    float speed[3];
+    float speed[2];
     sf::Sprite characterSprite;
     characterState_t characterState;
 
@@ -47,4 +52,8 @@ public:
     virtual void catchEvents(sf::Event& event);
     virtual void startDamage();
     virtual void startDie();
+
+    void loseLife();
+    void respawn();
+    void setCheckpoint(sf::Vector2f position);
 };

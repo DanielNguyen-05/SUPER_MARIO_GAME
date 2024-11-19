@@ -1,12 +1,12 @@
 #include "../header/Characters.h"
 
-void Characters::draw(sf::RenderWindow &window)
+void Characters::draw(sf::RenderWindow& window)
 {
     window.draw(characterSprite);
     animation();
 }
 
-void Characters::catchEvents(sf::Event &event)
+void Characters::catchEvents(sf::Event& event)
 {
     if (event.type == sf::Event::KeyPressed)
     {
@@ -73,7 +73,7 @@ void Characters::superState()
     characterSprite.setTextureRect(sf::IntRect(0, 32, 16, 48));
 }
 
-void Characters::setCharacterRectForWalk(sf::IntRect &intRect)
+void Characters::setCharacterRectForWalk(sf::IntRect& intRect)
 {
     if (intRect.left == 0)
     {
@@ -110,7 +110,7 @@ void Characters::move()
     }
 }
 
-void Characters::jump(sf::IntRect &intRect, int RectPosition, float waiting)
+void Characters::jump(sf::IntRect& intRect, int RectPosition, float waiting)
 {
     if (goUp && onGround)
     {
@@ -134,7 +134,7 @@ void Characters::jump(sf::IntRect &intRect, int RectPosition, float waiting)
     }
 }
 
-void Characters::moveRight(sf::IntRect &intRect)
+void Characters::moveRight(sf::IntRect& intRect)
 {
     if (goRight)
     {
@@ -143,7 +143,7 @@ void Characters::moveRight(sf::IntRect &intRect)
     }
 }
 
-void Characters::moveLeft(sf::IntRect &intRect)
+void Characters::moveLeft(sf::IntRect& intRect)
 {
     if (goLeft)
     {
@@ -195,4 +195,37 @@ void Characters::die()
         characterSprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
         changeStateTimer.restart();
     }
+}
+
+// Giảm mạng sống khi Mario chết
+void Characters::loseLife() {
+    if (livesLeft > 0) {
+        livesLeft--;  // Giảm số mạng còn lại
+    }
+    else {
+        dead = true;  // Mario chết hoàn toàn nếu hết mạng
+    }
+}
+
+// Hồi sinh Mario từ checkpoint hoặc từ đầu level
+void Characters::respawn() {
+    if (livesLeft > 0) {
+        if (respawnFromCheckpoint) {
+            // Hồi sinh từ checkpoint
+            characterSprite.setPosition(checkpointPosition);
+        }
+        else {
+            // Hồi sinh từ đầu level
+            characterSprite.setPosition(500, 200);  // Vị trí đầu level
+        }
+        dying = false;
+        dead = false;
+        onGround = true;  // Mario ở trạng thái đứng trên mặt đất
+    }
+}
+
+// Thiết lập checkpoint khi Mario đạt đến vị trí đặc biệt
+void Characters::setCheckpoint(sf::Vector2f position) {
+    checkpointPosition = position;
+    respawnFromCheckpoint = true;  // Sau khi thiết lập checkpoint, Mario sẽ hồi sinh tại đây
 }

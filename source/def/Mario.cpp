@@ -2,12 +2,11 @@
 
 Mario::Mario(float x, float y)
 {
+    lives = 3;
     acceleration[0] = 57;
     acceleration[1] = 80;
-    acceleration[2] = 93;
     speed[0] = 0;
     speed[1] = 70;
-    speed[2] = 120;
     startJumpPosition = 500;
     changeStateCounter = 0;
     goRight = goUp = goLeft = goDown = jumping = onGround = false;
@@ -74,33 +73,137 @@ void Mario::superState()
 
 void Mario::damage()
 {
+    if (damaging) {
+        if (changeStateCounter < 8) {
+            if (changeStateTimer.getElapsedTime().asSeconds() > 0.18) {
+                if (changeStateCounter % 2 == 0) {
+                    characterSprite.setTextureRect(IntRect(400, 36, 40, 60));
+                }
+                else {
+                    characterSprite.setTextureRect(IntRect(286, 96, 30, 32));
+                }
+                changeStateCounter++;
+                changeStateTimer.restart();
+            }
+        }
+        else {
+            if (characterState == SUPER) {
+                bigState();
+            }
+            else {
+                smallState();
+            }
+            changeStateCounter = 0;
+            damaging = false;
+        }
+    }
 }
 
-void Mario::die()
+void Mario::catchEvents(sf::Event& event)
+{
+    if (!dying) {
+        if (event.type == sf::Event::KeyPressed) {
+            if (event.key.code == sf::Keyboard::Right) {
+                goRight = true;
+            }
+            if (event.key.code == sf::Keyboard::Left) {
+                goLeft = true;
+            }
+            if (event.key.code == sf::Keyboard::Up) {
+                goUp = true;
+            }
+            if (event.key.code == sf::Keyboard::Down) {
+                goDown = true;
+            }
+            if (event.key.code == sf::Keyboard::Space) {
+                if (onGround) {
+                    jumping = true;
+                    jumpSound.play();
+                }
+            }
+        }
+        if (event.type == sf::Event::KeyReleased) {
+            if (event.key.code == sf::Keyboard::Right) {
+                goRight = false;
+            }
+            if (event.key.code == sf::Keyboard::Left) {
+                goLeft = false;
+            }
+        }
+    }
+}
+
+void Mario::startDamage()
+{
+    damaging = true;
+    damageSound.play();
+    onGround = false;
+    characterSprite.move(-50, -130);
+}
+
+void Mario::startDie()
 {
     dying = true;
     dieSound.play();
     changeStateCounter = 1;
     speed[0] = 0;
     speed[1] = 0;
-    speed[2] = 0;
 }
 
-void Mario::catchEvents(sf::Event& event)
+void Mario::die()
 {
+    if (dying) {
+        onGround = false; // Mario không còn ở trên mặt đất
+
+        // Cập nhật sprite để hiển thị trạng thái chết
+        characterSprite.setTextureRect(sf::IntRect(192, 96, 30, 32));
+
+        if (changeStateCounter == 1) {
+            speed[1] = -60; // Mario nhảy lên khi chết
+            characterSprite.move(-75, 0); // Di chuyển Mario sang trái (hoặc có thể di chuyển khác)
+            changeStateCounter = 0;
+
+            // Phát âm thanh khi Mario chết (giả định bạn có hàm playSound)
+            // playSound("mario_die_sound");
+        }
+
+        // Mario rơi xuống dần với tốc độ giảm dần (thêm trọng lực)
+        speed[1] += 5; // Tăng tốc độ rơi theo trọng lực (có thể điều chỉnh để tăng dần hoặc giảm dần)
+        characterSprite.move(speed[0], speed[1] * 0.1f); // Chuyển động với tốc độ giảm dần (tăng thêm hệ số 0.1f cho hiệu ứng mượt mà)
+
+        // Kiểm tra nếu Mario rơi ra khỏi màn hình
+        if (characterSprite.getPosition().y > WINDOW_HEIGHT) {
+            dead = true;  // Mario chết hoàn toàn
+            dying = false; // Dừng trạng thái dying
+            goLeft = goRight = goUp = goDown = false; // Dừng mọi chuyển động
+
+            speed[0] = 0; // Dừng mọi chuyển động ngang
+            speed[1] = 0; // Dừng mọi chuyển động dọc
+
+            // Cập nhật lại vị trí của Mario tại checkpoint (hoặc đầu level)
+            if (livesLeft > 0) {
+                // Hồi sinh tại checkpoint
+                if (checkpointPosition != sf::Vector2f(0, 0)) {
+                    characterSprite.setPosition(checkpointPosition);
+                }
+                else {
+                    // Nếu không có checkpoint, hồi sinh tại vị trí đầu level
+                    characterSprite.setPosition(500, 200);  // Vị trí đầu màn
+                }
+
+                // Thiết lập lại trạng thái khi hồi sinh
+                dying = false;
+                dead = false;
+                onGround = true; // Mario đứng trên mặt đất
+            }
+            else {
+                // Nếu không còn mạng, chuyển sang màn game over
+                GameOver();
+            }
+        }
+    }
 }
 
-void Mario::startDamage()
-{
-    damaging = true;
-    onGround = false;
-    damageSound.play();
-    characterSprite.move(-50, -130);
-}
-
-void Mario::startDie()
-{
-}
 
 void Mario::move()
 {
@@ -135,4 +238,8 @@ void Mario::changeToBig()
 
 void Mario::changeToSuper()
 {
+}
+
+void setMarioRectForWalk(sf::IntRect& intRect) {
+
 }
