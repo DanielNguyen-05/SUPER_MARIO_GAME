@@ -39,7 +39,7 @@ Mario::Mario(float x, float y)
     dieSound.setBuffer(dieBuffer);
 }
 
-void Mario::draw(sf::RenderWindow &window)
+void Mario::draw(sf::RenderWindow& window)
 {
     window.draw(marioSprite);
     animation();
@@ -83,7 +83,7 @@ void Mario::die()
 {
 }
 
-void Mario::catchEvents(sf::Event &event)
+void Mario::catchEvents(sf::Event& event)
 {
 }
 
@@ -99,14 +99,14 @@ void Mario::move()
 {
 }
 
-void Mario::jump(sf::IntRect &intRect, int RectPosition, float waiting)
+void Mario::jump(sf::IntRect& intRect, int RectPosition, float waiting)
 {
 }
 
-void Mario::moveRight(sf::IntRect &intRect)
+void Mario::moveRight(sf::IntRect& intRect)
 {
 }
 
-void Mario::moveLeft(sf::IntRect &intRect)
+void Mario::moveLeft(sf::IntRect& intRect)
 {
 }

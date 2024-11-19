@@ -37,12 +37,12 @@ MainMenu::MainMenu()
     float width = 628;
     float hight = 225;
     string OptionsTemp[6] = {
-        "START",
-        "TUTORIAL",
-        "LEADERBOARD", // Top 3 players
-        "CREDITS",     // Introduce the team
-        "OPTIONS",     // Music control
-        "EXIT"};
+        "   START",
+        "  TUTORIAL",
+        " LEADERBOARD", // Top 3 players
+        "   CREDITS",     // Introduce the team
+        "   OPTIONS",     // Music control
+        "    EXIT" };
 
     for (int i = 0; i < 6; i++)
     {
@@ -91,7 +91,7 @@ void MainMenu::catchEvents(Event event)
     }
 }
 
-void MainMenu::drawAll(RenderWindow &window)
+void MainMenu::drawAll(RenderWindow& window)
 {
     this->draw(window);
     // playerName.draw(window);
@@ -101,7 +101,7 @@ void MainMenu::drawAll(RenderWindow &window)
     // credits.draw(window);
 }
 
-void MainMenu::draw(RenderWindow &window)
+void MainMenu::draw(RenderWindow& window)
 {
     checkShow();
     controlMusic();
