@@ -13,13 +13,15 @@
 using namespace std;
 using namespace sf;
 
-typedef enum {
+typedef enum
+{
     SMALL,
     BIG,
     SUPER
 } marioState_t;
 
-typedef enum {
+typedef enum
+{
     COIN,
     MASHROOM,
     FLOWER,
@@ -27,7 +29,8 @@ typedef enum {
     NONE
 } item_t;
 
-typedef enum {
+typedef enum
+{
     QUESTION,
     STONE,
     BRONZE,
@@ -35,14 +38,16 @@ typedef enum {
     ROCK
 } block_t;
 
-typedef enum {
+typedef enum
+{
     BLACK,
     SMASHED,
     TURTLE,
     SHELL
 } enemy_t;
 
-struct player {
+struct player
+{
     string name;
     string score;
     string level;
@@ -50,12 +55,14 @@ struct player {
     float enemiesSpeed;
 };
 
-struct area {
+struct area
+{
     float width;
     float height;
 };
 
-struct position {
+struct position
+{
     float x;
     float y;
 };
@@ -63,7 +70,7 @@ struct position {
 #define WINDOW_WIDTH 1600
 #define WINDOW_HEIGHT 900
 
-#define MAIN_MENU_FONT "assets/fonts/Barkentina_font.ttf"
+#define MAIN_MENU_FONT "assets/fonts/super_mario_256.ttf"
 
 #define CAIRO_REGULAR "assets/fonts/Cairo-Regular.ttf"
 
