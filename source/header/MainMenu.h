@@ -23,6 +23,7 @@ private: // attributes
 public: // attributes
     bool gameRunning;
     player newPlayer;
+    characterState_t characterState;
 
 private: // methods
     // Draw Main Menu contents

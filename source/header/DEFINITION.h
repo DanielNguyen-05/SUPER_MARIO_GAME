@@ -18,7 +18,7 @@ typedef enum
     SMALL,
     BIG,
     SUPER
-} marioState_t;
+} characterState_t;
 
 typedef enum
 {

@@ -14,18 +14,18 @@ Mario::Mario(float x, float y)
     PoweringUpToSuper = PoweringUpToBig = damaging = dying = stuck = dead = false;
 
     // Set Mario Sprite Properties
-    if (!marioTexture.loadFromFile(MARIO_CHARACTER))
+    if (!characterTexture.loadFromFile(MARIO_CHARACTER))
     {
         std::cout << "Can't load MARIO_CHARACTER\n";
     }
-    if (!marioSuperTexture.loadFromFile(MARIO_SUPER_CHARACTER))
+    if (!characterTexture.loadFromFile(MARIO_SUPER_CHARACTER))
     {
         std::cout << "Can't load MARIO_SUPER_CHARACTER\n";
     }
-    marioTexture.setSmooth(true);
-    marioSprite.setTexture(marioTexture);
-    marioSprite.setPosition(x, y);
-    marioSprite.setScale(2, 2);
+    characterTexture.setSmooth(true);
+    characterSprite.setTexture(characterTexture);
+    characterSprite.setPosition(x, y);
+    characterSprite.setScale(2, 2);
     smallState();
 
     // Set Sound effect Properties
@@ -41,38 +41,35 @@ Mario::Mario(float x, float y)
 
 void Mario::draw(sf::RenderWindow& window)
 {
-    window.draw(marioSprite);
+    window.draw(characterSprite);
     animation();
-}
-
-void Mario::animation()
-{
-    if ((!PoweringUpToBig && !PoweringUpToSuper) && !damaging)
-        move();
-    changeToBig();
-    changeToSuper();
-    damage();
-    die();
 }
 
 void Mario::smallState()
 {
+    characterSprite.setTexture(characterTexture);
+    characterState = SMALL;
+    characterArea.width = 28;
+    characterArea.height = 32;
+    characterSprite.setTextureRect(sf::IntRect(0, 96, characterArea.width, characterArea.height));
+    characterSprite.setOrigin(characterArea.width / 2, characterArea.height);
 }
 
 void Mario::bigState()
 {
+    characterSprite.setTexture(characterTexture);
+    characterState = BIG;
+    characterArea.width = 31;
+    characterArea.height = 60;
+    characterSprite.setTextureRect(sf::IntRect(0, 36, characterArea.width, characterArea.height));
+    characterSprite.setOrigin(characterArea.width / 2, characterArea.height);
 }
 
 void Mario::superState()
 {
-}
-
-void Mario::changeToBig()
-{
-}
-
-void Mario::changeToSuper()
-{
+    bigState();
+    characterState = SUPER;
+    characterSprite.setTexture(characterTexture);
 }
 
 void Mario::damage()
@@ -81,6 +78,12 @@ void Mario::damage()
 
 void Mario::die()
 {
+    dying = true;
+    dieSound.play();
+    changeStateCounter = 1;
+    speed[0] = 0;
+    speed[1] = 0;
+    speed[2] = 0;
 }
 
 void Mario::catchEvents(sf::Event& event)
@@ -89,6 +92,10 @@ void Mario::catchEvents(sf::Event& event)
 
 void Mario::startDamage()
 {
+    damaging = true;
+    onGround = false;
+    damageSound.play();
+    characterSprite.move(-50, -130);
 }
 
 void Mario::startDie()
@@ -108,5 +115,24 @@ void Mario::moveRight(sf::IntRect& intRect)
 }
 
 void Mario::moveLeft(sf::IntRect& intRect)
+{
+}
+
+void Mario::animation()
+{
+    if ((!PoweringUpToBig && !PoweringUpToSuper) && !damaging) {
+        move();
+    }
+    changeToBig();
+    changeToSuper();
+    damage();
+    die();
+}
+
+void Mario::changeToBig()
+{
+}
+
+void Mario::changeToSuper()
 {
 }

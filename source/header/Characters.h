@@ -5,9 +5,10 @@ class Characters {
 protected:
     vector<Characters> characters;
     int changeStateCounter;
-    sf::Clock timer1, timer2, changeStateTimer;
     bool goRight, goUp, goLeft, goDown, damaging;
     float acceleration[3], startJumpPosition;
+
+    sf::Clock timer1, timer2, changeStateTimer;
     area characterArea;
     sf::SoundBuffer jumpBuffer, damageBuffer, dieBuffer;
     sf::Sound jumpSound, damageSound, dieSound;
@@ -36,9 +37,10 @@ protected:
 
 public:
     sf::Texture characterTexture;
-    bool jumping, onGround, dying, stuck, dead;
+    bool jumping, onGround, PoweringUpToBig, PoweringUpToSuper, dying, stuck, dead;
     float speed[3];
     sf::Sprite characterSprite;
+    characterState_t characterState;
 
     virtual ~Characters() {}
     virtual void draw(sf::RenderWindow& window);
