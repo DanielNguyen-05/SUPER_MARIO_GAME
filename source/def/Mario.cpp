@@ -1,6 +1,7 @@
-#include "Mario.h"
+#include "../header/Mario.h"
 
-Mario::Mario(float x, float y) {
+Mario::Mario(float x, float y)
+{
     acceleration[0] = 57;
     acceleration[1] = 80;
     acceleration[2] = 93;
@@ -13,10 +14,12 @@ Mario::Mario(float x, float y) {
     PoweringUpToSuper = PoweringUpToBig = damaging = dying = stuck = dead = false;
 
     // Set Mario Sprite Properties
-    if (!marioTexture.loadFromFile(MARIO_CHARACTER)) {
+    if (!marioTexture.loadFromFile(MARIO_CHARACTER))
+    {
         std::cout << "Can't load MARIO_CHARACTER\n";
     }
-    if (!marioSuperTexture.loadFromFile(MARIO_SUPER_CHARACTER)) {
+    if (!marioSuperTexture.loadFromFile(MARIO_SUPER_CHARACTER))
+    {
         std::cout << "Can't load MARIO_SUPER_CHARACTER\n";
     }
     marioTexture.setSmooth(true);
@@ -25,7 +28,7 @@ Mario::Mario(float x, float y) {
     marioSprite.setScale(2, 2);
     smallState();
 
-    //Set Sound effect Properties
+    // Set Sound effect Properties
     jumpBuffer.loadFromFile(JUMP_SOUND);
     jumpSound.setBuffer(jumpBuffer);
 
@@ -36,15 +39,74 @@ Mario::Mario(float x, float y) {
     dieSound.setBuffer(dieBuffer);
 }
 
-void Mario::draw(sf::RenderWindow& window) {
+void Mario::draw(sf::RenderWindow &window)
+{
     window.draw(marioSprite);
     animation();
 }
 
-void Mario::animation() {
-    if ((!PoweringUpToBig && !PoweringUpToSuper) && !damaging) move();
+void Mario::animation()
+{
+    if ((!PoweringUpToBig && !PoweringUpToSuper) && !damaging)
+        move();
     changeToBig();
     changeToSuper();
     damage();
     die();
+}
+
+void Mario::smallState()
+{
+}
+
+void Mario::bigState()
+{
+}
+
+void Mario::superState()
+{
+}
+
+void Mario::changeToBig()
+{
+}
+
+void Mario::changeToSuper()
+{
+}
+
+void Mario::damage()
+{
+}
+
+void Mario::die()
+{
+}
+
+void Mario::catchEvents(sf::Event &event)
+{
+}
+
+void Mario::startDamage()
+{
+}
+
+void Mario::startDie()
+{
+}
+
+void Mario::move()
+{
+}
+
+void Mario::jump(sf::IntRect &intRect, int RectPosition, float waiting)
+{
+}
+
+void Mario::moveRight(sf::IntRect &intRect)
+{
+}
+
+void Mario::moveLeft(sf::IntRect &intRect)
+{
 }
