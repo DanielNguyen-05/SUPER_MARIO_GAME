@@ -38,9 +38,9 @@ MainMenu::MainMenu()
     float hight = 225;
     string OptionsTemp[6] = {
         "START",
-        "HOW TO PLAY",
-        "HIGH SCORES", // Top 3 players
-        "MEMBERS",     // Introduce the team
+        "TUTORIAL",
+        "LEADERBOARD", // Top 3 players
+        "CREDITS",     // Introduce the team
         "OPTIONS",     // Music control
         "EXIT"};
 
