@@ -1,6 +1,7 @@
 #include "../header/MainMenu.h"
 
-MainMenu::MainMenu() {
+MainMenu::MainMenu()
+{
     // Set initial values
     this->show();
     selectedOption = 0;
@@ -8,18 +9,21 @@ MainMenu::MainMenu() {
     gameRunning = false;
 
     // Load fonts from file
-    if (!menuFont.loadFromFile(MAIN_MENU_FONT)) {
+    if (!menuFont.loadFromFile(MAIN_MENU_FONT))
+    {
         cout << "Can't load MAIN_MENU_FONT\n";
     }
 
     // Load backgrounds
-    if (!backGroundTexture.loadFromFile(MAIN_MENU_BACKGROUND)) {
+    if (!backGroundTexture.loadFromFile(MAIN_MENU_BACKGROUND))
+    {
         cout << "Can't load MAIN_MENU_BACKGROUND\n";
     }
     backGroundSprite.setTexture(backGroundTexture);
 
     // Set OptionShadow Properties
-    if (!optionShadowTexture.loadFromFile(MENU_SHADOW)) {
+    if (!optionShadowTexture.loadFromFile(MENU_SHADOW))
+    {
         cout << "Can't load MENU_SHADOW\n";
     }
 
@@ -33,26 +37,27 @@ MainMenu::MainMenu() {
     float width = 628;
     float hight = 225;
     string OptionsTemp[6] = {
-        "	  START",
+        "START",
         "HOW TO PLAY",
-        "HIGH  SCORES", // Top 3 players
-        "  MEMBERS", // Introduce the team
-        "    OPTIONS", // Music control
-        "       EXIT" };
+        "HIGH SCORES", // Top 3 players
+        "MEMBERS",     // Introduce the team
+        "OPTIONS",     // Music control
+        "EXIT"};
 
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 6; i++)
+    {
         menuOptions[i].setFont(menuFont);
         menuOptions[i].setFillColor(sf::Color::White);
         menuOptions[i].setCharacterSize(43);
-        menuOptions[i].setStyle(sf::Text::Bold);
+        menuOptions[i].setStyle(sf::Text::Regular);
         menuOptions[i].setString(OptionsTemp[i]);
         hight += 70;
         menuOptions[i].setPosition(width, hight);
     }
 }
 
-
-void MainMenu::handleAllEvents(Event event) {
+void MainMenu::handleAllEvents(Event event)
+{
     this->catchEvents(event);
     // playerName.catchEvents(event, newPlayer);
     // howToPlay.catchEvents(event);
@@ -61,18 +66,24 @@ void MainMenu::handleAllEvents(Event event) {
     // credits.catchEvents(event);
 }
 
-void MainMenu::catchEvents(Event event) {
-    if (display) {
-        if (event.type == Event::KeyReleased) {
-            if (event.key.code == Keyboard::Up || event.key.code == Keyboard::A) {
+void MainMenu::catchEvents(Event event)
+{
+    if (display)
+    {
+        if (event.type == Event::KeyReleased)
+        {
+            if (event.key.code == Keyboard::Up || event.key.code == Keyboard::A)
+            {
                 this->moveUp();
                 changingOptionSound.play();
             }
-            else if (event.key.code == Keyboard::Down || event.key.code == Keyboard::S) {
+            else if (event.key.code == Keyboard::Down || event.key.code == Keyboard::S)
+            {
                 this->moveDown();
                 changingOptionSound.play();
             }
-            else if (event.key.code == Keyboard::Enter) {
+            else if (event.key.code == Keyboard::Enter)
+            {
                 mainMenuHandleSelection();
                 changingOptionSound.play();
             }
@@ -80,8 +91,8 @@ void MainMenu::catchEvents(Event event) {
     }
 }
 
-
-void MainMenu::drawAll(RenderWindow& window) {
+void MainMenu::drawAll(RenderWindow &window)
+{
     this->draw(window);
     // playerName.draw(window);
     // howToPlay.draw(window);
@@ -90,20 +101,24 @@ void MainMenu::drawAll(RenderWindow& window) {
     // credits.draw(window);
 }
 
-void MainMenu::draw(RenderWindow& window) {
+void MainMenu::draw(RenderWindow &window)
+{
     checkShow();
     controlMusic();
-    if (display) {
+    if (display)
+    {
         window.draw(backGroundSprite);
         window.draw(optionShadowSprite);
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 6; i++)
+        {
             window.draw(menuOptions[i]);
         }
     }
 }
 
-void MainMenu::checkShow() {
+void MainMenu::checkShow()
+{
     // gameRunning = playerName.levelsList.gameEngine.gameRunning;
 
     // bool allFormsClose = ((!playerName.display && !howToPlay.display)
@@ -112,36 +127,42 @@ void MainMenu::checkShow() {
     // if (allFormsClose && !gameRunning) show();
 }
 
-
-void MainMenu::moveDown() {
-    // if box in Exit postion set to Start 
-    if (optionShadowSprite.getPosition().y == 645) {
+void MainMenu::moveDown()
+{
+    // if box in Exit postion set to Start
+    if (optionShadowSprite.getPosition().y == 645)
+    {
         optionShadowSprite.setPosition(620, 295);
         selectedOption = 0;
     }
-    else {
+    else
+    {
         optionShadowSprite.move(0, 70);
         ++selectedOption;
     }
 }
 
-
-void MainMenu::moveUp() {
-    // if box in Start postion set to Exit 
-    if (optionShadowSprite.getPosition().y == 295) {
+void MainMenu::moveUp()
+{
+    // if box in Start postion set to Exit
+    if (optionShadowSprite.getPosition().y == 295)
+    {
         optionShadowSprite.setPosition(620, 645);
         selectedOption = 5;
     }
-    else {
+    else
+    {
         optionShadowSprite.move(0, -70);
         --selectedOption;
     }
 }
 
-void MainMenu::mainMenuHandleSelection() {
+void MainMenu::mainMenuHandleSelection()
+{
     // Check current selected option
     this->hide();
-    switch (selectedOption) {
+    switch (selectedOption)
+    {
         // case 0:
         //     playerName.show();
         //     controlEnemiesSpeed();
@@ -164,8 +185,8 @@ void MainMenu::mainMenuHandleSelection() {
     }
 }
 
-
-void MainMenu::controlMusic() {
+void MainMenu::controlMusic()
+{
     // if (gameRunning) {
     //     if (options.levelSound.getStatus() == options.levelSound.Stopped) {
     //         options.levelSound.play();
@@ -176,9 +197,10 @@ void MainMenu::controlMusic() {
     // }
 }
 
-
-void MainMenu::controlEnemiesSpeed() {
-    switch (newPlayer.lifes) {
+void MainMenu::controlEnemiesSpeed()
+{
+    switch (newPlayer.lifes)
+    {
     case 5:
         newPlayer.enemiesSpeed = 2;
         break;
