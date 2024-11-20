@@ -1,5 +1,6 @@
 #include "../header/Characters.h"
 
+int Characters::lives = 3;
 void Characters::draw(sf::RenderWindow& window)
 {
     window.draw(characterSprite);

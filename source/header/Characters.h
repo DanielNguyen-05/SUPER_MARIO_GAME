@@ -4,11 +4,10 @@
 class Characters {
 protected:
     vector<Characters> characters;
-    int lives;
+    static int lives;// Số mạng của nhân vật (cố định là 3)
     int changeStateCounter;
     bool goRight, goUp, goLeft, goDown, damaging;
     float acceleration[2], startJumpPosition;
-    int lives;  // Số mạng của nhân vật (cố định là 3)
     bool respawnFromCheckpoint;  // Kiểm tra nếu Mario cần hồi sinh từ checkpoint
 
     sf::Vector2f checkpointPosition;  // Vị trí checkpoint của Mario
