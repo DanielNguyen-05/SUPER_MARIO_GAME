@@ -59,7 +59,7 @@ MainMenu::MainMenu()
 void MainMenu::handleAllEvents(Event event)
 {
     this->catchEvents(event);
-    // playerName.catchEvents(event, newPlayer);
+    playerName.catchEvents(event, newPlayer);
     // howToPlay.catchEvents(event);
     // highScore.catchEvents(event);
     // options.catchEvents(event, newPlayer);
@@ -94,7 +94,7 @@ void MainMenu::catchEvents(Event event)
 void MainMenu::drawAll(RenderWindow& window)
 {
     this->draw(window);
-    // playerName.draw(window);
+    playerName.draw(window);
     // howToPlay.draw(window);
     // highScore.draw(window);
     // options.draw(window);
@@ -163,10 +163,10 @@ void MainMenu::mainMenuHandleSelection()
     this->hide();
     switch (selectedOption)
     {
-        // case 0:
-        //     playerName.show();
-        //     controlEnemiesSpeed();
-        //     break;
+        case 0:
+            playerName.show();
+            controlEnemiesSpeed();
+            break;
         // case 1:
         //     howToPlay.show();
         //     break;

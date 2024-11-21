@@ -1,7 +1,7 @@
 #pragma once
 #include "DEFINITION.h"
 #include "Menu.h"
-// #include "../Header/PlayerNameMenu.h"
+#include "../Header/PlayerNameMenu.h"
 // #include "../Header/HowToPlayMenu.h"
 // #include "../Header/HighScoreMenu.h"
 // #include "../Header/OptionsMenu.h"
@@ -9,7 +9,7 @@
 
 class MainMenu : private Menu {
 private: // attributes
-    // PlayerNameMenu playerName;
+    PlayerNameMenu playerName;
     // HowToPlayMenu howToPlay;
     // HighScoreMenu highScore;
     // OptionsMenu options;
