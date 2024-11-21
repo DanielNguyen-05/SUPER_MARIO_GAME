@@ -3,7 +3,7 @@
 #include "Menu.h"
 #include "../Header/PlayerNameMenu.h"
 // #include "../Header/HowToPlayMenu.h"
-// #include "../Header/HighScoreMenu.h"
+#include "../header/HighScoreMenu.h"
 // #include "../Header/OptionsMenu.h"
 // #include "../Header/CreditsMenu.h"
 
@@ -11,7 +11,7 @@ class MainMenu : private Menu {
 private: // attributes
     PlayerNameMenu playerName;
     // HowToPlayMenu howToPlay;
-    // HighScoreMenu highScore;
+    HighScoreMenu highScore;
     // OptionsMenu options;
     // CreditsMenu credits;
     sf::Font menuFont;

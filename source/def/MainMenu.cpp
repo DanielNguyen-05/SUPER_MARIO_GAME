@@ -61,7 +61,7 @@ void MainMenu::handleAllEvents(Event event)
     this->catchEvents(event);
     playerName.catchEvents(event, newPlayer);
     // howToPlay.catchEvents(event);
-    // highScore.catchEvents(event);
+    highScore.catchEvents(event);
     // options.catchEvents(event, newPlayer);
     // credits.catchEvents(event);
 }
@@ -96,7 +96,7 @@ void MainMenu::drawAll(RenderWindow& window)
     this->draw(window);
     playerName.draw(window);
     // howToPlay.draw(window);
-    // highScore.draw(window);
+    highScore.draw(window);
     // options.draw(window);
     // credits.draw(window);
 }
@@ -170,9 +170,9 @@ void MainMenu::mainMenuHandleSelection()
         // case 1:
         //     howToPlay.show();
         //     break;
-        // case 2:
-        //     highScore.show();
-        //     break;
+        case 2:
+            highScore.show();
+            break;
         // case 3:
         //     credits.show();
         //     break;

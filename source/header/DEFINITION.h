@@ -82,7 +82,7 @@ struct position
 
 #define MENU_SHADOW "assets/textures/MenuShadow.png"
 
-#define HIGH_SCORE_BACKGROUND "assets/textures/Menu/highScore.jpg"
+#define HIGH_SCORE_BACKGROUND "assets/textures/Menu/1.jpg"
 
 #define HOW_TO_PLAY_BACKGROUND "assets/textures/Menu/howToPlay.jpg"
 
