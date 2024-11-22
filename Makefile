@@ -1,48 +1,30 @@
 BUILD_DIR := build
 
-SRCS := $(wildcard source/def/*.cpp)
-OBJS := $(SRCS:source/def/%.cpp=$(BUILD_DIR)/%.o)
+SRCS := $(wildcard source/*.cpp)
+OBJS := $(SRCS:source/%.cpp=$(BUILD_DIR)/%.o)
 
-TARGET := source/lib/run
+TARGET := source/lib/run.exe
 
 CXX := g++
-CXXFLAGS := -std=c++11
-
-ifeq ($(shell uname), Darwin)
-    ifeq ($(shell brew list sfml),) 
-        SFML_INCLUDE := ./source/include
-        SFML_LIB := ./source/lib
-        LDFLAGS := -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -rpath $(SFML_LIB)
-        CXXFLAGS += -I$(SFML_INCLUDE)
-    else
-        SFML_INCLUDE := /opt/homebrew/include
-        SFML_LIB := /opt/homebrew/lib
-        LDFLAGS := -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
-        CXXFLAGS += -I$(SFML_INCLUDE)
-    endif
-else ifeq ($(OS), Windows_NT)
-    SFML_INCLUDE := ./source/include
-    SFML_LIB := ./source/lib
-    LDFLAGS := -L$(SFML_LIB) -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
-    CXXFLAGS += -I$(SFML_INCLUDE)
-    TARGET := source/lib/run.exe
-endif
+CXXFLAGS := -std=c++11 -I./source/include
+LDFLAGS := -L./source/lib -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system -mconsole
 
 all: $(TARGET)
+	@echo "Build complete. Running the program..."
 	@./$(TARGET)
 
 $(TARGET): $(OBJS)
 	@mkdir -p $(dir $(TARGET))
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
 
-$(BUILD_DIR)/%.o: source/def/%.cpp
+$(BUILD_DIR)/%.o: source/%.cpp
 	@mkdir -p $(BUILD_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 run: $(TARGET)
-	@./$(TARGET) 
+	@./$(TARGET)
 
 clean:
 	rm -rf $(BUILD_DIR) $(TARGET)
 
-.PHONY: all clean
+.PHONY: all clean run
