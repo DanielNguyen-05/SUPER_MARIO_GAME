@@ -1,13 +1,21 @@
-#include <SFML/Graphics.hpp>
-#include "window.h"
+#include "utilities.h"
+#include "core.h"
 #include "camera.h"
+#include "graphic_render.h"
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1200, 900), "Super Mario Bros.");
     sf::Clock clock;
 
-    Camera camera(5.0f); // Zoom level mặc định
+    Camera camera;
+    Renderer renderer(window);
+
+    sf::Texture texture;
+    if (!texture.loadFromFile(TEX_DIRECTORY + "/brick.png"))
+    {
+        std::cerr << "File opening error : " << TEX_DIRECTORY + "/brick\n";
+    }
 
     begin(window);
     while (window.isOpen())
@@ -21,21 +29,12 @@ int main()
             {
                 window.close();
             }
-
-            // Xử lý sự kiện thay đổi kích thước cửa sổ
-            if (event.type == sf::Event::Resized)
-            {
-                sf::Vector2u newSize(event.size.width, event.size.height);
-                window.setView(camera.GetView(newSize)); // Cập nhật view
-            }
         }
 
-        // Áp dụng view từ camera
-        window.setView(camera.GetView(window.getSize()));
-
         update(deltaTime);
+        render(renderer);
         window.clear();
-        render(window);
+        window.setView(camera.GetView(window.getSize()));
         window.display();
     }
 
