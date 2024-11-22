@@ -13,11 +13,11 @@ TARGET := $(LIB_DIR)/run.exe
 
 # Compiler and flags
 CXX := g++
-CXXFLAGS := -std=c++11 -I$(INCLUDE_DIR)
+CXXFLAGS := -std=c++17 -I$(INCLUDE_DIR)
 LDFLAGS := -L$(LIB_DIR) -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system -mconsole
 
 # Default rule
-all: $(TARGET)
+all: silent-clean $(TARGET)
 	@echo "Build complete!"
 	@echo "Running the program..."
 	@./$(TARGET)
@@ -42,9 +42,13 @@ run: $(TARGET)
 	@./$(TARGET)
 
 # Clean build files
+
+silent-clean:
+	@rm -rf $(BUILD_DIR) $(TARGET)
+
 clean:
 	@echo "Cleaning up..."
-	@rm -rf $(BUILD_DIR) $(TARGET)
+	@$(MAKE) --no-print-directory silent-clean
 
 # Phony targets
 .PHONY: all clean run

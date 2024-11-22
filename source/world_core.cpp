@@ -1,7 +1,7 @@
-#include "core.h"
+#include "utilities.h"
+#include "world_core.h"
 #include "camera.h"
 #include "graphic_render.h"
-#include "utilities.h"
 
 sf::Texture texture;
 
@@ -19,5 +19,5 @@ void update(float deltaTime)
 
 void render(Renderer &renderer)
 {
-    renderer.Draw(texture, sf::Vector2f(), sf::Vector2f(2, 2));
+    renderer.Draw(texture, sf::Vector2f(), sf::Vector2f(4.5f, 4.5f));
 }

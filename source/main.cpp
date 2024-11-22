@@ -1,5 +1,5 @@
 #include "utilities.h"
-#include "core.h"
+#include "world_core.h"
 #include "camera.h"
 #include "graphic_render.h"
 
@@ -32,9 +32,10 @@ int main()
         }
 
         update(deltaTime);
-        render(renderer);
+
         window.clear();
         window.setView(camera.GetView(window.getSize()));
+        render(renderer);
         window.display();
     }
 
