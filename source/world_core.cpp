@@ -1,15 +1,19 @@
 #include "utilities.h"
 #include "world_core.h"
-#include "camera.h"
-#include "graphic_render.h"
+#include "resource_manager.h"
+#include <filesystem>
 
-sf::Texture texture;
+Camera camera(310.0f);
 
 void begin(const sf::Window &window)
 {
-    if (!texture.loadFromFile(TEX_DIRECTORY + "/brick.png"))
+    for (auto &file : std::filesystem::directory_iterator(TEX_DIRECTORY))
     {
-        exit(-1);
+        if (file.is_regular_file() && (file.path().extension() == ".png" || file.path().extension() == ".jpg"))
+        {
+            ResManager::textures[file.path().filename().string()].loadFromFile(
+                file.path().string());
+        }
     }
 }
 
@@ -19,5 +23,4 @@ void update(float deltaTime)
 
 void render(Renderer &renderer)
 {
-    renderer.Draw(texture, sf::Vector2f(), sf::Vector2f(4.5f, 4.5f));
 }

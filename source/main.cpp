@@ -11,12 +11,6 @@ int main()
     Camera camera;
     Renderer renderer(window);
 
-    sf::Texture texture;
-    if (!texture.loadFromFile(TEX_DIRECTORY + "/brick.png"))
-    {
-        std::cerr << "File opening error : " << TEX_DIRECTORY + "/brick\n";
-    }
-
     begin(window);
     while (window.isOpen())
     {
@@ -32,7 +26,6 @@ int main()
         }
 
         update(deltaTime);
-
         window.clear();
         window.setView(camera.GetView(window.getSize()));
         render(renderer);
