@@ -7,7 +7,8 @@
 // #include "../Header/OptionsMenu.h"
 // #include "../Header/CreditsMenu.h"
 
-class MainMenu : private Menu {
+class MainMenu : private Menu
+{
 private: // attributes
     PlayerNameMenu playerName;
     // HowToPlayMenu howToPlay;
@@ -17,7 +18,7 @@ private: // attributes
     sf::Font menuFont;
     sf::Text menuOptions[6];
     sf::Texture optionShadowTexture;
-    sf::Sprite optionShadowSprite;
+    sf::Text menuOptionsOutline[6];
     int selectedOption;
 
 public: // attributes
@@ -27,7 +28,7 @@ public: // attributes
 
 private: // methods
     // Draw Main Menu contents
-    void draw(sf::RenderWindow& window) override;
+    void draw(sf::RenderWindow &window) override;
 
     // Handle all events happening on Main Menu
     void catchEvents(sf::Event event) override;
@@ -47,6 +48,8 @@ private: // methods
     // Control enemies' speed according to selected difficulty
     void controlEnemiesSpeed();
 
+    void updateMenuOptionsColors();
+
 public: // methods
     // Constructor
     MainMenu();
@@ -55,7 +58,7 @@ public: // methods
     void handleAllEvents(sf::Event event);
 
     // Draw Menu and its children contents
-    void drawAll(sf::RenderWindow& window);
+    void drawAll(sf::RenderWindow &window);
 
     // Make Menu display
     void checkShow();

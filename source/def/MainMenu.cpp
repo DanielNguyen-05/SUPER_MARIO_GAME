@@ -21,38 +21,39 @@ MainMenu::MainMenu()
     }
     backGroundSprite.setTexture(backGroundTexture);
 
-    // Set OptionShadow Properties
-    if (!optionShadowTexture.loadFromFile(MENU_SHADOW))
-    {
-        cout << "Can't load MENU_SHADOW\n";
-    }
-
-    optionShadowSprite.setTexture(optionShadowTexture);
-    optionShadowSprite.setColor(Color(255, 255, 255, 100));
-    optionShadowSprite.setPosition(620, 295 + selectedOption * 70);
-
     setChangeOptionSound();
 
-    // Helper varibles
-    float width = 628;
-    float hight = 225;
+    // Helper variables
+    float width = 1000;
+    float hight = 200;
     string OptionsTemp[6] = {
         "   START",
         "  TUTORIAL",
         " LEADERBOARD", // Top 3 players
-        "   CREDITS",     // Introduce the team
-        "   OPTIONS",     // Music control
-        "    EXIT" };
+        "   CREDITS",   // Introduce the team
+        "   OPTIONS",   // Music control
+        "    EXIT"};
 
     for (int i = 0; i < 6; i++)
     {
+        // Main text
         menuOptions[i].setFont(menuFont);
         menuOptions[i].setFillColor(sf::Color::White);
         menuOptions[i].setCharacterSize(43);
         menuOptions[i].setStyle(sf::Text::Regular);
         menuOptions[i].setString(OptionsTemp[i]);
+
+        // Outline text
+        menuOptionsOutline[i].setFont(menuFont);
+        menuOptionsOutline[i].setFillColor(sf::Color::Black); // Màu viền
+        menuOptionsOutline[i].setCharacterSize(43);
+        menuOptionsOutline[i].setStyle(sf::Text::Regular);
+        menuOptionsOutline[i].setString(OptionsTemp[i]);
+
+        // Position
         hight += 70;
         menuOptions[i].setPosition(width, hight);
+        menuOptionsOutline[i].setPosition(width - 2, hight - 2); // Dịch viền một chút
     }
 }
 
@@ -60,10 +61,7 @@ void MainMenu::handleAllEvents(Event event)
 {
     this->catchEvents(event);
     playerName.catchEvents(event, newPlayer);
-    // howToPlay.catchEvents(event);
     highScore.catchEvents(event);
-    // options.catchEvents(event, newPlayer);
-    // credits.catchEvents(event);
 }
 
 void MainMenu::catchEvents(Event event)
@@ -91,94 +89,65 @@ void MainMenu::catchEvents(Event event)
     }
 }
 
-void MainMenu::drawAll(RenderWindow& window)
+void MainMenu::drawAll(RenderWindow &window)
 {
     this->draw(window);
     playerName.draw(window);
-    // howToPlay.draw(window);
     highScore.draw(window);
-    // options.draw(window);
-    // credits.draw(window);
 }
 
-void MainMenu::draw(RenderWindow& window)
+void MainMenu::draw(RenderWindow &window)
 {
     checkShow();
     controlMusic();
     if (display)
     {
         window.draw(backGroundSprite);
-        window.draw(optionShadowSprite);
 
         for (int i = 0; i < 6; i++)
         {
-            window.draw(menuOptions[i]);
+            window.draw(menuOptionsOutline[i]); // Vẽ viền chữ
+            window.draw(menuOptions[i]);        // Vẽ chữ chính
         }
     }
 }
 
 void MainMenu::checkShow()
 {
-    // gameRunning = playerName.levelsList.gameEngine.gameRunning;
-
-    // bool allFormsClose = ((!playerName.display && !howToPlay.display)
-    //     && (!highScore.display && !options.display))
-    //     && (!credits.display && !playerName.levelsList.display);
-    // if (allFormsClose && !gameRunning) show();
+    // Nếu tất cả menu con đóng và không trong trạng thái game, hiển thị lại menu chính
+    if (!playerName.display && !highScore.display && !gameRunning)
+    {
+        show();
+    }
 }
 
 void MainMenu::moveDown()
 {
-    // if box in Exit postion set to Start
-    if (optionShadowSprite.getPosition().y == 645)
-    {
-        optionShadowSprite.setPosition(620, 295);
-        selectedOption = 0;
-    }
-    else
-    {
-        optionShadowSprite.move(0, 70);
-        ++selectedOption;
-    }
+    // Di chuyển xuống, quay lại đầu nếu đến cuối
+    selectedOption = (selectedOption + 1) % 6;
+    updateMenuOptionsColors();
 }
 
 void MainMenu::moveUp()
 {
-    // if box in Start postion set to Exit
-    if (optionShadowSprite.getPosition().y == 295)
-    {
-        optionShadowSprite.setPosition(620, 645);
-        selectedOption = 5;
-    }
-    else
-    {
-        optionShadowSprite.move(0, -70);
-        --selectedOption;
-    }
+    // Di chuyển lên, quay lại cuối nếu ở đầu
+    selectedOption = (selectedOption - 1 + 6) % 6;
+    updateMenuOptionsColors();
 }
 
 void MainMenu::mainMenuHandleSelection()
 {
-    // Check current selected option
+    // Thực hiện hành động tương ứng với lựa chọn hiện tại
     this->hide();
     switch (selectedOption)
     {
-        case 0:
-            playerName.show();
-            controlEnemiesSpeed();
-            break;
-        // case 1:
-        //     howToPlay.show();
-        //     break;
-        case 2:
-            highScore.show();
-            break;
-        // case 3:
-        //     credits.show();
-        //     break;
-        // case 4:
-        //     options.show();
-        //     break;
+    case 0:
+        playerName.show();
+        controlEnemiesSpeed();
+        break;
+    case 2:
+        highScore.show();
+        break;
     case 5:
         exit(0);
         break;
@@ -187,14 +156,11 @@ void MainMenu::mainMenuHandleSelection()
 
 void MainMenu::controlMusic()
 {
-    // if (gameRunning) {
-    //     if (options.levelSound.getStatus() == options.levelSound.Stopped) {
-    //         options.levelSound.play();
-    //     }
-    //     if (options.menuSound.getStatus() == options.menuSound.Playing) {
-    //         options.menuSound.stop();
-    //     }
-    // }
+    // Nếu đang chạy game, kiểm soát âm nhạc
+    if (gameRunning)
+    {
+        // Điều chỉnh âm thanh menu và game
+    }
 }
 
 void MainMenu::controlEnemiesSpeed()
@@ -211,6 +177,25 @@ void MainMenu::controlEnemiesSpeed()
         newPlayer.enemiesSpeed = 7;
         break;
     default:
+        newPlayer.enemiesSpeed = 1;
         break;
+    }
+}
+
+// Hàm cập nhật màu sắc của các menu options
+void MainMenu::updateMenuOptionsColors()
+{
+    for (int i = 0; i < 6; i++)
+    {
+        if (i == selectedOption)
+        {
+            menuOptions[i].setFillColor(sf::Color::Yellow);     // Màu nổi bật
+            menuOptionsOutline[i].setFillColor(sf::Color::Red); // Viền nổi bật
+        }
+        else
+        {
+            menuOptions[i].setFillColor(sf::Color::White);        // Màu bình thường
+            menuOptionsOutline[i].setFillColor(sf::Color::Black); // Viền bình thường
+        }
     }
 }
