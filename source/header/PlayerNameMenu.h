@@ -4,8 +4,8 @@
 class PlayerNameMenu : private Menu {
 private:
     // Thành phần giao diện
-   	sf::Text playerNameText;
-	sf::String username;
+    sf::Text playerNameText;
+    sf::String username;
 
 public:
     bool display;
@@ -19,6 +19,6 @@ public:
 
     // Lấy tên người dùng
     sf::String getName() const;
-    	//Handle all event happend on Player Name window
-	void catchEvents(Event event, player& newPlayer);
+    //Handle all event happend on Player Name window
+    void catchEvents(Event event, player& newPlayer);
 };

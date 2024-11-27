@@ -1,6 +1,6 @@
 #pragma once
-#include "../header/DEFINITION.h"
-#include "../header/Menu.h"
+#include "DEFINITION.h"
+#include "Menu.h"
 
 class HighScoreMenu : public Menu
 {

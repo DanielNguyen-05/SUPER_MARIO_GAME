@@ -1,6 +1,6 @@
 #pragma once
-#include "../header/Characters.h"
-#include "../header/GameOver.h"   
+#include "Characters.h"
+#include "GameOver.h"   
 
 // Mario's specific states and behaviors
 class Mario : public Characters

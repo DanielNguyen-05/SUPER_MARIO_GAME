@@ -1,5 +1,4 @@
 #include "../header/HighScoreMenu.h"
-
 #include "../header/HighScoreMenu.h"
 
 // Constructor
@@ -23,7 +22,7 @@ HighScoreMenu::HighScoreMenu() {
 
 
     // Set các thành phần text high score
-   /* 
+   /*
         highScoreText[0][0].setFont(font); // Tên người chơi
         highScoreText[0][1].setFont(font); // Điểm số
 
@@ -60,7 +59,7 @@ HighScoreMenu::HighScoreMenu() {
 
          // Khoảng cách giữa các dòng
         highScoresPos.x += 300;*/
-    
+
 }
 
 // Hàm vẽ
@@ -74,7 +73,7 @@ void HighScoreMenu::draw(RenderWindow& window) {
             window.draw(rankSprites[i]);
         }
 */
-        // Vẽ thông tin xếp hạng (tên + điểm)
+// Vẽ thông tin xếp hạng (tên + điểm)
         for (int i = 0; i < 3; i++) {
             window.draw(highScoreText[i][0]);
             window.draw(highScoreText[i][1]);

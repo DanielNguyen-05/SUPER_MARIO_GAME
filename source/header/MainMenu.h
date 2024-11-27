@@ -1,10 +1,10 @@
 #pragma once
 #include "DEFINITION.h"
 #include "Menu.h"
-#include "../Header/PlayerNameMenu.h"
+#include "PlayerNameMenu.h"
 // #include "../Header/HowToPlayMenu.h"
-#include "../header/HighScoreMenu.h"
-#include "../Header/OptionsMenu.h"
+#include "HighScoreMenu.h"
+#include "OptionsMenu.h"
 // #include "../Header/CreditsMenu.h"
 
 class MainMenu : private Menu
