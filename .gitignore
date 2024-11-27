@@ -33,3 +33,12 @@
 # macOS specific files
 .DS_Store
 .vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/extensions.json
+.vscode/requirements.json
+.vscode/snippets.json
+.vscode/keybindings.json
+.vscode/globalStorage/
+.vscode-workspace/
+.vscode/c_cpp_properties.json
