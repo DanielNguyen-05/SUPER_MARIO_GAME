@@ -4,7 +4,7 @@
 #include "../Header/PlayerNameMenu.h"
 // #include "../Header/HowToPlayMenu.h"
 #include "../header/HighScoreMenu.h"
-// #include "../Header/OptionsMenu.h"
+#include "../Header/OptionsMenu.h"
 // #include "../Header/CreditsMenu.h"
 
 class MainMenu : private Menu
@@ -13,7 +13,7 @@ private: // attributes
     PlayerNameMenu playerName;
     // HowToPlayMenu howToPlay;
     HighScoreMenu highScore;
-    // OptionsMenu options;
+    OptionsMenu options;
     // CreditsMenu credits;
     sf::Font menuFont;
     sf::Text menuOptions[6];
@@ -28,7 +28,7 @@ public: // attributes
 
 private: // methods
     // Draw Main Menu contents
-    void draw(sf::RenderWindow &window) override;
+    void draw(sf::RenderWindow& window) override;
 
     // Handle all events happening on Main Menu
     void catchEvents(sf::Event event) override;
@@ -58,7 +58,7 @@ public: // methods
     void handleAllEvents(sf::Event event);
 
     // Draw Menu and its children contents
-    void drawAll(sf::RenderWindow &window);
+    void drawAll(sf::RenderWindow& window);
 
     // Make Menu display
     void checkShow();

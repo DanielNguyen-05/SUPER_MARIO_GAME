@@ -19,7 +19,7 @@ void Menu::setChangeOptionSound() {
     }
     // Create a sound source (changingOptionSound) and bind it to the buffer
     this->changingOptionSound.setBuffer(this->changingOptionBuffer);
-    this->changingOptionSound.setVolume(50);
+    this->changingOptionSound.setVolume(100);
 }
 
 // Draw Menu Options

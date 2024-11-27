@@ -2,7 +2,7 @@
 
 // Constructor
 PlayerNameMenu::PlayerNameMenu() {
-   // Set Back Text Properties
+	// Set Back Text Properties
 	setBackText();
 
 	setChangeOptionSound();
@@ -15,13 +15,13 @@ PlayerNameMenu::PlayerNameMenu() {
 	playerNameText.setCharacterSize(70);
 	playerNameText.setStyle(Text::Style::Bold);
 	playerNameText.setPosition(447, 411);
-    // Ban đầu, menu không hiển thị
-    display = false;
+	// Ban đầu, menu không hiển thị
+	display = false;
 }
 
 // Vẽ giao diện
 void PlayerNameMenu::draw(sf::RenderWindow& window) {
-   	if (display) {
+	if (display) {
 		window.draw(backGroundSprite);
 		window.draw(playerNameText);
 		window.draw(backText);
@@ -32,17 +32,17 @@ void PlayerNameMenu::draw(sf::RenderWindow& window) {
 
 // Lấy tên người dùng
 sf::String PlayerNameMenu::getName() const {
-    return username;
+	return username;
 }
 
 // Hiển thị menu
 void PlayerNameMenu::show() {
-    display = true;
+	display = true;
 }
 
 // Ẩn menu
 void PlayerNameMenu::hide() {
-    display = false;
+	display = false;
 }
 
 void PlayerNameMenu::catchEvents(Event event, player& newPlayer) {
@@ -82,7 +82,7 @@ void PlayerNameMenu::catchEvents(Event event, player& newPlayer) {
 		case Event::TextEntered:
 			bool notForbidinKeys = (!Keyboard::isKeyPressed(Keyboard::Enter) && !Keyboard::isKeyPressed(Keyboard::BackSpace)) && (!Keyboard::isKeyPressed(Keyboard::Escape) && !Keyboard::isKeyPressed(Keyboard::Space));
 			if (username.getSize() <= 20 && notForbidinKeys) {
-				if(event.text.unicode < '0' || event.text.unicode > '9')
+				if (event.text.unicode < '0' || event.text.unicode > '9')
 					username += event.text.unicode;
 				playerNameText.setString(username);
 			}

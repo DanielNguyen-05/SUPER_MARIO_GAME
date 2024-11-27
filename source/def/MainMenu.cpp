@@ -1,7 +1,6 @@
 #include "../header/MainMenu.h"
 
-MainMenu::MainMenu()
-{
+MainMenu::MainMenu() {
     // Set initial values
     this->show();
     selectedOption = 0;
@@ -9,8 +8,7 @@ MainMenu::MainMenu()
     gameRunning = false;
 
     // Load fonts from file
-    if (!menuFont.loadFromFile(MAIN_MENU_FONT))
-    {
+    if (!menuFont.loadFromFile(MAIN_MENU_FONT)) {
         cout << "Can't load MAIN_MENU_FONT\n";
     }
 
@@ -32,7 +30,7 @@ MainMenu::MainMenu()
         " LEADERBOARD", // Top 3 players
         "   CREDITS",   // Introduce the team
         "   OPTIONS",   // Music control
-        "    EXIT"};
+        "    EXIT" };
 
     for (int i = 0; i < 6; i++)
     {
@@ -89,14 +87,14 @@ void MainMenu::catchEvents(Event event)
     }
 }
 
-void MainMenu::drawAll(RenderWindow &window)
+void MainMenu::drawAll(RenderWindow& window)
 {
     this->draw(window);
     playerName.draw(window);
     highScore.draw(window);
 }
 
-void MainMenu::draw(RenderWindow &window)
+void MainMenu::draw(RenderWindow& window)
 {
     checkShow();
     controlMusic();
@@ -157,9 +155,9 @@ void MainMenu::mainMenuHandleSelection()
 void MainMenu::controlMusic()
 {
     // Nếu đang chạy game, kiểm soát âm nhạc
-    if (gameRunning)
-    {
-        // Điều chỉnh âm thanh menu và game
+    if (gameRunning) {
+        if (options.menuSound.getStatus() == options.menuSound.Playing)
+            options.menuSound.stop();
     }
 }
 
