@@ -78,7 +78,7 @@ struct position
 
 #define LEVELS_LIST_BACKGROUND "assets/textures/Menu/levelsList.jpg"
 
-#define PLAYER_NAME_BACKGROUND "assets/textures/Menu/playerName.jpg"
+#define PLAYER_NAME_BACKGROUND "assets/textures/Menu/playerName3.jpg"
 
 #define MENU_SHADOW "assets/textures/MenuShadow.png"
 

@@ -17,48 +17,41 @@ HighScoreMenu::HighScoreMenu() {
     backGroundSprite.setTexture(backGroundTexture);
 
     // Set vị trí của các thành phần high score
-    highScoresPos.x = 450;
-    highScoresPos.y = 300;
+    highScoresPos.x = 518;
+    highScoresPos.y = 450;
 
 
     // Set các thành phần text high score
-   /*
-        highScoreText[0][0].setFont(font); // Tên người chơi
-        highScoreText[0][1].setFont(font); // Điểm số
+   for (int i = 0; i < 3; i++){
+        highScoreText[i][0].setFont(font); // Tên người chơi
+        highScoreText[i][1].setFont(font); // Điểm số
 
-        highScoreText[0][0].setCharacterSize(40);
-        highScoreText[0][1].setCharacterSize(40);
+        highScoreText[i][0].setFillColor(sf::Color::Green);
+        highScoreText[i][1].setFillColor(sf::Color::White);
 
-        // Vị trí text tên và điểm tương ứng
-        highScoreText[0][0].setPosition(highScoresPos.x, highScoresPos.y);
-        highScoreText[0][1].setPosition(highScoresPos.x, highScoresPos.y + 50);
-
-         // Khoảng cách giữa các dòng
-        highScoresPos.x += 300;
-        highScoreText[1][0].setFont(font); // Tên người chơi
-        highScoreText[1][1].setFont(font); // Điểm số
-
-        highScoreText[1][0].setCharacterSize(40);
-        highScoreText[1][1].setCharacterSize(40);
-
-        // Vị trí text tên và điểm tương ứng
+        highScoreText[i][0].setCharacterSize(32);
+        highScoreText[i][1].setCharacterSize(32);
+   }
+       // Vị trí text tên và điểm tương ứng
         highScoreText[1][0].setPosition(highScoresPos.x, highScoresPos.y);
         highScoreText[1][1].setPosition(highScoresPos.x, highScoresPos.y + 50);
 
+        // Khoảng cách giữa các dòng
+        highScoresPos.x += 225;
+
+        // Vị trí text tên và điểm tương ứng
+        highScoreText[0][0].setPosition(highScoresPos.x, highScoresPos.y - 125);
+        highScoreText[0][1].setPosition(highScoresPos.x, highScoresPos.y - 75);
+
          // Khoảng cách giữa các dòng
         highScoresPos.x += 300;
-        highScoreText[2][0].setFont(font); // Tên người chơi
-        highScoreText[2][1].setFont(font); // Điểm số
-
-        highScoreText[2][0].setCharacterSize(40);
-        highScoreText[2][1].setCharacterSize(40);
-
-                // Vị trí text tên và điểm tương ứng
+    
+        // Vị trí text tên và điểm tương ứng
         highScoreText[2][0].setPosition(highScoresPos.x, highScoresPos.y);
         highScoreText[2][1].setPosition(highScoresPos.x, highScoresPos.y + 50);
 
          // Khoảng cách giữa các dòng
-        highScoresPos.x += 300;*/
+        highScoresPos.x += 300;
 
 }
 
