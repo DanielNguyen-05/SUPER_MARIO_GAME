@@ -1,6 +1,6 @@
 #pragma once
 #include "Characters.h"
-#include "DEFINITION.h"
+#include "GameOver.h"   
 
 class Luigi : public Characters {
 private:
