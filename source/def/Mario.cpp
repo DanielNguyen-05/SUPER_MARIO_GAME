@@ -190,7 +190,6 @@ void Mario::die()
                     // Nếu không có checkpoint, hồi sinh tại vị trí đầu level
                     characterSprite.setPosition(500, 200);  // Vị trí đầu màn
                 }
-
                 // Thiết lập lại trạng thái khi hồi sinh
                 dying = false;
                 dead = false;
