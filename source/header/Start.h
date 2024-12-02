@@ -14,8 +14,7 @@ public:
 
     void render(sf::RenderTarget* target);
     bool isGameStarted() const;
-    void handleMouseClick(sf::RenderWindow& window);
+    // void handleMouseClick(sf::RenderWindow& window);
     sf::Font getFont() const { return font; }
-
 };
 

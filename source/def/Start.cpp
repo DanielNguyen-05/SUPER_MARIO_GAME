@@ -56,18 +56,18 @@ bool Start::isGameStarted() const
     return gameStarted;
 }
 
-void Start::handleMouseClick(sf::RenderWindow& window)
-{
-    if (playButton.isMouseOver(window))
-    {
-        gameStarted = true; // Start the game
-    }
-    if (exitButton.isMouseOver(window))
-    {
-        window.close(); // Exit the game
-    }
-    if (optionsButton.isMouseOver(window))
-    {
-        // Handle options (chưa có logic)
-    }
-}
+// void Start::handleMouseClick(sf::RenderWindow& window)
+// {
+//     if (playButton.isMouseOver(window))
+//     {
+//         gameStarted = true; // Start the game
+//     }
+//     if (exitButton.isMouseOver(window))
+//     {
+//         window.close(); // Exit the game
+//     }
+//     if (optionsButton.isMouseOver(window))
+//     {
+//         // Handle options (chưa có logic)
+//     }
+// }

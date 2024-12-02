@@ -143,8 +143,17 @@ void MainMenu::mainMenuHandleSelection()
         playerName.show();
         controlEnemiesSpeed();
         break;
+    case 1:
+        // howToPlay.show();
+        break;
     case 2:
         highScore.show();
+        break;
+    case 3:
+        // credits.show();
+        break;
+    case 4:
+        options.show();
         break;
     case 5:
         exit(0);

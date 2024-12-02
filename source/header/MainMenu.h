@@ -20,6 +20,7 @@ private: // attributes
     sf::Texture optionShadowTexture;
     sf::Text menuOptionsOutline[6];
     int selectedOption;
+    sf::Sprite optionShadowSprite;
 
 public: // attributes
     bool gameRunning;
