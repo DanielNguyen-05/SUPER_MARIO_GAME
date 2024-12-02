@@ -13,7 +13,7 @@ Start::Start()
     }
 
     // Load font
-    if (!font.loadFromFile("../../assets/fonts/Super_Mario_Bros.ttf"))
+    if (!font.loadFromFile(GAME_FONT))
     {
         cerr << "Failed to load font!" << "\n";
     }

@@ -63,4 +63,6 @@ public: // methods
 
     // Make Menu display
     void checkShow();
+
+    void confirmExit();
 };
