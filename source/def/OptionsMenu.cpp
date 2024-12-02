@@ -118,11 +118,16 @@ void OptionsMenu::moveLeft() {
     }
 }
 
-///
 void OptionsMenu::changeSettings(bool up, player& newPlayer) {
     switch (activeSlide) {
     case 0:
         changeActiveMusicOption();
+        break;
+    case 1:
+        changeActiveControlOption();
+        break;
+    case 2:
+        // changeActiveDifficultyOption();
         break;
     }
 }
@@ -138,6 +143,26 @@ void OptionsMenu::changeActiveMusicOption() {
     updateMusicSettings();
 }
 
+void OptionsMenu::changeActiveControlOption() {
+    handControlled = !handControlled;
+    if (handControlled) {
+        controlBallSprite.setPosition(966, 450);
+    }
+    else {
+        controlBallSprite.setPosition(966, 255);
+    }
+    updateControlSettings();
+}
+
+void OptionsMenu::updateControlSettings() {
+    if (handControlled) {
+        // system("start cmd /k \"python  \"HandControler/HandControl.py\"\"");
+        // handControlled = false;
+    }
+    else {
+        // system("taskkill /f /im python.exe");
+    }
+}
 
 void OptionsMenu::updateMusicSettings() {
     if (muteMusic) {
@@ -149,4 +174,3 @@ void OptionsMenu::updateMusicSettings() {
         // levelSound.setVolume(100);
     }
 }
-

@@ -15,7 +15,7 @@ private:
     int activeSlide;
 public:
     sf::Sound menuSound;
-    bool muteMusic;
+    bool muteMusic, handControlled;
 
     // Constructors
     OptionsMenu();
@@ -28,4 +28,6 @@ public:
     void changeSettings(bool up, player& newPlayer);
     void changeActiveMusicOption(); // Change Music ball (on and off)
     void updateMusicSettings(); // mute or unmute music
+    void changeActiveControlOption(); // Change Control ball (hand or keyboard)
+    void updateControlSettings(); // Change control settings
 };

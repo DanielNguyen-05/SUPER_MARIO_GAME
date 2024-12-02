@@ -26,7 +26,7 @@ public:
     virtual void catchEvents(sf::Event event);
 
     // Make Menu display
-    virtual void show();
+    virtual void show(); // virtual function to be overridden when want to show high score
 
     // Close Menu
     virtual void hide();
