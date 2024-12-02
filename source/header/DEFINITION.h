@@ -92,7 +92,7 @@ struct position
 
 #define MUSIC_BALL "assets/textures/Menu/musicBall.png"
 
-#define DIFFICULTY_BALL "assets/textures/Menu/difficultyBall.png"
+// #define DIFFICULTY_BALL "assets/textures/Menu/difficultyBall.png"
 
 #define CONTROL_BALL "assets/textures/Menu/controlBall.png"
 
@@ -106,6 +106,10 @@ struct position
 #define MARIO_CHARACTER "assets/textures/Mario.png"
 
 #define MARIO_SUPER_CHARACTER "assets/textures/MarioSuper.png"
+
+#define LUIGI_CHARACTER "assets/textures/Luigi.png"
+
+#define LUIGI_SUPER_CHARACTER "assets/textures/LuigiSuper.png"
 
 #define JUMP_SOUND "assets/sounds/jump.wav"
 

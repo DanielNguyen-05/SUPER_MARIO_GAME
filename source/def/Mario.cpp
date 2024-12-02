@@ -203,21 +203,127 @@ void Mario::die()
     }
 }
 
-
 void Mario::move()
 {
+    if (onGround) jumping = false;
+    IntRect marioRect = characterSprite.getTextureRect();
+
+    float waitingTime = 0.05; // 0.12s to make whole round
+    if (timer1.getElapsedTime().asSeconds() > waitingTime)
+    {
+        // Jump when press arrow up
+        int jumpRectPosition = 161; // Big and Super position = 161
+        if (characterState == SMALL) jumpRectPosition += 1.5; // Small position = 162.5
+
+        if (goUp) {
+            marioRect.left = jumpRectPosition;
+            characterSprite.setTextureRect(marioRect);
+            if (jumping == false) {
+                jumpSound.play(); // jumping sound
+                startJumpPosition = characterSprite.getPosition().y;
+                speed[1] = -60;
+                jumping = true;
+            }
+            goUp = false;
+            onGround = false;
+        }
+        jump(marioRect, jumpRectPosition, waitingTime);
+
+        waitingTime += 0.07;
+        if (timer2.getElapsedTime().asSeconds() > waitingTime) {
+
+            if (goRight) { // Move to right
+                moveRight(marioRect);
+            }
+
+            else if (goLeft) { // Move to left
+                moveLeft(marioRect);
+            }
+            else {
+                // acceleration movement when release keyboard
+                if (speed[0] >= 1 || speed[0] <= -1) {
+                    setMarioRectForWalk(marioRect);
+                    if (!jumping) characterSprite.setTextureRect(marioRect);
+
+                    // Calculate Mario Speed - X axis
+                    speed[0] = speed[0] + acceleration[0] * waitingTime;
+                }
+            }
+
+            // set down when press arrow down
+            if (goDown && characterState != SMALL) {
+
+                goDown = false;
+            }
+
+            timer2.restart();
+        }
+
+        characterSprite.move(speed[0], speed[1]);
+
+        timer1.restart();
+    }
+
+    if (speed[0] < 1 && speed[0] > -1 && onGround) {
+        standStill();
+    }
 }
 
 void Mario::jump(sf::IntRect& intRect, int RectPosition, float waiting)
 {
+    if (onGround) {
+        speed[1] = 0;
+        jumping = false;
+    }
+    else {
+        if (speed[1] > 0)
+            acceleration[1] = 200;
+        else
+            acceleration[1] = 120;
+
+        // Calculate Mario Speed - Y axis
+        speed[1] = speed[1] + acceleration[1] * waiting;
+    }
 }
 
 void Mario::moveRight(sf::IntRect& intRect)
 {
+    // check turnAround
+    if (speed[0] <= -1) {
+        intRect.left = 129; // Big and Super position
+        if (characterState == SMALL) intRect.left = 132; // Small Position	
+    }
+    else {
+        setMarioRectForWalk(intRect);
+    }
+
+    if (!jumping) characterSprite.setTextureRect(intRect);
+    characterSprite.setScale(2, 2);
+
+    speed[0] = 21;
+
+    // Make acceleration work in the opposite side
+    if (acceleration[0] > 0) acceleration[0] *= -1;
 }
 
 void Mario::moveLeft(sf::IntRect& intRect)
 {
+    // check turnAround
+    if (speed[0] >= 1) {
+        intRect.left = 129; // Big and Super position
+        if (characterState == SMALL) intRect.left = 132; // Small Position	
+    }
+    else {
+        setMarioRectForWalk(intRect);
+    }
+
+    if (!jumping) characterSprite.setTextureRect(intRect);
+    characterSprite.setScale(-2, 2);
+
+    speed[0] = -21;
+
+    // Make acceleration work in the oppsite side
+    if (acceleration[0] < 0) acceleration[0] *= -1;
 }
 
 void Mario::animation()
@@ -233,12 +339,67 @@ void Mario::animation()
 
 void Mario::changeToBig()
 {
+    if (PoweringUpToBig) {
+        if (changeStateCounter < 8) { // The last one will be 7 (odd)
+            if (changeStateTimer.getElapsedTime().asSeconds() > 0.18) {
+                if (changeStateCounter % 2 == 0)
+                    smallState();
+                else
+                    bigState();
+
+                changeStateCounter++;
+                changeStateTimer.restart();
+            }
+        }
+        else {
+            changeStateCounter = 0;
+            PoweringUpToBig = false;
+        }
+    }
 }
 
 void Mario::changeToSuper()
 {
+    if (PoweringUpToSuper) {
+        if (changeStateCounter < 8) { // The last one will be 7 (odd)
+            if (changeStateTimer.getElapsedTime().asSeconds() > 0.18) {
+                if (changeStateCounter % 2 == 0)
+                    smallState();
+                else
+                    superState();
+
+                changeStateCounter++;
+                changeStateTimer.restart();
+            }
+        }
+        else {
+            changeStateCounter = 0;
+            PoweringUpToSuper = false;
+        }
+    }
 }
 
-void setMarioRectForWalk(sf::IntRect& intRect) {
+void Mario::setMarioRectForWalk(sf::IntRect& intRect) {
+    int maxLeft = 0, picWidth = 0;
 
+    if (characterState == SMALL)
+    {
+        maxLeft = 99;
+        picWidth = 33;
+    }
+    else if (characterState == BIG || characterState == SUPER)
+    {
+        maxLeft = 96;
+        picWidth = 32;
+    }
+
+    if (intRect.left >= maxLeft)
+    {
+        intRect.left = picWidth;
+    }
+    else
+    {
+        intRect.left += picWidth;
+    }
+    return;
 }
