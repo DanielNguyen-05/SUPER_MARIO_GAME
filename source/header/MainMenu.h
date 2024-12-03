@@ -5,7 +5,7 @@
 #include "HowToPlayMenu.h"
 #include "HighScoreMenu.h"
 #include "OptionsMenu.h"
-// #include "../Header/CreditsMenu.h"
+#include "CreditsMenu.h"
 
 class MainMenu : private Menu
 {
@@ -14,7 +14,7 @@ private: // attributes
     HowToPlayMenu howToPlay;
     HighScoreMenu highScore;
     OptionsMenu options;
-    // CreditsMenu credits;
+    CreditsMenu credits;
     sf::Font menuFont;
     sf::Text menuOptions[6];
     sf::Texture optionShadowTexture;

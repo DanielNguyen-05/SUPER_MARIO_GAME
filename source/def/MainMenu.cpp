@@ -61,7 +61,7 @@ void MainMenu::handleAllEvents(Event event)
     playerName.catchEvents(event, newPlayer);
     howToPlay.catchEvents(event);
     highScore.catchEvents(event);
-    // credits.catchEvents(event);
+    credits.catchEvents(event);
     options.catchEvents(event, newPlayer);
 }
 
@@ -96,7 +96,7 @@ void MainMenu::drawAll(RenderWindow& window)
     playerName.draw(window);
     howToPlay.draw(window);
     highScore.draw(window);
-    // credits.draw(window);
+    credits.draw(window);
     options.draw(window);
 }
 
@@ -156,7 +156,7 @@ void MainMenu::mainMenuHandleSelection()
         highScore.show();
         break;
     case 3:
-        // credits.show();
+        credits.show();
         break;
     case 4:
         options.show();
