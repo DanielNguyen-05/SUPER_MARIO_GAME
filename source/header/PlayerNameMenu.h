@@ -1,16 +1,13 @@
 #pragma once
 #include "DEFINITION.h" 
 #include "Menu.h"
-class PlayerNameMenu : private Menu {
+class PlayerNameMenu : public Menu {
 private:
     // Thành phần giao diện
     sf::Text playerNameText;
     sf::String username;
 
 public:
-    bool display;
-    void show();
-    void hide();
     // Constructor
     PlayerNameMenu();
 

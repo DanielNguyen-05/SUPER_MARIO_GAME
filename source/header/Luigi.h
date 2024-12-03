@@ -5,13 +5,13 @@
 class Luigi : public Characters {
 private:
     // Private methods to change states (implemented in Luigi class)
-    void smallState();
-    void bigState();
-    void superState();
-    void changeToBig();
-    void changeToSuper();
-    void damage();
-    void die();
+    void smallState() override;
+    void bigState() override;
+    void superState() override;
+    void changeToBig() override;
+    void changeToSuper() override;
+    void damage() override;
+    void die() override;
 
 public:
     // Constructore

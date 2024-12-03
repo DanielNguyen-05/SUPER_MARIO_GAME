@@ -83,7 +83,11 @@ void OptionsMenu::catchEvents(Event event, player& newPlayer) {
                 this->hide();
                 changingOptionSound.play();
                 break;
+
+            default:
+                break;
             }
+        default:
             break;
         }
     }

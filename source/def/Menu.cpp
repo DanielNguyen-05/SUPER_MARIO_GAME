@@ -43,8 +43,8 @@ void Menu::setChangeOptionSound() {
 // Draw Menu Options
 void Menu::draw(sf::RenderWindow& window) {
     if (this->display == true) {
-        window.draw(this->backText);
         window.draw(this->backGroundSprite);
+        window.draw(this->backText);
     }
 }
 

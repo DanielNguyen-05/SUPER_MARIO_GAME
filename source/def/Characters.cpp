@@ -117,7 +117,9 @@ void Characters::jump(sf::IntRect& intRect, int RectPosition, float waiting)
     {
         startJumpPosition = characterSprite.getPosition().y;
         onGround = false;
-        characterSprite.move(0, -speed[2]);
+        goUp = true;
+        intRect.left = 16;
+        characterSprite.move(0, -speed[1]);
     }
     if (!onGround)
     {

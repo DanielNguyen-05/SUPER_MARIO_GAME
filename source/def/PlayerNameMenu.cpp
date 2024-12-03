@@ -29,63 +29,57 @@ void PlayerNameMenu::draw(sf::RenderWindow& window) {
 	//levelsList.draw(window);
 }
 
-
 // Lấy tên người dùng
 sf::String PlayerNameMenu::getName() const {
 	return username;
 }
 
-// Hiển thị menu
-void PlayerNameMenu::show() {
-	display = true;
-}
-
-// Ẩn menu
-void PlayerNameMenu::hide() {
-	display = false;
-}
-
 void PlayerNameMenu::catchEvents(Event event, player& newPlayer) {
 	if (display) {
-		switch (event.type)
-		{
+		switch (event.type) {
 		case Event::KeyReleased:
-			switch (event.key.code)
-			{
+			switch (event.key.code) {
 			case sf::Keyboard::Backspace:
-				// Erase last character form string
-				username = username.substring(0, username.getSize() - 1);
-				playerNameText.setString(username);
-				changingOptionSound.play();
-				break;
-			case sf::Keyboard::Enter:
+				// Erase the last character if the string is not empty
 				if (!username.isEmpty()) {
-					this->hide();
-
-					// Convert sfml String to std String
-					newPlayer.name = std::string(username);
-
-					username = ""; // To Clean last inputed name
+					username = username.substring(0, username.getSize() - 1);
 					playerNameText.setString(username);
-
-					//levelsList.show(newPlayer);
 				}
 				changingOptionSound.play();
 				break;
-			case Keyboard::Escape:
+
+			case sf::Keyboard::Enter:
+				if (!username.isEmpty()) {
+					this->hide();
+					newPlayer.name = std::string(username); // Convert sf::String to std::string
+					username = ""; // Clear the username for the next input
+					playerNameText.setString(username);
+				}
+				changingOptionSound.play();
+				break;
+
+			case sf::Keyboard::Escape:
 				this->hide();
 				changingOptionSound.play();
+				break;
+
+			default:
 				break;
 			}
 			break;
 
 		case Event::TextEntered:
-			bool notForbidinKeys = (!Keyboard::isKeyPressed(Keyboard::Enter) && !Keyboard::isKeyPressed(Keyboard::BackSpace)) && (!Keyboard::isKeyPressed(Keyboard::Escape) && !Keyboard::isKeyPressed(Keyboard::Space));
-			if (username.getSize() <= 20 && notForbidinKeys) {
-				if (event.text.unicode < '0' || event.text.unicode > '9')
-					username += event.text.unicode;
-				playerNameText.setString(username);
+			// Ensure only valid characters are entered (letters, numbers, spaces)
+			if (event.text.unicode < 128 && username.getSize() < 20) { // ASCII characters only
+				char enteredChar = static_cast<char>(event.text.unicode);
+				if (std::isalnum(enteredChar) || enteredChar == ' ') { // Letters, digits, or spaces
+					username += enteredChar;
+					playerNameText.setString(username);
+				}
 			}
+			break;
+
+		default:
 			break;
 		}
 	}
