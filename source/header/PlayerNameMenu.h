@@ -1,6 +1,7 @@
 #pragma once
 #include "DEFINITION.h" 
 #include "Menu.h"
+
 class PlayerNameMenu : public Menu {
 private:
     // Thành phần giao diện
@@ -16,6 +17,14 @@ public:
 
     // Lấy tên người dùng
     sf::String getName() const;
-    //Handle all event happend on Player Name window
+
+    // Handle all events happening on Player Name window
     void catchEvents(Event event, player& newPlayer);
+
+private:
+    // Helper functions to handle specific events
+    void handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer);
+    void handleBackspace();
+    void handleEnter(player& newPlayer);
+    void handleTextEntered(sf::Uint32 unicode);
 };
