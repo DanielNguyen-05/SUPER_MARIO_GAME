@@ -2,7 +2,7 @@
 #include "DEFINITION.h"
 #include "Menu.h"
 #include "PlayerNameMenu.h"
-// #include "../Header/HowToPlayMenu.h"
+#include "HowToPlayMenu.h"
 #include "HighScoreMenu.h"
 #include "OptionsMenu.h"
 // #include "../Header/CreditsMenu.h"
@@ -11,7 +11,7 @@ class MainMenu : private Menu
 {
 private: // attributes
     PlayerNameMenu playerName;
-    // HowToPlayMenu howToPlay;
+    HowToPlayMenu howToPlay;
     HighScoreMenu highScore;
     OptionsMenu options;
     // CreditsMenu credits;

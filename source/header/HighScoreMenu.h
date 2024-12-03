@@ -1,5 +1,4 @@
 #pragma once
-#include "DEFINITION.h"
 #include "Menu.h"
 
 class HighScoreMenu : public Menu
@@ -15,28 +14,20 @@ public:
 	// Constructor
 	HighScoreMenu();
 
-
-	/***			Methods				***/
-
 	// Draw Menu contents
 	void draw(RenderWindow& window) override;
-
 
 	// Make Menu display
 	void show() override;
 
-
 	// Fill High score board with the top 10
 	void fillHighScore();
-
 
 	// Sort players info according to score
 	void sortPlayersFile();
 
-
 	// Make a vector contain players information collected form file
 	void arrangePlayersInfo();
-
 
 	// Count how many lines in specific file 
 	int getNumberOfLines();
