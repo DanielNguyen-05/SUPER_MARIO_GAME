@@ -67,11 +67,12 @@ void MainMenu::handleAllEvents(Event event)
 
 void MainMenu::catchEvents(Event event)
 {
+    // updateMenuOptionsColors();
     if (display)
     {
         if (event.type == Event::KeyReleased)
         {
-            if (event.key.code == Keyboard::Up || event.key.code == Keyboard::A)
+            if (event.key.code == Keyboard::Up || event.key.code == Keyboard::W)
             {
                 this->moveUp();
                 changingOptionSound.play();
@@ -88,6 +89,7 @@ void MainMenu::catchEvents(Event event)
             }
         }
     }
+    updateMenuOptionsColors();
 }
 
 void MainMenu::drawAll(RenderWindow& window)
@@ -129,14 +131,14 @@ void MainMenu::moveDown()
 {
     // Di chuyển xuống, quay lại đầu nếu đến cuối
     selectedOption = (selectedOption + 1) % 6;
-    updateMenuOptionsColors();
+    // updateMenuOptionsColors();
 }
 
 void MainMenu::moveUp()
 {
     // Di chuyển lên, quay lại cuối nếu ở đầu
     selectedOption = (selectedOption - 1 + 6) % 6;
-    updateMenuOptionsColors();
+    // updateMenuOptionsColors();
 }
 
 void MainMenu::mainMenuHandleSelection()

@@ -9,6 +9,7 @@
 #include <fstream>
 #include <map>
 #include <string>
+#include <memory>
 
 using namespace std;
 using namespace sf;
