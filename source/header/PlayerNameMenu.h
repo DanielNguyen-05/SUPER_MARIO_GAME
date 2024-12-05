@@ -5,8 +5,17 @@
 class PlayerNameMenu : public Menu {
 private:
     // Thành phần giao diện
-    sf::Text playerNameText;
+    sf::Text title;
+    sf::Text usernameLabel;
+    sf::Text passwordLabel;
+    sf::Text inputFieldName;
+    sf::Text inputFieldPassword;
+    sf::Text loginButton;
+    sf::Text registerButton;
     sf::String username;
+    sf::String password;
+    sf::Text errorMessage;
+    bool enterName = true;
 
 public:
     // Constructor
@@ -27,4 +36,6 @@ private:
     void handleBackspace();
     void handleEnter(player& newPlayer);
     void handleTextEntered(sf::Uint32 unicode);
+    void updateInputFields();
+    bool isValidInput(const sf::String& Input) const;
 };

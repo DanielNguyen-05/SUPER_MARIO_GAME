@@ -49,6 +49,8 @@ typedef enum
 
 struct player
 {
+    string username;
+    string password;
     string name;
     string score;
     string level;
@@ -79,7 +81,7 @@ struct position
 
 #define LEVELS_LIST_BACKGROUND "assets/textures/Menu/levelsList.jpg"
 
-#define PLAYER_NAME_BACKGROUND "assets/textures/Menu/playerName3.jpg"
+#define PLAYER_NAME_BACKGROUND "assets/textures/Menu/Login.jpg"
 
 #define MENU_SHADOW "assets/textures/MenuShadow.png"
 

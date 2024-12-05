@@ -2,7 +2,7 @@
 
 MainMenu::MainMenu() {
     // Set initial values
-    this->show();
+    this->hide();
     selectedOption = 0;
     newPlayer.lifes = 3;
     gameRunning = false;
@@ -57,8 +57,8 @@ MainMenu::MainMenu() {
 
 void MainMenu::handleAllEvents(Event event)
 {
-    this->catchEvents(event);
     playerName.catchEvents(event, newPlayer);
+    this->catchEvents(event);
     howToPlay.catchEvents(event);
     highScore.catchEvents(event);
     credits.catchEvents(event);
@@ -148,7 +148,8 @@ void MainMenu::mainMenuHandleSelection()
     switch (selectedOption)
     {
     case 0:
-        playerName.show();
+       // playerName.show();
+        //levelsList.draw(window);
         controlEnemiesSpeed();
         break;
     case 1:
