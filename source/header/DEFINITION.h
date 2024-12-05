@@ -124,6 +124,7 @@ struct position
 
 /***					GameEngine						***/
 #define PLAYERS_FILE "Files/Players.txt"
+#define ACCOUNT_FILE "Files/users.txt"
 #define GAME_HEADER_FONT "assets/fonts/some_font.ttf"
 #define GAME_FONT "assets/fonts/Super_Mario_Bros.ttf"
 

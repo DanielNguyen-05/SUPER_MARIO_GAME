@@ -94,8 +94,8 @@ void MainMenu::catchEvents(Event event)
 
 void MainMenu::drawAll(RenderWindow& window)
 {
-    this->draw(window);
     playerName.draw(window);
+    this->draw(window);
     howToPlay.draw(window);
     highScore.draw(window);
     credits.draw(window);

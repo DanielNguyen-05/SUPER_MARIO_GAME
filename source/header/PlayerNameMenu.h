@@ -36,6 +36,10 @@ private:
     void handleBackspace();
     void handleEnter(player& newPlayer);
     void handleTextEntered(sf::Uint32 unicode);
+    void resetFields();
     void updateInputFields();
     bool isValidInput(const sf::String& Input) const;
+    void setErrorMessage(const sf::String& message);
+    bool checkCredentials(const sf::String& username, const sf::String& password);
 };
+

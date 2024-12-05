@@ -2,7 +2,7 @@
 
 // Constructor
 PlayerNameMenu::PlayerNameMenu() {
-	// ban đầu không cho menu hiển thị
+	// ban đầu cho menu hiển thị
 	display = true;
 
 	// Set Back Text Properties
@@ -129,22 +129,35 @@ void PlayerNameMenu::handleBackspace() {
 }
 
 void PlayerNameMenu::handleEnter(player& newPlayer) {
-   if (enterName) {
-        enterName = false;  // Chuyển sang nhập mật khẩu
-    } else {
-		 if (!isValidInput(password) || !isValidInput(username)) {
-            errorMessage.setString("Invalid username or password! No spaces allowed.");
-            return;  // Dừng nếu password không hợp lệ
+	if(!username.isEmpty()){
+		if (enterName) {
+			enterName = false;  // Chuyển sang nhập mật khẩu
+		} else {
+			/*if (!isValidInput(password) || !isValidInput(username)) {
+				errorMessage.setString("Invalid username or password! No spaces allowed.");
+				return;  // Dừng nếu password không hợp lệ
+			}
+			newPlayer.username = std::string(username);
+			newPlayer.password = std::string(password);
+			*/ 
+			if (checkCredentials(username, password)){
+			setErrorMessage("Login successful!.");
+			this->hide();
+			}
+			else {
+				if (username.getSize() < 6 || password.getSize() < 6) {
+					setErrorMessage("Username must be 6+ chars, Password 6+ chars.");
+				} 
+				else {
+					setErrorMessage("Incorrect username or password!");
+				}
+				resetFields();
+			}
 		}
-        newPlayer.username = std::string(username);
-        newPlayer.password = std::string(password); 
-		errorMessage.setString("Login Successful!");
-		this->hide();
 	}
     updateInputFields();
 	changingOptionSound.play();
 }
-
 
 void PlayerNameMenu::handleTextEntered(sf::Uint32 unicode) {
     if (unicode == '\b') return;  // Bỏ qua Backspace (đã xử lý riêng)
@@ -169,8 +182,41 @@ bool PlayerNameMenu::isValidInput(const sf::String& input) const {
     return !input.isEmpty();  // Đảm bảo chuỗi không rỗng
 }
 
+void PlayerNameMenu::resetFields() {
+    username = "";
+    password = "";
+    enterName = true;  // Quay lại nhập tên người dùng
+    updateInputFields();
+}
+
 
 void PlayerNameMenu::updateInputFields() {
     inputFieldName.setString(username + (enterName ? "_" : ""));
     inputFieldPassword.setString(std::string(password.getSize(), '*'));
+}
+
+bool PlayerNameMenu::checkCredentials(const sf::String& username, const sf::String& password) {
+    std::ifstream file(ACCOUNT_FILE);
+    if (!file.is_open()) {
+        setErrorMessage("Error opening user file!");
+        return false;
+    }
+
+    std::string line;
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string storedUsername, storedPassword;
+        
+        // Tách username và password từ dòng
+        if (iss >> storedUsername >> storedPassword) {
+            if (username == storedUsername && password == storedPassword) {
+                return true;  // Đăng nhập thành công
+            }
+        }
+    }
+    return false;  // Không tìm thấy thông tin khớp
+}
+
+void PlayerNameMenu::setErrorMessage(const sf::String& message) {
+    errorMessage.setString(message);
 }
