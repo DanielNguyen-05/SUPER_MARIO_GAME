@@ -1,6 +1,6 @@
-DarkKnight 999999 2
-knight 10000 2
-Omar 7700 0
+StrongDuck 999999 2
+Peaceful 10000 2
+Danielnguyen 7700 0
 Osama 7400 0
 Hesham 7400 0
 Fady 7400 0
