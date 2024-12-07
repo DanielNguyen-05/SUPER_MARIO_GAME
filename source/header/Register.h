@@ -1,40 +1,32 @@
 #pragma once
 #include "DEFINITION.h" 
 #include "Menu.h"
-#include "Register.h"
 
-class PlayerNameMenu : public Menu {
+class Register : public Menu {
 private:
-    // Thành phần giao diện
-    sf::Text title;
     sf::Text usernameLabel;
     sf::Text passwordLabel;
     sf::Text inputFieldName;
     sf::Text inputFieldPassword;
     sf::Text loginButton;
     sf::Text registerButton;
-    sf::String username;
-    sf::String password;
+    sf::String usernameRegister;
+    sf::String passwordRegister;
     sf::Text errorMessage;
     bool enterName = true;
 
 public:
-    Register R;
+    //Constructor
+    Register();
 
-    // Constructor
-    PlayerNameMenu();
+    void show(player& newPlayer);
 
-    // Vẽ giao diện
     void draw(sf::RenderWindow& window) override;
 
-    // Lấy tên người dùng
-    //sf::String getName() const;
-
-    // Handle all events happening on Player Name window
+    //handle all event happening on Register window
     void catchEvents(Event event, player& newPlayer);
 
 private:
-    // Helper functions to handle specific events
     void handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer);
     void handleBackspace();
     void handleEnter(player& newPlayer);
@@ -43,9 +35,8 @@ private:
     void updateInputFields();
     bool isValidInput(const sf::String& Input) const;
     void setErrorMessage(const sf::String& message);
-    bool checkCredentials(const sf::String& username, const sf::String& password);
-    void handleMouseClick(sf::Vector2i mousePos, player& newPlayer, Event event);
+    bool checkCredentials(const sf::String& username);
+    void handleMouseClick(sf::Vector2i mousePos, player& newPlayer);
+    void handleRegister(player& newPlayer);
     void handleLogin(player& newPlayer);
-    void handleRegister(Event event, player& newPlayer);
 };
-

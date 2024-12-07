@@ -1,9 +1,9 @@
-#include "../header/PlayerNameMenu.h"
+#include "../header/Register.h"
 
 // Constructor
-PlayerNameMenu::PlayerNameMenu() {
-	// ban đầu cho menu hiển thị
-	display = true;
+Register::Register() {
+	// ban đầu không cho menu hiển thị
+	this->hide();
 
 	// Set Back Text Properties
 	setBackText();
@@ -37,17 +37,17 @@ PlayerNameMenu::PlayerNameMenu() {
 	inputFieldPassword.setFillColor(sf::Color::Green);
 	inputFieldPassword.setPosition(400, 450);
 
-	loginButton.setFont(font);
-	loginButton.setString("Login");
-	loginButton.setCharacterSize(40);
-	loginButton.setFillColor(sf::Color::Red);
-	loginButton.setPosition(750, 550);
-
 	registerButton.setFont(font);
 	registerButton.setString("Register");
 	registerButton.setCharacterSize(40);
 	registerButton.setFillColor(sf::Color::Red);
-	registerButton.setPosition(730, 620);
+	registerButton.setPosition(730, 550);
+
+    loginButton.setFont(font);
+	loginButton.setString("Login");
+	loginButton.setCharacterSize(40);
+	loginButton.setFillColor(sf::Color::Red);
+	loginButton.setPosition(750, 620);
 
 	errorMessage.setFont(font);
 	errorMessage.setCharacterSize(30);
@@ -58,7 +58,7 @@ PlayerNameMenu::PlayerNameMenu() {
 }
 
 // Vẽ giao diện
-void PlayerNameMenu::draw(sf::RenderWindow& window) {
+void Register::draw(sf::RenderWindow& window) {
 	if (display) {
 		window.draw(backGroundSprite);
 		window.draw(usernameLabel);
@@ -69,15 +69,19 @@ void PlayerNameMenu::draw(sf::RenderWindow& window) {
 		window.draw(registerButton);
 		window.draw(errorMessage);
 		window.draw(backText);
-	} 
+	}
+}
+
+void Register::show(player& newPlayer){
+	display = true;
 }
 
 // Lấy tên người dùng
-/*sf::String PlayerNameMenu::getName() const {
-	return username;
-}*/
+//sf::String PlayerNameMenu::getName() const {
+//	return username;
+//}
 
-void PlayerNameMenu::catchEvents(Event event, player& newPlayer) {
+void Register::catchEvents(Event event, player& newPlayer) {
 	if (display) {
 		switch (event.type) {
 		case Event::KeyReleased:
@@ -90,67 +94,71 @@ void PlayerNameMenu::catchEvents(Event event, player& newPlayer) {
 
 		case Event::MouseButtonReleased:
             if (event.mouseButton.button == sf::Mouse::Left) {
-                handleMouseClick({event.mouseButton.x, event.mouseButton.y}, newPlayer, event);
+                handleMouseClick({event.mouseButton.x, event.mouseButton.y}, newPlayer);
             }
             break;
-		
+
 		default:
 			break;
-
 		}
 	}
 }
 
-void PlayerNameMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer) {
+void Register::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer) {
 	switch (keyCode) {
-		case sf::Keyboard::Backspace:
-			handleBackspace();
-			break;
+	case sf::Keyboard::Backspace:
+		handleBackspace();
+		break;
 
-		case sf::Keyboard::Enter:
-			handleEnter(newPlayer);
-			break;
+	case sf::Keyboard::Enter:
+		handleEnter(newPlayer);
+		break;
 
-			// case sf::Keyboard::Escape:
-			// 	this->hide();
-			// 	changingOptionSound.play();
-			// 	break;
+		// case sf::Keyboard::Escape:
+		// 	this->hide();
+		// 	changingOptionSound.play();
+		// 	break;
 
-		default:
-			break;
-		}
+	default:
+		break;
+	}
 }
 
-void PlayerNameMenu::handleBackspace() {
+void Register::handleBackspace() {
 	// Erase the last character if the string is not empty
 	if (enterName) {
-		if (!username.isEmpty()) {
-			username.erase(username.getSize() - 1);
+		if (!usernameRegister.isEmpty()) {
+			usernameRegister.erase(usernameRegister.getSize() - 1);
 		}
 	}
 	else {
-		if (!password.isEmpty()) {
-			password.erase(password.getSize() - 1);
+		if (!passwordRegister.isEmpty()) {
+			passwordRegister.erase(passwordRegister.getSize() - 1);
 		}
 	}
 	changingOptionSound.play();
 	updateInputFields();
 }
 
-void PlayerNameMenu::handleEnter(player& newPlayer) {
-	if (!username.isEmpty()) {
+void Register::handleEnter(player& newPlayer) {
+	if (!usernameRegister.isEmpty()) {
 		if (enterName) {
 			enterName = false;  // Chuyển sang nhập mật khẩu
 		}
 		else {
-			if (checkCredentials(username, password)) {
-				newPlayer.username = std::string(username);
-				newPlayer.password = std::string(password);
-				setErrorMessage("Login successful!.");
+			if (!isValidInput(passwordRegister) || !isValidInput(usernameRegister)) {
+				errorMessage.setString("Invalid username or password! No spaces allowed.");
+				return;  // Dừng nếu password không hợp lệ
+			}
+			newPlayer.username = std::string(usernameRegister);
+			newPlayer.password = std::string(passwordRegister);
+			
+			if (checkCredentials(usernameRegister)) {
+				setErrorMessage("Register successful!.");
 				this->hide();
 			}
 			else {
-				setErrorMessage("Incorrect username or password!");
+				setErrorMessage("Username does exist!.");
 			}
 			resetFields();
 		}
@@ -159,21 +167,21 @@ void PlayerNameMenu::handleEnter(player& newPlayer) {
 	changingOptionSound.play();
 }
 
-void PlayerNameMenu::handleTextEntered(sf::Uint32 unicode) {
+void Register::handleTextEntered(sf::Uint32 unicode) {
 	if (unicode == '\b') return;  // Bỏ qua Backspace (đã xử lý riêng)
 
 	if (unicode >= 32 && unicode <= 126) {  // Ký tự có thể in được
 		if (enterName) {
-			username += static_cast<char>(unicode);
+			usernameRegister+= static_cast<char>(unicode);
 		}
 		else {
-			password += static_cast<char>(unicode);
+			passwordRegister += static_cast<char>(unicode);
 		}
 	}
 	updateInputFields();
 }
 
-bool PlayerNameMenu::isValidInput(const sf::String& input) const {
+bool Register::isValidInput(const sf::String& input) const {
 	// Kiểm tra nếu chuỗi chứa bất kỳ khoảng trắng nào
 	for (size_t i = 0; i < input.getSize(); ++i) {
 		if (std::isspace(input[i])) {
@@ -183,20 +191,20 @@ bool PlayerNameMenu::isValidInput(const sf::String& input) const {
 	return !input.isEmpty();  // Đảm bảo chuỗi không rỗng
 }
 
-void PlayerNameMenu::resetFields() {
-	username = "";
-	password = "";
+void Register::resetFields() {
+	usernameRegister = "";
+	passwordRegister = "";
 	enterName = true;  // Quay lại nhập tên người dùng
 	updateInputFields();
 }
 
 
-void PlayerNameMenu::updateInputFields() {
-	inputFieldName.setString(username + (enterName ? "_" : ""));
-	inputFieldPassword.setString(std::string(password.getSize(), '*'));
+void Register::updateInputFields() {
+	inputFieldName.setString(usernameRegister + (enterName ? "_" : ""));
+	inputFieldPassword.setString(std::string(passwordRegister.getSize(), '*'));
 }
 
-bool PlayerNameMenu::checkCredentials(const sf::String& username, const sf::String& password) {
+bool Register::checkCredentials(const sf::String& username) {
 	std::ifstream file(ACCOUNT_FILE);
 	if (!file.is_open()) {
 		setErrorMessage("Error opening user file!");
@@ -210,19 +218,20 @@ bool PlayerNameMenu::checkCredentials(const sf::String& username, const sf::Stri
 
 		// Tách username và password từ dòng
 		if (iss >> storedUsername >> storedPassword) {
-			if (username == storedUsername && password == storedPassword) {
-				return true;  // Đăng nhập thành công
+			if (username == storedUsername) {
+                setErrorMessage("Username does exist!.");
+				return false;  // username đã tồn tại
 			}
 		}
 	}
-	return false;  // Không tìm thấy thông tin khớp
+	return true;  // đăng kí thành công
 }
 
-void PlayerNameMenu::setErrorMessage(const sf::String& message) {
+void Register::setErrorMessage(const sf::String& message) {
 	errorMessage.setString(message);
 }
 
-void PlayerNameMenu::handleMouseClick(sf::Vector2i mousePos, player& newPlayer, Event event) {
+void Register::handleMouseClick(sf::Vector2i mousePos, player& newPlayer) {
     if (display) {
         // Kiểm tra nếu nhấn nút Login
         if (loginButton.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
@@ -231,26 +240,38 @@ void PlayerNameMenu::handleMouseClick(sf::Vector2i mousePos, player& newPlayer, 
 
         // Kiểm tra nếu nhấn nút Register
         if (registerButton.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
-            handleRegister(event, newPlayer);
+            handleRegister(newPlayer);
         }
     }
 }
 
-void PlayerNameMenu::handleLogin(player& newPlayer) {
-    if (checkCredentials(username, password)) {
-        setErrorMessage("Login successful!");
-        this->hide();
-        newPlayer.username = std::string(username);
-        newPlayer.password = std::string(password);
-    } else {
-        setErrorMessage("Incorrect username or password!");
-        resetFields();
-    }
+void Register::handleLogin(player& newPlayer) {
+    this->hide();
     changingOptionSound.play();
 }
 
-void PlayerNameMenu::handleRegister(Event event, player& newPlayer) {
-	this->hide();
-	R.show(newPlayer);
+void Register::handleRegister(player& newPlayer) {
+    if (usernameRegister.getSize() < 6 || passwordRegister.getSize() < 6) {
+        setErrorMessage("Username and password must be 6+ chars.");
+        resetFields();
+        return;
+    }
+
+    if (isValidInput(usernameRegister) && isValidInput(passwordRegister)) {
+        // Ghi thông tin đăng ký vào file
+        std::ofstream file(ACCOUNT_FILE, std::ios::app);
+        if (!file.is_open()) {
+            setErrorMessage("Error opening user file!");
+            return;
+        }
+
+        file << usernameRegister.toAnsiString() << " " << passwordRegister.toAnsiString() << "\n";
+        file.close();
+
+        setErrorMessage("Registration successful! Please login.");
+        resetFields();
+    } else {
+        setErrorMessage("Invalid username or password! No spaces allowed.");
+    }
     changingOptionSound.play();
 }

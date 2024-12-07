@@ -58,6 +58,7 @@ MainMenu::MainMenu() {
 void MainMenu::handleAllEvents(Event event)
 {
     playerName.catchEvents(event, newPlayer);
+    playerName.R.catchEvents(event, newPlayer);
     this->catchEvents(event);
     howToPlay.catchEvents(event);
     highScore.catchEvents(event);
@@ -95,6 +96,7 @@ void MainMenu::catchEvents(Event event)
 void MainMenu::drawAll(RenderWindow& window)
 {
     playerName.draw(window);
+    playerName.R.draw(window);
     this->draw(window);
     howToPlay.draw(window);
     highScore.draw(window);
