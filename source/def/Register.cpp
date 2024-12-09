@@ -43,7 +43,7 @@ Register::Register() {
 	registerButton.setFillColor(sf::Color::Red);
 	registerButton.setPosition(730, 550);
 
-    loginButton.setFont(font);
+	loginButton.setFont(font);
 	loginButton.setString("Login");
 	loginButton.setCharacterSize(40);
 	loginButton.setFillColor(sf::Color::Red);
@@ -72,7 +72,7 @@ void Register::draw(sf::RenderWindow& window) {
 	}
 }
 
-void Register::show(player& newPlayer){
+void Register::show(player& newPlayer) {
 	display = true;
 }
 
@@ -93,10 +93,10 @@ void Register::catchEvents(Event event, player& newPlayer) {
 			break;
 
 		case Event::MouseButtonReleased:
-            if (event.mouseButton.button == sf::Mouse::Left) {
-                handleMouseClick({event.mouseButton.x, event.mouseButton.y}, newPlayer);
-            }
-            break;
+			if (event.mouseButton.button == sf::Mouse::Left) {
+				handleMouseClick({ event.mouseButton.x, event.mouseButton.y }, newPlayer);
+			}
+			break;
 
 		default:
 			break;
@@ -152,7 +152,7 @@ void Register::handleEnter(player& newPlayer) {
 			}
 			newPlayer.username = std::string(usernameRegister);
 			newPlayer.password = std::string(passwordRegister);
-			
+
 			if (checkCredentials(usernameRegister)) {
 				setErrorMessage("Register successful!.");
 				this->hide();
@@ -172,7 +172,7 @@ void Register::handleTextEntered(sf::Uint32 unicode) {
 
 	if (unicode >= 32 && unicode <= 126) {  // Ký tự có thể in được
 		if (enterName) {
-			usernameRegister+= static_cast<char>(unicode);
+			usernameRegister += static_cast<char>(unicode);
 		}
 		else {
 			passwordRegister += static_cast<char>(unicode);
@@ -219,7 +219,7 @@ bool Register::checkCredentials(const sf::String& username) {
 		// Tách username và password từ dòng
 		if (iss >> storedUsername >> storedPassword) {
 			if (username == storedUsername) {
-                setErrorMessage("Username does exist!.");
+				setErrorMessage("Username does exist!.");
 				return false;  // username đã tồn tại
 			}
 		}
@@ -232,46 +232,47 @@ void Register::setErrorMessage(const sf::String& message) {
 }
 
 void Register::handleMouseClick(sf::Vector2i mousePos, player& newPlayer) {
-    if (display) {
-        // Kiểm tra nếu nhấn nút Login
-        if (loginButton.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
-            handleLogin(newPlayer);
-        }
+	if (display) {
+		// Kiểm tra nếu nhấn nút Login
+		if (loginButton.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
+			handleLogin(newPlayer);
+		}
 
-        // Kiểm tra nếu nhấn nút Register
-        if (registerButton.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
-            handleRegister(newPlayer);
-        }
-    }
+		// Kiểm tra nếu nhấn nút Register
+		if (registerButton.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
+			handleRegister(newPlayer);
+		}
+	}
 }
 
 void Register::handleLogin(player& newPlayer) {
-    this->hide();
-    changingOptionSound.play();
+	this->hide();
+	changingOptionSound.play();
 }
 
 void Register::handleRegister(player& newPlayer) {
-    if (usernameRegister.getSize() < 6 || passwordRegister.getSize() < 6) {
-        setErrorMessage("Username and password must be 6+ chars.");
-        resetFields();
-        return;
-    }
+	if (usernameRegister.getSize() < 6 || passwordRegister.getSize() < 6) {
+		setErrorMessage("Username and password must be 6+ chars.");
+		resetFields();
+		return;
+	}
 
-    if (isValidInput(usernameRegister) && isValidInput(passwordRegister)) {
-        // Ghi thông tin đăng ký vào file
-        std::ofstream file(ACCOUNT_FILE, std::ios::app);
-        if (!file.is_open()) {
-            setErrorMessage("Error opening user file!");
-            return;
-        }
+	if (isValidInput(usernameRegister) && isValidInput(passwordRegister)) {
+		// Ghi thông tin đăng ký vào file
+		std::ofstream file(ACCOUNT_FILE, std::ios::app);
+		if (!file.is_open()) {
+			setErrorMessage("Error opening user file!");
+			return;
+		}
 
-        file << usernameRegister.toAnsiString() << " " << passwordRegister.toAnsiString() << "\n";
-        file.close();
+		file << usernameRegister.toAnsiString() << " " << passwordRegister.toAnsiString() << "\n";
+		file.close();
 
-        setErrorMessage("Registration successful! Please login.");
-        resetFields();
-    } else {
-        setErrorMessage("Invalid username or password! No spaces allowed.");
-    }
-    changingOptionSound.play();
+		setErrorMessage("Registration successful! Please login.");
+		resetFields();
+	}
+	else {
+		setErrorMessage("Invalid username or password! No spaces allowed.");
+	}
+	changingOptionSound.play();
 }
