@@ -48,7 +48,7 @@ void PlayerNameMenu::draw(sf::RenderWindow& window) {
 		window.draw(loginButton);
 		window.draw(errorMessage);
 		window.draw(backText);
-	} 
+	}
 	//
 }
 
@@ -69,11 +69,11 @@ void PlayerNameMenu::catchEvents(Event event, player& newPlayer) {
 			break;
 
 		case Event::MouseButtonReleased:
-            if (event.mouseButton.button == sf::Mouse::Left) {
-                handleMouseClick({event.mouseButton.x, event.mouseButton.y}, newPlayer, event);
-            }
-            break;
-		
+			if (event.mouseButton.button == sf::Mouse::Left) {
+				handleMouseClick({ event.mouseButton.x, event.mouseButton.y }, newPlayer, event);
+			}
+			break;
+
 		default:
 			break;
 
@@ -83,22 +83,22 @@ void PlayerNameMenu::catchEvents(Event event, player& newPlayer) {
 
 void PlayerNameMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer) {
 	switch (keyCode) {
-		case sf::Keyboard::Backspace:
-			handleBackspace();
-			break;
+	case sf::Keyboard::Backspace:
+		handleBackspace();
+		break;
 
-		case sf::Keyboard::Enter:
-			handleEnter(newPlayer);
-			break;
+	case sf::Keyboard::Enter:
+		handleEnter(newPlayer);
+		break;
 
-			// case sf::Keyboard::Escape:
-			// 	this->hide();
-			// 	changingOptionSound.play();
-			// 	break;
+	case sf::Keyboard::Escape:
+		this->hide();
+		changingOptionSound.play();
+		break;
 
-		default:
-			break;
-		}
+	default:
+		break;
+	}
 }
 
 void PlayerNameMenu::handleBackspace() {
@@ -114,8 +114,8 @@ void PlayerNameMenu::handleBackspace() {
 
 void PlayerNameMenu::handleEnter(player& newPlayer) {
 	if (!username.isEmpty()) {
-	handleLogin(newPlayer);
-	changingOptionSound.play();
+		handleLogin(newPlayer);
+		changingOptionSound.play();
 	}
 }
 
@@ -177,16 +177,16 @@ void PlayerNameMenu::setErrorMessage(const sf::String& message) {
 }
 
 void PlayerNameMenu::handleMouseClick(sf::Vector2i mousePos, player& newPlayer, Event event) {
-    if (display) {
-        // Kiểm tra nếu nhấn nút Login
-        if (loginButton.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
-            handleLogin(newPlayer);
-        }
-    }
+	if (display) {
+		// Kiểm tra nếu nhấn nút Login
+		if (loginButton.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
+			handleLogin(newPlayer);
+		}
+	}
 }
 
 void PlayerNameMenu::handleLogin(player& newPlayer) {
-	if (!isValidInput(username)){
+	if (!isValidInput(username)) {
 		resetFields();
 		setErrorMessage("Invalid username! Spaces not allowed");
 	}
@@ -197,7 +197,8 @@ void PlayerNameMenu::handleLogin(player& newPlayer) {
 			this->hide();
 			newPlayer.username = std::string(username);
 			resetFields();
-		} else {
+		}
+		else {
 			//continue or new game menu
 		}
 		changingOptionSound.play();
