@@ -2,7 +2,6 @@
 #include "DEFINITION.h"
 #include "Menu.h"
 #include "PlayerNameMenu.h"
-#include "Register.h"
 #include "HowToPlayMenu.h"
 #include "HighScoreMenu.h"
 #include "OptionsMenu.h"

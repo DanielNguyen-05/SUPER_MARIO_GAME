@@ -1,25 +1,19 @@
 #pragma once
 #include "DEFINITION.h" 
 #include "Menu.h"
-#include "Register.h"
 
 class PlayerNameMenu : public Menu {
 private:
     // Thành phần giao diện
     sf::Text title;
     sf::Text usernameLabel;
-    sf::Text passwordLabel;
     sf::Text inputFieldName;
-    sf::Text inputFieldPassword;
     sf::Text loginButton;
-    sf::Text registerButton;
     sf::String username;
-    sf::String password;
     sf::Text errorMessage;
     bool enterName = true;
 
 public:
-    Register R;
 
     // Constructor
     PlayerNameMenu();
@@ -43,9 +37,8 @@ private:
     void updateInputFields();
     bool isValidInput(const sf::String& Input) const;
     void setErrorMessage(const sf::String& message);
-    bool checkCredentials(const sf::String& username, const sf::String& password);
+    bool checkCredentials(const sf::String& username);
     void handleMouseClick(sf::Vector2i mousePos, player& newPlayer, Event event);
     void handleLogin(player& newPlayer);
-    void handleRegister(Event event, player& newPlayer);
 };
 
