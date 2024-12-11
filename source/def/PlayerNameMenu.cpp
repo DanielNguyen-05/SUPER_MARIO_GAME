@@ -196,6 +196,7 @@ void PlayerNameMenu::handleLogin(player& newPlayer) {
 			setErrorMessage("Login successful!");
 			this->hide();
 			newPlayer.username = std::string(username);
+			saveUsernameToFile();
 			resetFields();
 		}
 		else {
@@ -205,4 +206,14 @@ void PlayerNameMenu::handleLogin(player& newPlayer) {
 	}
 }
 
+void PlayerNameMenu::saveUsernameToFile(){
+	std::ofstream outFile(ACCOUNT_FILE, std::ios::app); // Mở tệp ở chế độ thêm dữ liệu
+    if (outFile.is_open()) {
+        outFile << username.toAnsiString() << "\n"; // Ghi tên người dùng vào tệp
+        outFile.close();
+    } else {
+        // Xử lý lỗi nếu không thể mở tệp
+        setErrorMessage("Unable to open file to save username.");
+    }
+}
 

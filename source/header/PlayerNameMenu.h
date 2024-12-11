@@ -27,6 +27,9 @@ public:
     // Handle all events happening on Player Name window
     void catchEvents(Event event, player& newPlayer);
 
+    // Lưu tên người dùng vào file
+    void saveUsernameToFile();
+
 private:
     // Helper functions to handle specific events
     void handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer);
