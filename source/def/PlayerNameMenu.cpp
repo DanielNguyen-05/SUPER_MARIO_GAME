@@ -2,8 +2,8 @@
 
 // Constructor
 PlayerNameMenu::PlayerNameMenu() {
-	// ban đầu cho menu hiển thị
-	this->hide();
+	// ban đầu không cho cho menu hiển thị
+	display = false;
 
 	// Set Back Text Properties
 	setBackText();
@@ -51,6 +51,9 @@ void PlayerNameMenu::draw(sf::RenderWindow& window) {
 	}
 }
 
+void PlayerNameMenu::show(player& newPlayer){
+	display = true;
+}
 // Lấy tên người dùng
 /*sf::String PlayerNameMenu::getName() const {
 	return username;
@@ -59,8 +62,8 @@ void PlayerNameMenu::draw(sf::RenderWindow& window) {
 void PlayerNameMenu::catchEvents(Event event, player& newPlayer) {
 	if (display) {
 		switch (event.type) {
-		case Event::KeyReleased:
-			handleKeyReleased(event.key.code, newPlayer);
+		case Event::KeyPressed:
+			handleKeyPressed(event.key.code, newPlayer);
 			break;
 
 		case Event::TextEntered:
@@ -80,7 +83,7 @@ void PlayerNameMenu::catchEvents(Event event, player& newPlayer) {
 	}
 }
 
-void PlayerNameMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer) {
+void PlayerNameMenu::handleKeyPressed(sf::Keyboard::Key keyCode, player& newPlayer) {
 	switch (keyCode) {
 	case sf::Keyboard::Backspace:
 		handleBackspace();
@@ -162,7 +165,8 @@ bool PlayerNameMenu::checkCredentials(const sf::String& username) {
 	while (std::getline(file, line)) {
 		std::istringstream iss(line);
 		std::string storedUsername;
-		if (iss >> storedUsername) {
+		int level1Score, level2Score, level3Score;
+		if (iss >> storedUsername >> level1Score >> level2Score >> level3Score) {
 			if (username == storedUsername) {
 				return false;
 			}
@@ -199,7 +203,8 @@ void PlayerNameMenu::handleLogin(player& newPlayer) {
 			resetFields();
 		}
 		else {
-			//continue or new game menu
+			resetFields();
+			setErrorMessage("Username already exists!.");
 		}
 		changingOptionSound.play();
 	}
@@ -208,7 +213,7 @@ void PlayerNameMenu::handleLogin(player& newPlayer) {
 void PlayerNameMenu::saveUsernameToFile(){
 	std::ofstream outFile(ACCOUNT_FILE, std::ios::app); // Mở tệp ở chế độ thêm dữ liệu
     if (outFile.is_open()) {
-        outFile << "\n" << username.toAnsiString(); // Ghi tên người dùng vào tệp
+        outFile << username.toAnsiString() << " -1 -1 -1" << "\n" ; // Ghi tên người dùng vào tệp
         outFile.close();
     } else {
         // Xử lý lỗi nếu không thể mở tệp

@@ -1,7 +1,7 @@
-#include "../header/PlayerMenu.h"
+#include "../header/PlayerOptionsMenu.h"
 
-GameMenu::GameMenu() {
-    this->hide();
+PlayerOptionsMenu::PlayerOptionsMenu() {
+    display = false;
     if (!font.loadFromFile(MAIN_MENU_FONT)) {
         std::cerr << "Error loading font!" << std::endl;
     }
@@ -36,25 +36,27 @@ GameMenu::GameMenu() {
 
 
 // Vẽ giao diện
-void GameMenu::draw(sf::RenderWindow& window) {
+void PlayerOptionsMenu::draw(sf::RenderWindow& window) {
 	if (display) {
         window.draw(backGroundSprite);
         window.draw(titleText);
         for (const auto& option : Options)
             window.draw(option);
+        
         window.draw(backText);
     }
+    user.draw(window);
 }
 
 
-void GameMenu::catchEvents(Event event, player& newPlayer) {
+void PlayerOptionsMenu::catchEvents(Event event, player& newPlayer) {
    if (display) {
 		switch (event.type) {
-		case Event::KeyReleased:
-			handleKeyReleased(event.key.code, newPlayer);
+		case Event::KeyPressed:
+			handleKeyPressed(event.key.code, newPlayer);
 			break;
 
-		case Event::MouseButtonReleased:
+		/*case Event::MouseButtonReleased:
 			if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
             sf::Vector2i mousePos(event.mouseButton.x, event.mouseButton.y);
             for (int i = 0; i < 2; ++i) {
@@ -69,16 +71,13 @@ void GameMenu::catchEvents(Event event, player& newPlayer) {
                     }
             }
 			}
-			break;
-
-		default:
-			break;
-
+			break;*/
 		}
 	}
+    user.catchEvents(event, newPlayer);
 }
 
-void GameMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer) {
+void PlayerOptionsMenu::handleKeyPressed(sf::Keyboard::Key keyCode, player& newPlayer) {
 	switch (keyCode) {
         case sf::Keyboard::Up:
             this->moveUp();
@@ -101,35 +100,37 @@ void GameMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer) {
 	}
 }
 
-void GameMenu::handleEnter(player& newPlayer){
-    //this->hide();
+void PlayerOptionsMenu::handleEnter(player& newPlayer){
     switch (selectedPlayerOption)
     {
     case 0:
-        user.show();
+        this->hide();
+        user.show(newPlayer);
         //levelsList.draw(window);
        // controlEnemiesSpeed();
         break;
+    case 1:
     //levelsList.draw(window);
     //controlEnemiesSpeed();
+    break;
     }     
 }
 
 
-void GameMenu::moveDown()
+void PlayerOptionsMenu::moveDown()
 {
     // Di chuyển xuống, quay lại đầu nếu đến cuối
     selectedPlayerOption = (selectedPlayerOption + 1) % 2;
     // updateMenuOptionsColors();
 }
 
-void GameMenu::moveUp()
+void PlayerOptionsMenu::moveUp()
 {
     // Di chuyển lên, quay lại cuối nếu ở đầu
     selectedPlayerOption = (selectedPlayerOption - 1 + 2) % 2;
     // updateMenuOptionsColors();
 }
-bool GameMenu::isHovering(const sf::Text& text, const sf::Vector2i& mousePos) {
+bool PlayerOptionsMenu::isHovering(const sf::Text& text, const sf::Vector2i& mousePos) {
     return text.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 }
 

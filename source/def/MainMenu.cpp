@@ -58,7 +58,7 @@ MainMenu::MainMenu() {
 void MainMenu::handleAllEvents(Event event)
 {
     this->catchEvents(event);
-    playerName.catchEvents(event, newPlayer);
+    playerOptions.catchEvents(event, newPlayer);
     howToPlay.catchEvents(event);
     highScore.catchEvents(event);
     credits.catchEvents(event);
@@ -95,7 +95,7 @@ void MainMenu::catchEvents(Event event)
 void MainMenu::drawAll(RenderWindow& window)
 {
     this->draw(window);
-    playerName.draw(window);
+    playerOptions.draw(window);
     howToPlay.draw(window);
     highScore.draw(window);
     credits.draw(window);
@@ -121,7 +121,7 @@ void MainMenu::draw(RenderWindow& window)
 void MainMenu::checkShow()
 {
     // Nếu tất cả menu con đóng và không trong trạng thái game, hiển thị lại menu chính
-    if (!playerName.display && !highScore.display && !gameRunning)
+    if (!playerOptions.display && !highScore.display && !gameRunning)
     {
         show();
     }
@@ -148,7 +148,7 @@ void MainMenu::mainMenuHandleSelection()
     switch (selectedOption)
     {
     case 0:
-        playerName.show();
+        playerOptions.show();
         //levelsList.draw(window);
         controlEnemiesSpeed();
         break;

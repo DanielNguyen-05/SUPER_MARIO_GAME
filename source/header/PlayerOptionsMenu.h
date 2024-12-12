@@ -3,7 +3,7 @@
 #include "Menu.h"
 #include "PlayerNameMenu.h"
 
-class GameMenu : public Menu{
+class PlayerOptionsMenu : public Menu{
 private:
     sf::Font font;
     sf::Text Options[2];
@@ -21,7 +21,7 @@ private:
 public:
     PlayerNameMenu user;
 
-    GameMenu();
+    PlayerOptionsMenu();
 
     // Vẽ giao diện
     void draw(sf::RenderWindow& window) override;
@@ -31,10 +31,7 @@ public:
 
     void handleMouseClick(sf::Vector2i mousePos, player& newPlayer, Event event);
 
-    void handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer);
+    void handleKeyPressed(sf::Keyboard::Key keyCode, player& newPlayer);
 
     void handleEnter(player& newPlayer);
-
-      // Lưu tên người dùng vào file
-    void saveUsernameToFile();
 };

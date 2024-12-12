@@ -21,6 +21,9 @@ public:
     // Vẽ giao diện
     void draw(sf::RenderWindow& window) override;
 
+    // Make Menu display
+	void show(player& newPlayer);
+
     // Lấy tên người dùng
     //sf::String getName() const;
 
@@ -32,7 +35,7 @@ public:
 
 private:
     // Helper functions to handle specific events
-    void handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer);
+    void handleKeyPressed(sf::Keyboard::Key keyCode, player& newPlayer);
     void handleBackspace();
     void handleEnter(player& newPlayer);
     void handleTextEntered(sf::Uint32 unicode);
