@@ -9,11 +9,11 @@ GameMenu::GameMenu() {
     selectedPlayerOption = 0;
 
     // Set Back Text Properties
-	setBackText();
-	setChangeOptionSound();
+    setBackText();
+    setChangeOptionSound();
 
     if (!backGroundTexture.loadFromFile(PLAYER_NAME_BACKGROUND)) { std::cout << "Can't load PLAYER_NAME_BACKGROUND\n"; }
-	backGroundSprite.setTexture(backGroundTexture);
+    backGroundSprite.setTexture(backGroundTexture);
     // Cấu hình tiêu đề
     titleText.setFont(font);
     titleText.setString("Super Mario Game");
@@ -22,7 +22,7 @@ GameMenu::GameMenu() {
     titleText.setPosition(800 - titleText.getGlobalBounds().width / 2.f, 380);
 
     // Cấu hình các tùy chọn menu
-    std::vector<std::string> options = {"New Game", "Continue"};
+    std::vector<std::string> options = { "New Game", "Continue" };
     float startY = 450.0f;
     for (size_t i = 0; i < options.size(); ++i) {
         Options[i].setFont(font);
@@ -37,7 +37,7 @@ GameMenu::GameMenu() {
 
 // Vẽ giao diện
 void GameMenu::draw(sf::RenderWindow& window) {
-	if (display) {
+    if (display) {
         window.draw(backGroundSprite);
         window.draw(titleText);
         for (const auto& option : Options)
@@ -48,61 +48,62 @@ void GameMenu::draw(sf::RenderWindow& window) {
 
 
 void GameMenu::catchEvents(Event event, player& newPlayer) {
-   if (display) {
-		switch (event.type) {
-		case Event::KeyReleased:
-			handleKeyReleased(event.key.code, newPlayer);
-			break;
+    if (display) {
+        switch (event.type) {
+        case Event::KeyReleased:
+            handleKeyReleased(event.key.code, newPlayer);
+            break;
 
-		case Event::MouseButtonReleased:
-			if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-            sf::Vector2i mousePos(event.mouseButton.x, event.mouseButton.y);
-            for (int i = 0; i < 2; ++i) {
-                if (isHovering(Options[i], mousePos)) {
-                    if (i == 0) {
-                        std::cout << "New Game clicked" << std::endl;
-                        // Thêm logic xử lý cho New Game
-                        } else if (i == 1) {
+        case Event::MouseButtonReleased:
+            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+                sf::Vector2i mousePos(event.mouseButton.x, event.mouseButton.y);
+                for (int i = 0; i < 2; ++i) {
+                    if (isHovering(Options[i], mousePos)) {
+                        if (i == 0) {
+                            std::cout << "New Game clicked" << std::endl;
+                            // Thêm logic xử lý cho New Game
+                        }
+                        else if (i == 1) {
                             std::cout << "Continue clicked" << std::endl;
                             // Thêm logic xử lý cho Continue
                         }
                     }
+                }
             }
-			}
-			break;
-
-		default:
-			break;
-
-		}
-	}
-}
-
-void GameMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer) {
-	switch (keyCode) {
-        case sf::Keyboard::Up:
-            this->moveUp();
-                changingOptionSound.play();
-        case sf::Keyboard::Down:
-            this->moveDown();
-                changingOptionSound.play();
-
-        case sf::Keyboard::Enter:
-            handleEnter(newPlayer);
-            break;
-
-        case sf::Keyboard::Escape:
-            this->hide();
-            changingOptionSound.play();
             break;
 
         default:
             break;
-	}
+
+        }
+    }
 }
 
-void GameMenu::handleEnter(player& newPlayer){
-    //this->hide();
+void GameMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer) {
+    switch (keyCode) {
+    case sf::Keyboard::Up:
+        this->moveUp();
+        changingOptionSound.play();
+    case sf::Keyboard::Down:
+        this->moveDown();
+        changingOptionSound.play();
+
+    case sf::Keyboard::Enter:
+        handleEnter(newPlayer);
+        break;
+
+    case sf::Keyboard::Escape:
+        this->hide();
+        changingOptionSound.play();
+        break;
+
+    default:
+        break;
+    }
+}
+
+void GameMenu::handleEnter(player& newPlayer) {
+    this->hide();
     switch (selectedPlayerOption)
     {
     case 0:
@@ -110,9 +111,9 @@ void GameMenu::handleEnter(player& newPlayer){
         //levelsList.draw(window);
        // controlEnemiesSpeed();
         break;
-    //levelsList.draw(window);
-    //controlEnemiesSpeed();
-    }     
+        //levelsList.draw(window);
+        //controlEnemiesSpeed();
+    }
 }
 
 
@@ -129,6 +130,7 @@ void GameMenu::moveUp()
     selectedPlayerOption = (selectedPlayerOption - 1 + 2) % 2;
     // updateMenuOptionsColors();
 }
+
 bool GameMenu::isHovering(const sf::Text& text, const sf::Vector2i& mousePos) {
     return text.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 }
