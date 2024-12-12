@@ -49,7 +49,6 @@ void PlayerNameMenu::draw(sf::RenderWindow& window) {
 		window.draw(errorMessage);
 		window.draw(backText);
 	}
-	//
 }
 
 // Lấy tên người dùng
@@ -209,7 +208,7 @@ void PlayerNameMenu::handleLogin(player& newPlayer) {
 void PlayerNameMenu::saveUsernameToFile(){
 	std::ofstream outFile(ACCOUNT_FILE, std::ios::app); // Mở tệp ở chế độ thêm dữ liệu
     if (outFile.is_open()) {
-        outFile << username.toAnsiString() << "\n"; // Ghi tên người dùng vào tệp
+        outFile << "\n" << username.toAnsiString(); // Ghi tên người dùng vào tệp
         outFile.close();
     } else {
         // Xử lý lỗi nếu không thể mở tệp
