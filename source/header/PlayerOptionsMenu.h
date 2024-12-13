@@ -3,10 +3,11 @@
 #include "Menu.h"
 #include "PlayerNameMenu.h"
 
-class PlayerOptionsMenu : public Menu{
+class PlayerOptionsMenu : public Menu {
 private:
     sf::Font font;
-    sf::Text Options[2];
+    sf::Text PlayerOptions[2];
+    sf::Text PlayerOptionsOutline[2];
     sf::Text titleText;
     int selectedPlayerOption;
     bool newUser = true;
@@ -18,6 +19,8 @@ private:
 
     // Move to the next option
     void moveDown();
+
+    void updatePlayerOptionsColors();
 public:
     PlayerNameMenu user;
 
