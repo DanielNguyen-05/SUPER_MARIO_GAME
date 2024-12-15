@@ -1,0 +1,1 @@
+File này tồn tại để skip main menu. Khi vô game thì sẽ check có file này hay không, có thì skip.
