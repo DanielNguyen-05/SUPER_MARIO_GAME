@@ -42,3 +42,6 @@
 .vscode/globalStorage/
 .vscode-workspace/
 .vscode/c_cpp_properties.json
+
+# specific files
+Files/users.txt
