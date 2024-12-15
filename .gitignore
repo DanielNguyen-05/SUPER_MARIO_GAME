@@ -44,4 +44,4 @@
 .vscode/c_cpp_properties.json
 
 # specific files
-users.txt
+*.txt
