@@ -1,6 +1,6 @@
 #include "../header/PlayerOptionsMenu.h"
 
-PlayerOptionsMenu::PlayerOptionsMenu() {
+PlayerOptionsMenu::PlayerOptionsMenu() : user(), levelsList(){
     display = false;
 
     // Load fonts from file
@@ -55,6 +55,7 @@ void PlayerOptionsMenu::draw(sf::RenderWindow& window) {
         window.draw(backText);
     }
     user.draw(window);
+    levelsList.draw(window);
 }
 
 
@@ -85,6 +86,7 @@ void PlayerOptionsMenu::catchEvents(Event event, player& newPlayer) {
 	}
     updatePlayerOptionsColors();
     user.catchEvents(event, newPlayer);
+    //levelsList.catchEvents(event, newPlayer);
 }
 
 void PlayerOptionsMenu::handleKeyPressed(sf::Keyboard::Key keyCode, player& newPlayer) {
@@ -99,6 +101,7 @@ void PlayerOptionsMenu::handleKeyPressed(sf::Keyboard::Key keyCode, player& newP
             break;
 
         case sf::Keyboard::Enter:
+            this->hide();
             handleEnter(newPlayer);
             break;
 
@@ -116,14 +119,12 @@ void PlayerOptionsMenu::handleEnter(player& newPlayer){
     switch (selectedPlayerOption)
     {
     case 0:
-        this->hide();
         user.show(newPlayer);
-        //levelsList.draw(window);
        // controlEnemiesSpeed();
         break;
     case 1:
-    //levelsList.draw(window);
-    //controlEnemiesSpeed();
+        levelsList.show(newPlayer);
+        //controlEnemiesSpeed();
     break;
     }     
 }

@@ -62,8 +62,8 @@ void PlayerNameMenu::show(player& newPlayer){
 void PlayerNameMenu::catchEvents(Event event, player& newPlayer) {
 	if (display) {
 		switch (event.type) {
-		case Event::KeyPressed:
-			handleKeyPressed(event.key.code, newPlayer);
+		case Event::KeyReleased:
+			handleKeyReleased(event.key.code, newPlayer);
 			break;
 
 		case Event::TextEntered:
@@ -83,7 +83,7 @@ void PlayerNameMenu::catchEvents(Event event, player& newPlayer) {
 	}
 }
 
-void PlayerNameMenu::handleKeyPressed(sf::Keyboard::Key keyCode, player& newPlayer) {
+void PlayerNameMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer) {
 	switch (keyCode) {
 	case sf::Keyboard::Backspace:
 		handleBackspace();
@@ -165,8 +165,8 @@ bool PlayerNameMenu::checkCredentials(const sf::String& username) {
 	while (std::getline(file, line)) {
 		std::istringstream iss(line);
 		std::string storedUsername;
-		int level1Score, level2Score, level3Score;
-		if (iss >> storedUsername >> level1Score >> level2Score >> level3Score) {
+		int Level1Score, Level2Score, Level3Score;
+		if (iss >> storedUsername >> Level1Score >> Level2Score >> Level3Score) {
 			if (username == storedUsername) {
 				return false;
 			}
@@ -198,6 +198,7 @@ void PlayerNameMenu::handleLogin(player& newPlayer) {
 		if (checkCredentials(username)) {
 			setErrorMessage("Login successful!");
 			this->hide();
+			//levelsList.show(newPlayer);
 			newPlayer.username = std::string(username);
 			saveUsernameToFile();
 			resetFields();
@@ -213,7 +214,7 @@ void PlayerNameMenu::handleLogin(player& newPlayer) {
 void PlayerNameMenu::saveUsernameToFile(){
 	std::ofstream outFile(ACCOUNT_FILE, std::ios::app); // Mở tệp ở chế độ thêm dữ liệu
     if (outFile.is_open()) {
-        outFile << username.toAnsiString() << " -1 -1 -1" << "\n" ; // Ghi tên người dùng vào tệp
+        outFile << username.toAnsiString() << " 0 -1 -1" << "\n" ; // Ghi tên người dùng vào tệp
         outFile.close();
     } else {
         // Xử lý lỗi nếu không thể mở tệp

@@ -113,10 +113,16 @@ void HighScoreMenu::arrangePlayersInfo() {
 
     // Đọc dữ liệu từ file
     for (int i = 0; i < lines; i++) {
-        playersFile >> tempPlayer.name >> tempPlayer.score >> tempPlayer.level;
-        players.push_back({ atoi(tempPlayer.score.c_str()), {atoi(tempPlayer.level.c_str()), tempPlayer.name} });
+        playersFile >> tempPlayer.username >> tempPlayer.level1Score >> tempPlayer.level2Score >>tempPlayer.level3Score;
+        if (tempPlayer.level2Score != "-1")
+            tempPlayer.level = "2";
+        if (tempPlayer.level3Score != "-1")
+            tempPlayer.level = "3";
+        int totalScore = atoi(tempPlayer.level1Score.c_str()) + 
+                 atoi(tempPlayer.level2Score.c_str()) + 
+                 atoi(tempPlayer.level3Score.c_str());
+        players.push_back({totalScore, {stoi(tempPlayer.level), tempPlayer.username}});
     }
-
     playersFile.close();
     playersFile.clear();
 }

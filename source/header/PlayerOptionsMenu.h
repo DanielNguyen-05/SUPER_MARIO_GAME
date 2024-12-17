@@ -2,6 +2,7 @@
 #include "DEFINITION.h"
 #include "Menu.h"
 #include "PlayerNameMenu.h"
+#include "LevelsList.h"
 
 class PlayerOptionsMenu : public Menu {
 private:
@@ -24,6 +25,8 @@ private:
 public:
     PlayerNameMenu user;
 
+    LevelsList levelsList;
+
     PlayerOptionsMenu();
 
     // Vẽ giao diện
@@ -37,4 +40,5 @@ public:
     void handleKeyPressed(sf::Keyboard::Key keyCode, player& newPlayer);
 
     void handleEnter(player& newPlayer);
+
 };

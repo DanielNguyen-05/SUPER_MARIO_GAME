@@ -50,9 +50,9 @@ typedef enum
 struct player
 {
     string username;
-    string password;
-    string name;
-    string score;
+    string level1Score;
+    string level2Score;
+    string level3Score;
     string level;
     int lifes;
     float enemiesSpeed;

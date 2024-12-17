@@ -2,7 +2,9 @@
 #include "DEFINITION.h" 
 #include "Menu.h"
 
-class PlayerNameMenu : public Menu {
+
+
+class PlayerNameMenu : public Menu{
 private:
     // Thành phần giao diện
     sf::Text title;
@@ -35,7 +37,7 @@ public:
 
 private:
     // Helper functions to handle specific events
-    void handleKeyPressed(sf::Keyboard::Key keyCode, player& newPlayer);
+    void handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer);
     void handleBackspace();
     void handleEnter(player& newPlayer);
     void handleTextEntered(sf::Uint32 unicode);
