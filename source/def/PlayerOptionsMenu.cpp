@@ -8,6 +8,7 @@ PlayerOptionsMenu::PlayerOptionsMenu() : user(), levelsList(){
         cout << "Can't load MAIN_MENU_FONT\n";
     }
 
+    newUser = false;
     selectedPlayerOption = 0;
 
     // Set Back Text Properties
