@@ -72,12 +72,12 @@ void MainMenu::catchEvents(Event event)
     {
         if (event.type == Event::KeyReleased)
         {
-            if (event.key.code == Keyboard::Up || event.key.code == Keyboard::W)
+            if (event.key.code == Keyboard::Up)
             {
                 this->moveUp();
                 changingOptionSound.play();
             }
-            else if (event.key.code == Keyboard::Down || event.key.code == Keyboard::S)
+            else if (event.key.code == Keyboard::Down)
             {
                 this->moveDown();
                 changingOptionSound.play();
@@ -121,7 +121,7 @@ void MainMenu::draw(RenderWindow& window)
 void MainMenu::checkShow()
 {
     // Nếu tất cả menu con đóng và không trong trạng thái game, hiển thị lại menu chính
-    if (!playerOptions.display && !highScore.display && !gameRunning)
+    if (!playerOptions.display && !playerOptions.levelsList.display && !highScore.display && !gameRunning)
     {
         show();
     }
@@ -149,7 +149,6 @@ void MainMenu::mainMenuHandleSelection()
     {
     case 0:
         playerOptions.show();
-        //levelsList.draw(window);
         controlEnemiesSpeed();
         break;
     case 1:
