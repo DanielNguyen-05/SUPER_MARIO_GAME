@@ -1,6 +1,5 @@
 #include "../header/Level1.h"
 
-
 Level1::Level1(GameEngine& gameEngine) {
     // Set initial values
     this->gameEngine = &gameEngine;

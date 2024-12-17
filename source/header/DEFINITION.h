@@ -10,6 +10,7 @@
 #include <map>
 #include <string>
 #include <memory>
+#include <cstring>
 
 using namespace std;
 using namespace sf;
