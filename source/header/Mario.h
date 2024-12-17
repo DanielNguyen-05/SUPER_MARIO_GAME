@@ -16,6 +16,7 @@ private:
     void die() override;
 
 public:
+
     // Constructor
     Mario(float x, float y);
 
@@ -34,4 +35,6 @@ public:
 
     // Handle Mario animation
     void animation() override;
+
+    void reset();
 };

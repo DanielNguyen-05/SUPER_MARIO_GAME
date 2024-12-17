@@ -52,6 +52,7 @@ public:
     // Close the Level
     void end();
 
+    void resetLevel();
     // Check if Mario is on the ground
     void checkGround(int num);
 
@@ -60,6 +61,8 @@ public:
 
     // Check end of the level
     void checkEnd();
+
+    void checkEnemyCollision();
 
 private:
     // Arrange Array for Grounds Properties on screen

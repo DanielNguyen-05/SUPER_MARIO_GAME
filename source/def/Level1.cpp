@@ -110,6 +110,17 @@ void Level1::catchEvents(Event event) {
     }
 }
 
+/*void Level1::resetLevel() {
+    coin.clear();
+    stone.clear();
+    question.clear();
+    rock.clear();
+    black.clear();
+    turtle.clear();
+    // Reset lại trạng thái mario
+    gameEngine->mario.reset();
+}
+*/
 
 void Level1::start() {
     camera.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
@@ -120,6 +131,7 @@ void Level1::start() {
 
 
 void Level1::end() {
+    //resetLevel();
     display = false;
     gameEngine->currentPlayer.level = 2;
     finished = true;
@@ -254,3 +266,18 @@ void Level1::arrangeLevelBlocks() {
         }
     }
 }
+/*
+void Level1::checkEnemyCollision() {
+    for (int i = 0; i < BLACK_NUM; i++) {
+        if (gameEngine->mario.characterSprite.getGlobalBounds().intersects(black[i].enemySprite.getGlobalBounds())) {
+            gameEngine->mario.dying = true; // Trigger Mario death
+            return; // Stop further checks
+        }
+    }
+    for (int i = 0; i < TURTLE_NUM; i++) {
+        if (gameEngine->mario.characterSprite.getGlobalBounds().intersects(turtle[i].enemySprite.getGlobalBounds())) {
+            gameEngine->mario.dying = true; // Trigger Mario death
+            return;
+        }
+    }
+}*/

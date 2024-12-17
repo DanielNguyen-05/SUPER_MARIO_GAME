@@ -50,7 +50,7 @@ void Mario::smallState()
     characterState = SMALL;
     characterArea.width = 28;
     characterArea.height = 32;
-    characterSprite.setTextureRect(sf::IntRect(0, 96, characterArea.width, characterArea.height));
+    characterSprite.setTextureRect(sf::IntRect(0, 36, characterArea.width, characterArea.height));
     characterSprite.setOrigin(characterArea.width / 2, characterArea.height);
 }
 
@@ -115,19 +115,22 @@ void Mario::catchEvents(sf::Event& event)
             if (event.key.code == sf::Keyboard::Down) {
                 goDown = true;
             }
-            if (event.key.code == sf::Keyboard::Space) {
+            /*if (event.key.code == sf::Keyboard::Space) {
                 if (onGround) {
                     jumping = true;
                     jumpSound.play();
                 }
-            }
+            }*/
         }
-        if (event.type == sf::Event::KeyReleased) {
-            if (event.key.code == sf::Keyboard::Right) {
-                goRight = false;
-            }
-            if (event.key.code == sf::Keyboard::Left) {
-                goLeft = false;
+        else
+        {
+            if (event.type == sf::Event::KeyReleased) {
+                if (event.key.code == sf::Keyboard::Right) {
+                    goRight = false;
+                }
+                if (event.key.code == sf::Keyboard::Left) {
+                    goLeft = false;
+                }
             }
         }
     }
@@ -403,3 +406,39 @@ void Mario::setMarioRectForWalk(sf::IntRect& intRect) {
     }
     return;
 }
+
+void Mario::reset()
+{
+    // Reset các biến về trạng thái ban đầu
+    lives = 3;  // Đặt lại số mạng ban đầu
+    speed[0] = 0;  // Đặt lại tốc độ theo phương ngang
+    speed[1] = 70; // Đặt lại tốc độ theo phương dọc
+    startJumpPosition = 500; // Vị trí bắt đầu nhảy
+    changeStateCounter = 0;  // Đặt lại bộ đếm trạng thái thay đổi
+    goRight = goUp = goLeft = goDown = jumping = onGround = false;  // Đặt lại trạng thái chuyển động
+    PoweringUpToSuper = PoweringUpToBig = damaging = dying = stuck = dead = false; // Reset trạng thái nâng cấp và trạng thái chết
+
+    // Nếu checkpoint đã được thiết lập, đặt lại vị trí Mario tại đó
+    if (checkpointPosition != sf::Vector2f(0, 0)) {
+        characterSprite.setPosition(checkpointPosition);  // Đặt lại vị trí Mario tại checkpoint
+    } else {
+        characterSprite.setPosition(500, 200);  // Nếu không có checkpoint, đặt vị trí ban đầu
+    }
+
+    // Reset texture của Mario về trạng thái nhỏ ban đầu
+    smallState();
+
+    // Reset các âm thanh
+    jumpSound.stop();
+    damageSound.stop();
+    dieSound.stop();
+
+    // Reset các chỉ số liên quan đến trạng thái của Mario
+    //health = 100;  // Đặt lại sức khỏe ban đầu (hoặc giá trị khác nếu có)
+   // livesLeft = 3;  // Đặt lại số mạng (hoặc giá trị khác nếu có)
+    checkpointPosition = sf::Vector2f(0, 0);  // Đặt lại vị trí checkpoint về không gian nếu chưa thiết lập
+
+    // Đặt lại các biến liên quan đến hoạt ảnh hoặc tốc độ nếu cần
+    // resetAnimation();  // Nếu bạn có một phương thức reset hoạt ảnh, bạn có thể gọi nó ở đây.
+}
+
