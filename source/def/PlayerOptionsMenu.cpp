@@ -63,8 +63,8 @@ void PlayerOptionsMenu::draw(sf::RenderWindow& window) {
 void PlayerOptionsMenu::catchEvents(Event event, player& newPlayer) {
    if (display) {
 		switch (event.type) {
-		case Event::KeyPressed:
-			handleKeyPressed(event.key.code, newPlayer);
+		case Event::KeyReleased:
+			handleKeyReleased(event.key.code, newPlayer);
 			break;
 
 		/*case Event::MouseButtonReleased:
@@ -87,33 +87,39 @@ void PlayerOptionsMenu::catchEvents(Event event, player& newPlayer) {
 	}
     updatePlayerOptionsColors();
     user.catchEvents(event, newPlayer);
-    //levelsList.catchEvents(event, newPlayer);
+    levelsList.catchEvents(event, newPlayer);
 }
 
-void PlayerOptionsMenu::handleKeyPressed(sf::Keyboard::Key keyCode, player& newPlayer) {
-	switch (keyCode) {
-        case sf::Keyboard::Up:
-            this->moveUp();
-            changingOptionSound.play();
-            break;
-        case sf::Keyboard::Down:
-            this->moveDown();
-            changingOptionSound.play();
-            break;
+void PlayerOptionsMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer) {
+    if (!newUser){
+        newUser = true;
+    }
+    else
+    {
+        switch (keyCode) {
+            case sf::Keyboard::Up:
+                this->moveUp();
+                changingOptionSound.play();
+                break;
+            case sf::Keyboard::Down:
+                this->moveDown();
+                changingOptionSound.play();
+                break;
 
-        case sf::Keyboard::Enter:
-            this->hide();
-            handleEnter(newPlayer);
-            break;
+            case sf::Keyboard::Enter:
+                this->hide();
+                handleEnter(newPlayer);
+                break;
 
-        case sf::Keyboard::Escape:
-            this->hide();
-            changingOptionSound.play();
-            break;
+            case sf::Keyboard::Escape:
+                this->hide();
+                changingOptionSound.play();
+                break;
 
-        default:
-            break;
-	}
+            default:
+                break;
+        }
+    }
 }
 
 void PlayerOptionsMenu::handleEnter(player& newPlayer){

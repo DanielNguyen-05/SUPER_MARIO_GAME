@@ -11,7 +11,7 @@ private:
     sf::Text PlayerOptionsOutline[2];
     sf::Text titleText;
     int selectedPlayerOption;
-    bool newUser = true;
+    bool newUser;
 
     bool isHovering(const sf::Text& text, const sf::Vector2i& mousePos);
 
@@ -37,7 +37,7 @@ public:
 
     void handleMouseClick(sf::Vector2i mousePos, player& newPlayer, Event event);
 
-    void handleKeyPressed(sf::Keyboard::Key keyCode, player& newPlayer);
+    void handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer);
 
     void handleEnter(player& newPlayer);
 

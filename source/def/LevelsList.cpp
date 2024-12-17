@@ -68,7 +68,7 @@ void LevelsList::catchEvents(Event event, player& newPlayer) {
 	if (display) {
 		switch (event.type)
 		{
-		case Event::KeyReleased:
+		case Event::KeyPressed:
 			switch (event.key.code)
 			{
 			case Keyboard::Up:
