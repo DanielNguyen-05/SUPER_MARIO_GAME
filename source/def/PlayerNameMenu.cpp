@@ -59,11 +59,11 @@ void PlayerNameMenu::show(player& newPlayer){
 	return username;
 }*/
 
-void PlayerNameMenu::catchEvents(Event event, player& newPlayer) {
+void PlayerNameMenu::catchEvents(Event event, player& newPlayer, LevelsList& levelsList) {
 	if (display) {
 		switch (event.type) {
 		case Event::KeyReleased:
-			handleKeyReleased(event.key.code, newPlayer);
+			handleKeyReleased(event.key.code, newPlayer, levelsList);
 			break;
 
 		case Event::TextEntered:
@@ -83,14 +83,14 @@ void PlayerNameMenu::catchEvents(Event event, player& newPlayer) {
 	}
 }
 
-void PlayerNameMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer) {
+void PlayerNameMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer, LevelsList& levelsList) {
 	switch (keyCode) {
 	case sf::Keyboard::Backspace:
 		handleBackspace();
 		break;
 
 	case sf::Keyboard::Enter:
-		handleEnter(newPlayer);
+		handleEnter(newPlayer, levelsList);
 		break;
 
 	case sf::Keyboard::Escape:
@@ -114,9 +114,9 @@ void PlayerNameMenu::handleBackspace() {
 	updateInputFields();
 }
 
-void PlayerNameMenu::handleEnter(player& newPlayer) {
+void PlayerNameMenu::handleEnter(player& newPlayer, LevelsList& levelsList) {
 	if (!username.isEmpty()) {
-		handleLogin(newPlayer);
+		handleLogin(newPlayer, levelsList);
 		changingOptionSound.play();
 	}
 }
@@ -183,12 +183,12 @@ void PlayerNameMenu::handleMouseClick(sf::Vector2i mousePos, player& newPlayer, 
 	if (display) {
 		// Kiểm tra nếu nhấn nút Login
 		if (loginButton.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePos))) {
-			handleLogin(newPlayer);
+			//handleLogin(newPlayer,LevelsList& levelsList);
 		}
 	}
 }
 
-void PlayerNameMenu::handleLogin(player& newPlayer) {
+void PlayerNameMenu::handleLogin(player& newPlayer, LevelsList& levelsList) {
 	if (!isValidInput(username)) {
 		resetFields();
 		setErrorMessage("Invalid username! Spaces not allowed");
@@ -198,11 +198,11 @@ void PlayerNameMenu::handleLogin(player& newPlayer) {
 		if (checkCredentials(username)) {
 			setErrorMessage("Login successful!");
 			this->hide();
-			//levelsList.show(newPlayer);
+			levelsList.show(newPlayer);
 			newPlayer.username = std::string(username);
 			saveUsernameToFile();
 			resetFields();
-		}
+		}	
 		else {
 			resetFields();
 			setErrorMessage("Username already exists!.");

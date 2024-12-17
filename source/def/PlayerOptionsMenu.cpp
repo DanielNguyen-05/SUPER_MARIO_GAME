@@ -86,7 +86,7 @@ void PlayerOptionsMenu::catchEvents(Event event, player& newPlayer) {
 		}
 	}
     updatePlayerOptionsColors();
-    user.catchEvents(event, newPlayer);
+    user.catchEvents(event, newPlayer, levelsList);
     levelsList.catchEvents(event, newPlayer);
 }
 
@@ -108,11 +108,13 @@ void PlayerOptionsMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& new
 
             case sf::Keyboard::Enter:
                 this->hide();
+                newUser = false;
                 handleEnter(newPlayer);
                 break;
 
             case sf::Keyboard::Escape:
                 this->hide();
+                newUser = false;
                 changingOptionSound.play();
                 break;
 

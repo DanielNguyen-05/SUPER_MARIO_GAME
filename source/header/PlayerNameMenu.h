@@ -1,6 +1,7 @@
 #pragma once
 #include "DEFINITION.h" 
 #include "Menu.h"
+#include "LevelsList.h"
 
 
 
@@ -30,16 +31,16 @@ public:
     //sf::String getName() const;
 
     // Handle all events happening on Player Name window
-    void catchEvents(Event event, player& newPlayer);
+    void catchEvents(Event event, player& newPlayer, LevelsList& levelsList);
 
     // Lưu tên người dùng vào file
     void saveUsernameToFile();
 
 private:
     // Helper functions to handle specific events
-    void handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer);
+    void handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer, LevelsList& levelsList);
     void handleBackspace();
-    void handleEnter(player& newPlayer);
+    void handleEnter(player& newPlayer, LevelsList& levelsList);
     void handleTextEntered(sf::Uint32 unicode);
     void resetFields();
     void updateInputFields();
@@ -47,6 +48,6 @@ private:
     void setErrorMessage(const sf::String& message);
     bool checkCredentials(const sf::String& username);
     void handleMouseClick(sf::Vector2i mousePos, player& newPlayer, Event event);
-    void handleLogin(player& newPlayer);
+    void handleLogin(player& newPlayer, LevelsList& levelsList);
 };
 
