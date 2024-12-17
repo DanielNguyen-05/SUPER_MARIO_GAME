@@ -213,7 +213,6 @@ void Enemy::setKilled() {
 	}
 }
 
-
 void Enemy::checkTurtleFaid() {
 	if (moving && turtleTimer.getElapsedTime().asSeconds() > 10)
 		display = false;

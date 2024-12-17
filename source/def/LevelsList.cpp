@@ -9,7 +9,6 @@ LevelsList::LevelsList() :level1(gameEngine), level2(gameEngine), level3(gameEng
 
 	// Set Back Text Properties
 	setBackText();
-
 	setChangeOptionSound();
 
 	// Load background
@@ -80,7 +79,7 @@ void LevelsList::catchEvents(Event event, player& newPlayer) {
 				break;
 			case Keyboard::Enter:
 				this->hide();
-				//gameEngine.gameRunning = true;
+				gameEngine.gameRunning = true;
 				switch (selectedLevel) {
 				case 0:
 					level1.start();
@@ -111,26 +110,31 @@ void LevelsList::catchEvents(Event event, player& newPlayer) {
 void LevelsList::checkOpendLevels() {
 	int lines = getNumberOfLines();
 	player tempPlayer;
+	maxLevel = 1; // Default to level 1
 
+	// Mở file
 	playersFile.open(ACCOUNT_FILE);
-
-	// Add players information to vector
-	for (int i = 0; i < lines; i++) {
-		playersFile >> tempPlayer.username >> tempPlayer.level1Score >> tempPlayer.level2Score >> tempPlayer.level3Score;
-		/*if (tempPlayer.username == gameEngine.currentPlayer.username) {
-			if (tempPlayer.level2Score != -1){
-				maxLevel = 2;
-			}
-			if(tempPlayer.level3Score != -1)
-				maxLevel = 3;
-			}
-			break;
-		}*/
+	if (!playersFile.is_open()) {
+		cerr << "Error: Unable to open file " << ACCOUNT_FILE << endl;
+		return;
 	}
 
-	playersFile.close();
-	playersFile.clear();
+	// Đọc thông tin người chơi từ file
+	for (int i = 0; i < lines; i++) {
+		playersFile >> tempPlayer.username >> tempPlayer.level1Score >> tempPlayer.level2Score >> tempPlayer.level3Score;
 
+		// Kiểm tra thông tin của người chơi hiện tại
+		if (tempPlayer.username == gameEngine.currentPlayer.username) {
+			if (stoi(tempPlayer.level2Score) != -1) maxLevel = 2;
+			if (stoi(tempPlayer.level3Score) != -1) maxLevel = 3;
+			break; // Dừng vòng lặp khi tìm thấy người chơi
+		}
+	}
+
+	// Đóng file
+	playersFile.close();
+
+	// Cập nhật các level đã mở
 	setOpendLevels();
 }
 

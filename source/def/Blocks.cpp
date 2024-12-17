@@ -7,11 +7,11 @@ Blocks::Blocks(GameEngine& gameEngine, block_t blockType, item_t itemType, float
     this->itemType = itemType;
     this->blockType = blockType;
 
-    questionRect = sf::IntRect(0, 0, 32, 31);
-    stoneRect = sf::IntRect(32, 0, 32, 31);
-    bronzeRect = sf::IntRect(0, 32, 32, 31);
-    rockRect = sf::IntRect(96, 0, 32, 31);
-    smashRect = sf::IntRect(0, 0, 800, 800);
+    questionRect = IntRect(0, 0, 32, 31);
+    stoneRect = IntRect(32, 0, 32, 31);
+    bronzeRect = IntRect(0, 32, 32, 31);
+    rockRect = IntRect(96, 0, 32, 31);
+    smashRect = IntRect(0, 0, 800, 800);
 
     currentRect = movingSpeed = 0;
     display = true;
@@ -47,13 +47,15 @@ Blocks::Blocks(GameEngine& gameEngine, block_t blockType, item_t itemType, float
     blockHight = blockSprite.getGlobalBounds().height;
 }
 
-void Blocks::draw(sf::RenderWindow& window) {
+
+void Blocks::draw(RenderWindow& window) {
     item.draw(window);
     if (display) {
         animation();
         window.draw(blockSprite);
     }
 }
+
 
 void Blocks::animation() {
     if (timer.getElapsedTime().asSeconds() > 0.2f) {
@@ -114,28 +116,33 @@ void Blocks::startPopUp() {
     }
 }
 
+
 void Blocks::popUp() {
     if (isPopUp) {
         int currentTime = popUpTimer.getElapsedTime().asMilliseconds();
 
-        if (currentTime < 150) { // GoingUp Time
+        if (currentTime < 150) // GoingUp Time
+        {
             if (popUpBlock) movingSpeed += -1;
             else {
                 if (itemType == COIN) movingSpeed += -3;
                 else movingSpeed += -1.05;
             }
         }
-        else if (currentTime < 200) { // StandStill time
+        else if (currentTime < 200) // StandStill time
+        {
             movingSpeed = 0;
             if (itemType == MASHROOM || itemType == FLOWER) movingSpeed += -1;
         }
-        else if (currentTime < 350) { // GoingDown Time
+        else if (currentTime < 350) // GoingDown Time
+        {
             if (popUpBlock) movingSpeed += 1;
             else {
                 if (itemType == COIN) movingSpeed += 1.15;
             }
         }
-        else {
+        else
+        {
             if (blockType == QUESTION) blockType = BRONZE;
 
             movingSpeed = 0;
@@ -160,11 +167,12 @@ void Blocks::popUp() {
     }
 }
 
+
 void Blocks::checkIntersection() {
     // Calculate Mario and Block bounds
-    sf::FloatRect marioBounds = gameEngine->mario.characterSprite.getGlobalBounds(),
+    FloatRect marioBounds = gameEngine->mario.characterSprite.getGlobalBounds(),
         blockBounds = blockSprite.getGlobalBounds();
-    sf::Vector2f marioPos = gameEngine->mario.characterSprite.getPosition(), blockPos = blockSprite.getPosition();
+    Vector2f marioPos = gameEngine->mario.characterSprite.getPosition(), blockPos = blockSprite.getPosition();
 
     float blockTopPoint = blockPos.y - (blockBounds.height / 2),
         blockBottomPoint = blockPos.y + (blockBounds.height / 2),
@@ -179,7 +187,7 @@ void Blocks::checkIntersection() {
                 gameEngine->mario.onGround = true;
                 marioOn = true;
             }
-            else if (gameEngine->mario.speed[1] < 0) { // Hit the block with head
+            else if (gameEngine->mario.speed[1] < 0/*marioPos.y - (marioBounds.height/2) >= blockBottomPoint*/) { // Hit the block with head
                 float blockBottom = blockBounds.top + blockBounds.height;
 
                 // Handle large size of smash sprite
@@ -219,6 +227,7 @@ void Blocks::checkIntersection() {
         }
     }
 }
+
 
 void Blocks::handleHitBlock() {
     switch (blockType)
