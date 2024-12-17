@@ -1,6 +1,6 @@
 #include "../header/LevelsList.h"
 
-LevelsList::LevelsList() //:level1(gameEngine), level2(gameEngine), level3(gameEngine) 
+LevelsList::LevelsList() :level1(gameEngine), level2(gameEngine), level3(gameEngine)
 {
 	// Set intial values
 	display = false;
@@ -32,10 +32,9 @@ LevelsList::LevelsList() //:level1(gameEngine), level2(gameEngine), level3(gameE
 	}
 }
 
-
 void LevelsList::show(player newPlayer) {
 	display = true;
-	//gameEngine.currentPlayer = newPlayer;
+	gameEngine.currentPlayer = newPlayer;
 
 	selectedLevel = 0;
 	optionShadowSprite.setPosition(695, 350 + selectedLevel * 200);
@@ -47,7 +46,7 @@ void LevelsList::show(player newPlayer) {
 
 void LevelsList::draw(RenderWindow& window) {
 	//cout << level1.finished;
-	if (display /*|| level1.finished || level2.finished*/) 
+	if (display /*|| level1.finished || level2.finished*/)
 	{
 		window.draw(backGroundSprite);
 		window.draw(optionShadowSprite);
@@ -57,9 +56,9 @@ void LevelsList::draw(RenderWindow& window) {
 		}
 	}
 	else {
-		//level1.draw(window);
-		//level2.draw(window);
-        //level3.draw(window);
+		level1.draw(window);
+		level2.draw(window);
+		level3.draw(window);
 	}
 }
 
@@ -84,14 +83,14 @@ void LevelsList::catchEvents(Event event, player& newPlayer) {
 				//gameEngine.gameRunning = true;
 				switch (selectedLevel) {
 				case 0:
-					//level1.start();
+					level1.start();
 					break;
-				//case 1:
-					//level2.start();
-					//break;
-                //case 2:
-                    //level3.start();
-                    //break;
+				case 1:
+					level2.start();
+					break;
+				case 2:
+					level3.start();
+					break;
 				}
 				break;
 			case Keyboard::Escape:
@@ -103,9 +102,9 @@ void LevelsList::catchEvents(Event event, player& newPlayer) {
 			break;
 		}
 	}
-	//level1.catchEvents(event);
-	//level2.catchEvents(event);
-    //level3.catchEvents(event);
+	level1.catchEvents(event);
+	level2.catchEvents(event);
+	level3.catchEvents(event);
 }
 
 
@@ -155,7 +154,7 @@ int LevelsList::getNumberOfLines() {
 void LevelsList::setOpendLevels() {
 	for (int i = 0; i < NUMBER_OF_LEVELS; i++) {
 		levelsNameText[i].setFillColor(Color::White);
-		if(i >= maxLevel)
+		if (i >= maxLevel)
 			levelsNameText[i].setFillColor(sf::Color(80, 80, 80));
 	}
 }

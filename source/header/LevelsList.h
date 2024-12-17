@@ -1,27 +1,28 @@
 #pragma once
-#include "../header/DEFINITION.h"
-#include "../header/Menu.h"
-//#include "../Header/GameEngine.h"
-//#include "../Header/Level1.h"
-//#include "../Header/Level2.h"
+#include "DEFINITION.h"
+#include "Menu.h"
+#include "GameEngine.h"
+#include "Level1.h"
+#include "Level2.h"
+#include "Level3.h"
 
 #define NUMBER_OF_LEVELS 3
 
 class LevelsList : public Menu
 {
 private:
-	//Level1 level1;
-	//Level2 level2;
-    //Level3 level3;
+	Level1 level1;
+	Level2 level2;
+	Level3 level3;
 	Text levelsNameText[NUMBER_OF_LEVELS];
 	Texture optionShadowTexture;
 	Sprite optionShadowSprite;
 	int selectedLevel;
-    int maxLevel;
+	int maxLevel;
 	fstream playersFile;
 
 public:
-	//GameEngine gameEngine;
+	GameEngine gameEngine;
 
 	// Constructor
 	LevelsList();
