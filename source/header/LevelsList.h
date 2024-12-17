@@ -8,8 +8,7 @@
 
 #define NUMBER_OF_LEVELS 3
 
-class LevelsList : public Menu
-{
+class LevelsList : public Menu {
 private:
 	Level1 level1;
 	Level2 level2;

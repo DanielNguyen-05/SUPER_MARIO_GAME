@@ -1,6 +1,5 @@
 #include "../header/GameEngine.h"
 
-
 GameEngine::GameEngine() : mario(500, 200) {
     // Set initial values
     levelTime = 300;
@@ -50,6 +49,7 @@ GameEngine::GameEngine() : mario(500, 200) {
     // Set levels Map values
     levelsMap["level 1"] = 1;
     levelsMap["level 2"] = 2;
+    levelsMap["level 3"] = 3;
 
     //Set Lifes Text Properties
     lifeText.setCharacterSize(50);

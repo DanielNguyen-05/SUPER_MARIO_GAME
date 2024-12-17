@@ -2,8 +2,7 @@
 #include "DEFINITION.h"
 #include "Mario.h"
 
-class GameEngine
-{
+class GameEngine {
     /*          Properties          */
 private:
     Font headerFont;
@@ -34,54 +33,41 @@ public:
     // Update current score with Increased Score and display it
     void updateScore(int IncScore);
 
-
     // Start timer
     void startCountDown();
-
 
     // Update timer
     void updateTimer();
 
-
     // Check wheater Level time is finished or not
     bool isTimerFinished();
-
 
     // Convert remain time to score when player won
     void timeToScore();
 
-
     // draw GameEngine objects into screen
     void draw(RenderWindow& window);
-
 
     // Increase coins counter by one
     void updateCoins();
 
-
     // Add player name , his score and level to Players file
     void addPlayerInfo();
-
 
     // Set level Name text
     void setLevelName(std::string levelName);
 
-
     // Start Converting time to Score
     void startTimeToScore();
-
 
     // make coin spin during time
     void coinAnimation();
 
-
     //update life times when mario dies
     void updateLifes();
 
-
     // Set header position to move with Camera
     void setHeaderPosition(position screenCenter);
-
 
     // Start Life Screen
     void startLifeScreen(RenderWindow& window);
