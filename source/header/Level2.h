@@ -18,7 +18,7 @@
 
 class Level2
 {
-    /***            Properties                ***/
+    /***			Properties				***/
 private:
     vector<Items> coin;
     vector<Blocks> stone, question, rock;
@@ -30,32 +30,39 @@ private:
     bool display, marioOnGround[GROUNDS_NUM];
     float levelWidth;
     int coinCnt, stoneCnt, stoneCoinCnt, quesCoinCnt, quesMashCnt, quesFlowerCnt, rockCnt;
-    sf::Texture backGroundTexture, groundTexture;
-    sf::RectangleShape backGroundShape, groundShape[GROUNDS_NUM];
-    sf::View camera;
+    Texture backGroundTexture, groundTexture;
+    RectangleShape backGroundShape, groundShape[GROUNDS_NUM];
+    View camera;
     position screenCenter = { 0, 0 };
 
 public:
     Level2(GameEngine& gameEngine);
 
-    /***            Methods                ***/
-    // Draw Level contents
-    void draw(sf::RenderWindow& window);
 
-    // Control all level events
-    void catchEvents(sf::Event event);
+    /***			Methods				***/
+    // Draw Levels contents
+    void draw(RenderWindow& window);
 
-    // Start the Level
+
+    // Control all level event
+    void catchEvents(Event event);
+
+
+    // Make Level start
     void start();
 
-    // Close the Level
+
+    // Close Level
     void end();
 
-    // Check if Mario is on the ground
+
+    // Check weather mario in ground or not
     void checkGround(int num);
 
-    // Set Camera View with Mario's movement
-    void handleView(sf::RenderWindow& window);
+
+    // Set Camera View with mario movement
+    void handleView(RenderWindow& window);
+
 
     // Check end of the level
     void checkEnd();
@@ -64,6 +71,8 @@ private:
     // Arrange Array for Grounds Properties on screen
     void setGroundProperties();
 
+
     // Set Positions for all blocks in the level
     void arrangeLevelBlocks();
 };
+

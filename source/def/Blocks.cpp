@@ -170,9 +170,9 @@ void Blocks::popUp() {
 
 void Blocks::checkIntersection() {
     // Calculate Mario and Block bounds
-    FloatRect marioBounds = gameEngine->mario.characterSprite.getGlobalBounds(),
+    FloatRect marioBounds = gameEngine->mario.marioSprite.getGlobalBounds(),
         blockBounds = blockSprite.getGlobalBounds();
-    Vector2f marioPos = gameEngine->mario.characterSprite.getPosition(), blockPos = blockSprite.getPosition();
+    Vector2f marioPos = gameEngine->mario.marioSprite.getPosition(), blockPos = blockSprite.getPosition();
 
     float blockTopPoint = blockPos.y - (blockBounds.height / 2),
         blockBottomPoint = blockPos.y + (blockBounds.height / 2),
@@ -183,7 +183,7 @@ void Blocks::checkIntersection() {
     if (blockBounds.intersects(marioBounds)) {
         if (marioPos.x >= blockLeftPoint && marioPos.x <= blockRightPoint) {
             if (gameEngine->mario.speed[1] > 0 && blockType != SMASH) { // jump on the block
-                gameEngine->mario.characterSprite.setPosition(marioPos.x, blockBounds.top);
+                gameEngine->mario.marioSprite.setPosition(marioPos.x, blockBounds.top);
                 gameEngine->mario.onGround = true;
                 marioOn = true;
             }
@@ -193,7 +193,7 @@ void Blocks::checkIntersection() {
                 // Handle large size of smash sprite
                 if (blockType == SMASH) blockBottom = (blockBounds.top + blockBottom) / 2;
 
-                gameEngine->mario.characterSprite.setPosition(marioPos.x, blockBottom + marioBounds.height);
+                gameEngine->mario.marioSprite.setPosition(marioPos.x, blockBottom + marioBounds.height);
                 gameEngine->mario.speed[1] = 2;
                 handleHitBlock();
             }
@@ -202,9 +202,9 @@ void Blocks::checkIntersection() {
             if (gameEngine->mario.speed[1] > 1 && !gameEngine->mario.onGround || gameEngine->mario.speed[1] < 1) {
                 float blockRight = blockBounds.left + blockBounds.width;
                 if (marioPos.x > blockPos.x)
-                    gameEngine->mario.characterSprite.setPosition(blockRight + (marioBounds.width / 2), marioPos.y);
+                    gameEngine->mario.marioSprite.setPosition(blockRight + (marioBounds.width / 2), marioPos.y);
                 else
-                    gameEngine->mario.characterSprite.setPosition(blockBounds.left - (marioBounds.width / 2), marioPos.y);
+                    gameEngine->mario.marioSprite.setPosition(blockBounds.left - (marioBounds.width / 2), marioPos.y);
                 gameEngine->mario.speed[0] = 0;
                 gameEngine->mario.stuck = true;
                 stuckOn = true;
@@ -233,7 +233,7 @@ void Blocks::handleHitBlock() {
     switch (blockType)
     {
     case STONE:
-        switch (gameEngine->mario.characterState) {
+        switch (gameEngine->mario.marioState) {
         case SMALL:
             startPopUp();
             break;

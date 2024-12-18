@@ -140,8 +140,8 @@ void Level1::end() {
 
 void Level1::checkGround(int num) {
     if (!gameEngine->mario.dying) {
-        if (groundShape[num].getGlobalBounds().intersects(gameEngine->mario.characterSprite.getGlobalBounds())) {
-            gameEngine->mario.characterSprite.setPosition(gameEngine->mario.characterSprite.getPosition().x, groundShape[num].getGlobalBounds().top);
+        if (groundShape[num].getGlobalBounds().intersects(gameEngine->mario.marioSprite.getGlobalBounds())) {
+            gameEngine->mario.marioSprite.setPosition(gameEngine->mario.marioSprite.getPosition().x, groundShape[num].getGlobalBounds().top);
             gameEngine->mario.onGround = true;
             marioOnGround[num] = true;
         }
@@ -160,7 +160,7 @@ void Level1::handleView(RenderWindow& window) {
     // a + (b - a) * c
     if (/*!gameEngine->mario.stuck*/ !gameEngine->mario.dying) {
         float fr = (1 / 50.0);
-        screenCenter = { screenCenter.x + (gameEngine->mario.characterSprite.getPosition().x - screenCenter.x) * fr * 20, 450 };
+        screenCenter = { screenCenter.x + (gameEngine->mario.marioSprite.getPosition().x - screenCenter.x) * fr * 20, 450 };
 
         if (screenCenter.x > WINDOW_WIDTH / 2 && screenCenter.x < levelWidth - (WINDOW_WIDTH / 2)) {
             camera.setCenter(screenCenter.x, screenCenter.y);
@@ -172,14 +172,14 @@ void Level1::handleView(RenderWindow& window) {
 
 
 void Level1::checkEnd() {
-    Vector2f marioPos = gameEngine->mario.characterSprite.getPosition();
+    Vector2f marioPos = gameEngine->mario.marioSprite.getPosition();
     int space = 70;
     if (marioPos.x < space) {
-        gameEngine->mario.characterSprite.setPosition(space, marioPos.y);
+        gameEngine->mario.marioSprite.setPosition(space, marioPos.y);
         gameEngine->mario.speed[0] = 0;
     }
     else if (marioPos.x > levelWidth - space) {
-        gameEngine->mario.characterSprite.setPosition(levelWidth - space, marioPos.y);
+        gameEngine->mario.marioSprite.setPosition(levelWidth - space, marioPos.y);
         gameEngine->mario.speed[0] = 0;
         gameEngine->addPlayerInfo();
         end();
@@ -269,13 +269,13 @@ void Level1::arrangeLevelBlocks() {
 /*
 void Level1::checkEnemyCollision() {
     for (int i = 0; i < BLACK_NUM; i++) {
-        if (gameEngine->mario.characterSprite.getGlobalBounds().intersects(black[i].enemySprite.getGlobalBounds())) {
+        if (gameEngine->mario.marioSprite.getGlobalBounds().intersects(black[i].enemySprite.getGlobalBounds())) {
             gameEngine->mario.dying = true; // Trigger Mario death
             return; // Stop further checks
         }
     }
     for (int i = 0; i < TURTLE_NUM; i++) {
-        if (gameEngine->mario.characterSprite.getGlobalBounds().intersects(turtle[i].enemySprite.getGlobalBounds())) {
+        if (gameEngine->mario.marioSprite.getGlobalBounds().intersects(turtle[i].enemySprite.getGlobalBounds())) {
             gameEngine->mario.dying = true; // Trigger Mario death
             return;
         }

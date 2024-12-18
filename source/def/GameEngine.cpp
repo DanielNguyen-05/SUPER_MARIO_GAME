@@ -59,7 +59,7 @@ GameEngine::GameEngine() : mario(500, 200){
 	lifeText.setString(lifeStr.str());
 
 	// Set Mario Sprite Properties
-	marioLifeSprite.setTexture(mario.characterTexture);
+	marioLifeSprite.setTexture(mario.marioTexture);
 	marioLifeSprite.setTextureRect(IntRect(0, 96, 28, 32));
 	marioLifeSprite.setScale(2, 2);
 	marioLifeSprite.setOrigin(14, 16);

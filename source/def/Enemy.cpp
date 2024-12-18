@@ -169,7 +169,7 @@ void Enemy::checkGround() {
 
 void Enemy::checkKilled() {
 	if (!gameEngine->mario.dying) {
-		if (enemySprite.getGlobalBounds().intersects(gameEngine->mario.characterSprite.getGlobalBounds()) && !faid) {
+		if (enemySprite.getGlobalBounds().intersects(gameEngine->mario.marioSprite.getGlobalBounds()) && !faid) {
 			if (gameEngine->mario.speed[1] > 1 || (enemyType == SHELL && firstTime)) { // from above
 				isKilled = true;
 				if (!moving && enemyType == SHELL) {

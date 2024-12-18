@@ -57,7 +57,7 @@ Level3::Level3(GameEngine& gameEngine) {
         rock[i].blockSprite.setColor(Color(70, 50, 180)); // blue filter
     }
 
-    black.push_back(*new Enemy(gameEngine, TURTLE, rock[1].blockSprite, rock[2].blockSprite, groundShape[0], 900, 200));
+    //black.push_back(*new Enemy(gameEngine, TURTLE, rock[1].blockSprite, rock[2].blockSprite, groundShape[0], 900, 200));
 }
 
 
@@ -84,11 +84,11 @@ void Level3::draw(RenderWindow& window) {
         for (int i = 0; i < quesMashCnt + quesCoinCnt + quesFlowerCnt; i++)
             question[i].draw(window);
 
-        for (int i = 0; i < BLACK_NUM; i++)
+        /*for (int i = 0; i < BLACK_NUM; i++)
             black[i].draw(window);
 
         for (int i = 0; i < 0; i++)
-            turtle[i].draw(window);
+            turtle[i].draw(window);*/
 
         gameEngine->mario.draw(window);
         gameEngine->draw(window);
@@ -120,8 +120,8 @@ void Level3::end() {
 
 void Level3::checkGround(int num) {
     if (!gameEngine->mario.dying) {
-        if (groundShape[num].getGlobalBounds().intersects(gameEngine->mario.characterSprite.getGlobalBounds())) {
-            gameEngine->mario.characterSprite.setPosition(gameEngine->mario.characterSprite.getPosition().x, groundShape[num].getGlobalBounds().top);
+        if (groundShape[num].getGlobalBounds().intersects(gameEngine->mario.marioSprite.getGlobalBounds())) {
+            gameEngine->mario.marioSprite.setPosition(gameEngine->mario.marioSprite.getPosition().x, groundShape[num].getGlobalBounds().top);
             gameEngine->mario.onGround = true;
             marioOnGround[num] = true;
         }
@@ -140,7 +140,7 @@ void Level3::handleView(RenderWindow& window) {
     // a + (b - a) * c
     if (/*!gameEngine->mario.stuck*/ !gameEngine->mario.dying) {
         float fr = (1 / 60.0);
-        screenCenter = { screenCenter.x + (gameEngine->mario.characterSprite.getPosition().x - screenCenter.x) * fr * 20, 450 };
+        screenCenter = { screenCenter.x + (gameEngine->mario.marioSprite.getPosition().x - screenCenter.x) * fr * 20, 450 };
 
         if (screenCenter.x > WINDOW_WIDTH / 2 && screenCenter.x < levelWidth - (WINDOW_WIDTH / 2)) {
             camera.setCenter(screenCenter.x, screenCenter.y);
@@ -152,14 +152,14 @@ void Level3::handleView(RenderWindow& window) {
 
 
 void Level3::checkEnd() {
-    Vector2f marioPos = gameEngine->mario.characterSprite.getPosition();
+    Vector2f marioPos = gameEngine->mario.marioSprite.getPosition();
     int space = 70;
     if (marioPos.x < space) {
-        gameEngine->mario.characterSprite.setPosition(space, marioPos.y);
+        gameEngine->mario.marioSprite.setPosition(space, marioPos.y);
         gameEngine->mario.speed[0] = 0;
     }
     else if (marioPos.x > levelWidth - space) {
-        gameEngine->mario.characterSprite.setPosition(levelWidth - space, marioPos.y);
+        gameEngine->mario.marioSprite.setPosition(levelWidth - space, marioPos.y);
         gameEngine->mario.speed[0] = 0;
     }
 }

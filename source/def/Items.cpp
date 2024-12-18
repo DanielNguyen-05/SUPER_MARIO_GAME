@@ -131,7 +131,7 @@ void Items::TextFloat() {
 
 void Items::checkTaken() {
     if (!gameEngine->mario.dying) {
-        if (itemSprite.getGlobalBounds().intersects(gameEngine->mario.characterSprite.getGlobalBounds()) && !faid || (blockPoped && itemType == COIN)) {
+        if (itemSprite.getGlobalBounds().intersects(gameEngine->mario.marioSprite.getGlobalBounds()) && !faid || (blockPoped && itemType == COIN)) {
             isTaken = true;
             switch (itemType)
             {

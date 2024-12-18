@@ -1,40 +1,99 @@
 #pragma once
-#include "Characters.h"
-#include "GameOver.h"   
+#include "DEFINITION.h"
 
-// Mario's specific states and behaviors
-class Mario : public Characters
+class Mario
 {
+    /***		Mario properties		***/
 private:
-    // Private methods to change states (implemented in Mario class)
-    void smallState() override;
-    void bigState() override;
-    void superState() override;
-    void changeToBig() override;
-    void changeToSuper() override;
-    void damage() override;
-    void die() override;
+    int changeStateCounter;
+    Clock timer1, timer2, changeStateTimer;
+    bool goRight, goUp, goLeft, goDown, damaging;
+    float acceleration[2], startJumpPosition;
+    area marioArea;
+    SoundBuffer jumpBuffer, damageBuffer, dieBuffer;
+    Sound jumpSound, damageSound, dieSound;
 
 public:
+    Texture marioTexture, marioSuperTexture;
+    bool jumping, onGround, PoweringUpToBig, PoweringUpToSuper, dying, stuck, dead;
+    float speed[2];
+    Sprite marioSprite;
+    characterState_t marioState;
 
-    // Constructor
-    Mario(float x, float y);
 
-    // Overridden methods for Mario
-    void draw(sf::RenderWindow& window) override;
-    void catchEvents(sf::Event& event) override;
-    void startDamage() override;
-    void startDie() override;
+    Mario(float x, float y); // Constractor
 
-    // Mario-specific movement methods
-    void move() override;
-    void jump(sf::IntRect& intRect, int RectPosition, float waiting) override;
-    void setMarioRectForWalk(sf::IntRect& intRect);
-    void moveRight(sf::IntRect& intRect) override;
-    void moveLeft(sf::IntRect& intRect) override;
+    /***			Methods			***/
 
-    // Handle Mario animation
-    void animation() override;
+    // Draw mario on screen 
+    void draw(RenderWindow& window);
 
-    void reset();
+
+    // Handle events for mario movement
+    void catchEvents(Event& event);
+
+
+    // Start Damage animation
+    void startDamage();
+
+
+    // Start Die Animation
+    void startDie();
+
+private:
+    // set Mario to small state
+    void smallState();
+
+
+    // set Mario to Big state
+    void bigState();
+
+
+    // set Mario to Super state
+    void superState();
+
+
+    // Mario movement animation
+    void move();
+
+
+    // Make animation for mario while walking
+    void setMarioRectForWalk(IntRect& intRect);
+
+
+    // Make mario animation stand still 
+    void standStill();
+
+
+    // make mario jump
+    void jump(IntRect& intRect, int RectPosition, float waiting);
+
+
+    // make mario walk to the right
+    void moveRight(IntRect& intRect);
+
+
+    // make mario walk to the left
+    void moveLeft(IntRect& intRect);
+
+
+    // Make animation for Mario changing
+    void animation();
+
+
+    // make animation for Power up to Big state
+    void changeToBig();
+
+
+    // make animation for Power up to Super state
+    void changeToSuper();
+
+
+    // Animation of converting mario from big or super state to small 
+    void damage();
+
+
+    // Animation of Dying
+    void die();
 };
+
