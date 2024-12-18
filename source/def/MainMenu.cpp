@@ -144,7 +144,6 @@ void MainMenu::moveUp()
 
 void MainMenu::mainMenuHandleSelection()
 {
-    // Thực hiện hành động tương ứng với lựa chọn hiện tại
     switch (selectedOption)
     {
     case 0:
