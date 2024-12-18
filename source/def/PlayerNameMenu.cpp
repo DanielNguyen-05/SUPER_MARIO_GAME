@@ -76,11 +76,12 @@ void PlayerNameMenu::catchEvents(Event event, player& newPlayer, LevelsList& lev
 			}
 			break;
 
-		default:
-			break;
+//		default:
+		//	break;
 
 		}
 	}
+	levelsList.catchEvents(event, newPlayer);
 }
 
 void PlayerNameMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer, LevelsList& levelsList) {
@@ -98,8 +99,8 @@ void PlayerNameMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPla
 		changingOptionSound.play();
 		break;
 
-	default:
-		break;
+	//default:
+		//break;
 	}
 }
 
@@ -116,6 +117,7 @@ void PlayerNameMenu::handleBackspace() {
 
 void PlayerNameMenu::handleEnter(player& newPlayer, LevelsList& levelsList) {
 	if (!username.isEmpty()) {
+		std::cout<<"t4";
 		handleLogin(newPlayer, levelsList);
 		changingOptionSound.play();
 	}

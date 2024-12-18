@@ -114,6 +114,7 @@ void PlayerOptionsMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& new
 
             case sf::Keyboard::Escape:
                 this->hide();
+                selectedPlayerOption = 0;
                 newUser = false;
                 changingOptionSound.play();
                 break;
@@ -133,8 +134,9 @@ void PlayerOptionsMenu::handleEnter(player& newPlayer){
         break;
     case 1:
         levelsList.show(newPlayer);
+        selectedPlayerOption = 0;
         //controlEnemiesSpeed();
-    break;
+        break;
     }     
 }
 

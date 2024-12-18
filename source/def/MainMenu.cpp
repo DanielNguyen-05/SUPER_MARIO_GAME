@@ -84,6 +84,7 @@ void MainMenu::catchEvents(Event event)
             }
             else if (event.key.code == Keyboard::Enter)
             {
+                this->hide();
                 mainMenuHandleSelection();
                 changingOptionSound.play();
             }
@@ -144,7 +145,6 @@ void MainMenu::moveUp()
 void MainMenu::mainMenuHandleSelection()
 {
     // Thực hiện hành động tương ứng với lựa chọn hiện tại
-    this->hide();
     switch (selectedOption)
     {
     case 0:

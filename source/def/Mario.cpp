@@ -395,3 +395,23 @@ void Mario::startDie() {
     speed[0] = 0;
     speed[1] = 0;
 }
+
+void Mario::reset() {
+    // Reset Mario motion variables
+    acceleration[0] = 57;
+    acceleration[1] = 80;
+    speed[0] = 0;
+    speed[1] = 70;
+    startJumpPosition = 500;
+    changeStateCounter = 0;
+    goRight = goUp = goLeft = goDown = jumping = onGround = false;
+    PoweringUpToSuper = PoweringUpToBig = damaging = dying = stuck = dead = false;
+
+    // Reset Mario's position and scale
+    marioSprite.setPosition(500, 200);
+    marioSprite.setScale(2, 2);
+
+    // Reset to small state by default
+    smallState();
+}
+

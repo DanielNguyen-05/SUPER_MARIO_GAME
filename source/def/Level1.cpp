@@ -110,7 +110,7 @@ void Level1::catchEvents(Event event) {
     }
 }
 
-/*void Level1::resetLevel() {
+void Level1::resetLevel() {
     coin.clear();
     stone.clear();
     question.clear();
@@ -118,9 +118,10 @@ void Level1::catchEvents(Event event) {
     black.clear();
     turtle.clear();
     // Reset lại trạng thái mario
+    this->gameEngine = new GameEngine();
     gameEngine->mario.reset();
 }
-*/
+
 
 void Level1::start() {
     camera.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
@@ -131,9 +132,11 @@ void Level1::start() {
 
 
 void Level1::end() {
-    //resetLevel();
+    std::cout<<"end";
+   // resetLevel();
     display = false;
-    gameEngine->currentPlayer.level = 2;
+    gameEngine->currentPlayer.level = "2";
+    gameEngine->gameRunning = false;
     finished = true;
 }
 

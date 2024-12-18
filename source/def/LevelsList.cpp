@@ -19,7 +19,7 @@ LevelsList::LevelsList() :level1(gameEngine), level2(gameEngine), level3(gameEng
 	if (!optionShadowTexture.loadFromFile(MENU_SHADOW)) { std::cout << "Can't load MENU_SHADOW\n"; }
 	optionShadowSprite.setTexture(optionShadowTexture);
 	optionShadowSprite.setColor(Color(200, 0, 0, 80));
-	optionShadowSprite.setPosition(695, 350 + selectedLevel * 200);
+	optionShadowSprite.setPosition(695, 350 + selectedLevel * 120);
 	optionShadowSprite.setScale(0.6, 1);
 
 	// Set levels Name Text Properties
@@ -32,21 +32,25 @@ LevelsList::LevelsList() :level1(gameEngine), level2(gameEngine), level3(gameEng
 }
 
 void LevelsList::show(player newPlayer) {
+	checkOpendLevels();
 	display = true;
 	gameEngine.currentPlayer = newPlayer;
 
 	selectedLevel = 0;
-	optionShadowSprite.setPosition(695, 350 + selectedLevel * 200);
+	optionShadowSprite.setPosition(695, 350 + selectedLevel * 120);
 
 	// Find the last level this player has finished
-	checkOpendLevels();
 }
 
 
 void LevelsList::draw(RenderWindow& window) {
+	if(level1.finished)
+		display = true;
+	//checkShow(gameEngine.currentPlayer);
 	//cout << level1.finished;
-	if (display /*|| level1.finished || level2.finished*/)
+	if (display  /*|| level2.finished*/)
 	{
+		//std::cout <<"a";
 		window.draw(backGroundSprite);
 		window.draw(optionShadowSprite);
 		window.draw(backText);
@@ -60,6 +64,15 @@ void LevelsList::draw(RenderWindow& window) {
 		level3.draw(window);
 	}
 }
+/*
+void LevelsList::checkShow(player& newPlayer)
+{
+    // Nếu tất cả menu con đóng và không trong trạng thái game, hiển thị lại menu chính
+    if (level1.finished && !gameEngine.gameRunning)
+    {
+        show(newPlayer);
+    }
+}*/
 
 
 void LevelsList::catchEvents(Event event, player& newPlayer) {
@@ -79,6 +92,7 @@ void LevelsList::catchEvents(Event event, player& newPlayer) {
 				break;
 			case Keyboard::Enter:
 				this->hide();
+				std::cout<<"t3";
 				gameEngine.gameRunning = true;
 				switch (selectedLevel) {
 				case 0:
@@ -122,13 +136,8 @@ void LevelsList::checkOpendLevels() {
 	// Đọc thông tin người chơi từ file
 	for (int i = 0; i < lines; i++) {
 		playersFile >> tempPlayer.username >> tempPlayer.level1Score >> tempPlayer.level2Score >> tempPlayer.level3Score;
-
-		// Kiểm tra thông tin của người chơi hiện tại
-		if (tempPlayer.username == gameEngine.currentPlayer.username) {
 			if (stoi(tempPlayer.level2Score) != -1) maxLevel = 2;
 			if (stoi(tempPlayer.level3Score) != -1) maxLevel = 3;
-			break; // Dừng vòng lặp khi tìm thấy người chơi
-		}
 	}
 
 	// Đóng file
@@ -176,7 +185,7 @@ void LevelsList::moveDown()
 			selectedLevel++;
 		}
 	}
-	optionShadowSprite.setPosition(695, 350 + selectedLevel * 200);
+	optionShadowSprite.setPosition(695, 350 + selectedLevel * 120);
 }
 
 
@@ -192,5 +201,5 @@ void LevelsList::moveUp()
 			selectedLevel--;
 		}
 	}
-	optionShadowSprite.setPosition(695, 350 + selectedLevel * 200);
+	optionShadowSprite.setPosition(695, 350 + selectedLevel * 120);
 }

@@ -199,7 +199,7 @@ void GameEngine::setLevelName(string levelName) {
 }
 
 void GameEngine::addPlayerInfo() {
-	playersFile.open(PLAYERS_FILE, ios::app);
+	playersFile.open(ACCOUNT_FILE, ios::app);
 	playersFile << currentPlayer.username << ' ' << scoreInt << ' ' << levelsMap[std::string(levelText.getString())] << '\n';
 	playersFile.close();
 	playersFile.clear();

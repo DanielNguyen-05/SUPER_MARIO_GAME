@@ -40,6 +40,8 @@ public:
     // Start Die Animation
     void startDie();
 
+    void reset();
+
 private:
     // set Mario to small state
     void smallState();
