@@ -7,7 +7,7 @@ private:
 	/***			Properties				***/
 	position highScoresPos;
 	Text highScoreText[3][2];
-	vector <pair<int, pair<int, string>>> players;
+	vector<pair<int, pair<int, string>>> players;
 	fstream playersFile;
 
 public:
@@ -15,7 +15,7 @@ public:
 	HighScoreMenu();
 
 	// Draw Menu contents
-	void draw(RenderWindow& window) override;
+	void draw(RenderWindow &window) override;
 
 	// Make Menu display
 	void show() override;
@@ -29,7 +29,6 @@ public:
 	// Make a vector contain players information collected form file
 	void arrangePlayersInfo();
 
-	// Count how many lines in specific file 
+	// Count how many lines in specific file
 	int getNumberOfLines();
 };
-

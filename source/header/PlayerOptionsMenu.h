@@ -4,7 +4,8 @@
 #include "PlayerNameMenu.h"
 #include "LevelsList.h"
 
-class PlayerOptionsMenu : public Menu {
+class PlayerOptionsMenu : public Menu
+{
 private:
     sf::Font font;
     sf::Text PlayerOptions[2];
@@ -13,15 +14,16 @@ private:
     int selectedPlayerOption;
     bool newUser;
 
-    bool isHovering(const sf::Text& text, const sf::Vector2i& mousePos);
+    bool isHovering(const sf::Text &text, const sf::Vector2i &mousePos);
 
-     // Move up to the previous option
+    // Move up to the previous option
     void moveUp();
 
     // Move to the next option
     void moveDown();
 
     void updatePlayerOptionsColors();
+
 public:
     PlayerNameMenu user;
 
@@ -30,15 +32,14 @@ public:
     PlayerOptionsMenu();
 
     // Vẽ giao diện
-    void draw(sf::RenderWindow& window) override;
+    void draw(sf::RenderWindow &window) override;
 
     // Handle all events happening on Player window
-    void catchEvents(Event event, player& newPlayer);
+    void catchEvents(Event event, player &newPlayer);
 
-    void handleMouseClick(sf::Vector2i mousePos, player& newPlayer, Event event);
+    void handleMouseClick(sf::Vector2i mousePos, player &newPlayer, Event event);
 
-    void handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer);
+    void handleKeyReleased(sf::Keyboard::Key keyCode, player &newPlayer);
 
-    void handleEnter(player& newPlayer);
-
+    void handleEnter(player &newPlayer);
 };

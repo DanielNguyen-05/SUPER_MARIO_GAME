@@ -1,6 +1,7 @@
 #include "../header/Items.h"
 
-Items::Items(GameEngine& gameEngine, item_t item, float x, float y) {
+Items::Items(GameEngine &gameEngine, item_t item, float x, float y)
+{
     // Set initial values
     this->gameEngine = &gameEngine;
     display = true;
@@ -16,8 +17,8 @@ Items::Items(GameEngine& gameEngine, item_t item, float x, float y) {
     itemSprite.setTexture(gameEngine.itemTexture);
     itemSprite.setPosition(x, y);
 
-
-    switch (itemType) {
+    switch (itemType)
+    {
     case COIN:
         maxRect = 4;
         itemIntRect = coinIntRect;
@@ -56,39 +57,47 @@ Items::Items(GameEngine& gameEngine, item_t item, float x, float y) {
     floatingText.setString(to_string(takenScore));
 }
 
-
-void Items::draw(RenderWindow& window) {
-    if (display && itemType != NONE) {
+void Items::draw(RenderWindow &window)
+{
+    if (display && itemType != NONE)
+    {
         animation();
-        if (faid) window.draw(floatingText);
+        if (faid)
+            window.draw(floatingText);
         window.draw(itemSprite);
     }
 }
 
-
-void Items::animation() {
-    if (timer.getElapsedTime().asSeconds() > 0.2f) {
-        switch (itemType) {
+void Items::animation()
+{
+    if (timer.getElapsedTime().asSeconds() > 0.2f)
+    {
+        switch (itemType)
+        {
         case COIN:
             itemIntRect.left = coinIntRect.left + CurrentRect * coinIntRect.width;
             break;
         case FLOWER:
             itemIntRect.left = flowerIntRect.left + CurrentRect * flowerIntRect.width;
-            if (faid) itemSprite.setColor(Color::Transparent);
+            if (faid)
+                itemSprite.setColor(Color::Transparent);
             break;
         case MASHROOM:
             itemIntRect.left = mashroomIntRect.left + CurrentRect * mashroomIntRect.width;
-            if (faid) itemSprite.setColor(Color::Transparent);
+            if (faid)
+                itemSprite.setColor(Color::Transparent);
             break;
         case SPARKL:
             itemIntRect.left = sparklsIntRect.left + CurrentRect * sparklsIntRect.width;
-            if (CurrentRect == maxRect - 1) itemSprite.setColor(Color::Transparent);
+            if (CurrentRect == maxRect - 1)
+                itemSprite.setColor(Color::Transparent);
             break;
         }
         itemSprite.setTextureRect(itemIntRect);
         CurrentRect++;
 
-        if (CurrentRect == maxRect) CurrentRect = 0;
+        if (CurrentRect == maxRect)
+            CurrentRect = 0;
 
         timer.restart();
     }
@@ -96,9 +105,12 @@ void Items::animation() {
     TextFloat();
 }
 
-void Items::TextFloat() {
-    if (faid) {
-        if (!resetTime) {
+void Items::TextFloat()
+{
+    if (faid)
+    {
+        if (!resetTime)
+        {
             textFloatTimer.restart();
             resetTime = true;
         }
@@ -121,17 +133,19 @@ void Items::TextFloat() {
         else
         {
             floatingText.setFillColor(Color::Transparent);
-            floatingSpeed = 0; //Reseting its value
+            floatingSpeed = 0; // Reseting its value
             display = false;
         }
         floatingText.move(0, floatingSpeed);
     }
 }
 
-
-void Items::checkTaken() {
-    if (!gameEngine->mario.dying) {
-        if (itemSprite.getGlobalBounds().intersects(gameEngine->mario.marioSprite.getGlobalBounds()) && !faid || (blockPoped && itemType == COIN)) {
+void Items::checkTaken()
+{
+    if (!gameEngine->mario.dying)
+    {
+        if (itemSprite.getGlobalBounds().intersects(gameEngine->mario.marioSprite.getGlobalBounds()) && !faid || (blockPoped && itemType == COIN))
+        {
             isTaken = true;
             switch (itemType)
             {
@@ -150,9 +164,12 @@ void Items::checkTaken() {
     }
 }
 
-void Items::setTaken() {
-    if (isTaken) {
-        switch (itemType) {
+void Items::setTaken()
+{
+    if (isTaken)
+    {
+        switch (itemType)
+        {
         case COIN:
             gameEngine->updateCoins(); // increase coin counter by one
             itemType = SPARKL;

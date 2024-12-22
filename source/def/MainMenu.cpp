@@ -1,6 +1,7 @@
 #include "../header/MainMenu.h"
 
-MainMenu::MainMenu() {
+MainMenu::MainMenu()
+{
     // Set initial values
     display = true;
     selectedOption = 0;
@@ -8,7 +9,8 @@ MainMenu::MainMenu() {
     gameRunning = false;
 
     // Load fonts from file
-    if (!menuFont.loadFromFile(MAIN_MENU_FONT)) {
+    if (!menuFont.loadFromFile(MAIN_MENU_FONT))
+    {
         cout << "Can't load MAIN_MENU_FONT\n";
     }
 
@@ -30,7 +32,7 @@ MainMenu::MainMenu() {
         " LEADERBOARD", // Top 3 players
         "   CREDITS",   // Introduce the team
         "   OPTIONS",   // Music control
-        "    EXIT" };
+        "    EXIT"};
 
     for (int i = 0; i < 6; i++)
     {
@@ -93,7 +95,7 @@ void MainMenu::catchEvents(Event event)
     updateMenuOptionsColors();
 }
 
-void MainMenu::drawAll(RenderWindow& window)
+void MainMenu::drawAll(RenderWindow &window)
 {
     this->draw(window);
     playerOptions.draw(window);
@@ -103,7 +105,7 @@ void MainMenu::drawAll(RenderWindow& window)
     options.draw(window);
 }
 
-void MainMenu::draw(RenderWindow& window)
+void MainMenu::draw(RenderWindow &window)
 {
     checkShow();
     controlMusic();
@@ -171,7 +173,8 @@ void MainMenu::mainMenuHandleSelection()
 void MainMenu::controlMusic()
 {
     // Nếu đang chạy game, kiểm soát âm nhạc
-    if (gameRunning) {
+    if (gameRunning)
+    {
         if (options.menuSound.getStatus() == options.menuSound.Playing)
             options.menuSound.stop();
     }
@@ -221,14 +224,15 @@ void MainMenu::confirmExit() // chưa có đẹp, nữa chỉnh lại dùm tao
 
     // Tải font chỉ một lần trong constructor hoặc khởi tạo trước
     static sf::Font font;
-    if (!font.loadFromFile(GAME_FONT)) {
+    if (!font.loadFromFile(GAME_FONT))
+    {
         std::cerr << "Error loading font\n";
     }
 
     // Tạo văn bản hiển thị thông báo
     sf::Text text("Are you sure you want to exit? (Y/N)", font, 20);
     text.setFillColor(sf::Color::Black);
-    text.setPosition((500 - text.getGlobalBounds().width) / 2, 50);  // Căn giữa văn bản theo chiều ngang
+    text.setPosition((500 - text.getGlobalBounds().width) / 2, 50); // Căn giữa văn bản theo chiều ngang
 
     // Tạo các nút Yes và No
     sf::RectangleShape yesButton(sf::Vector2f(120, 50));
@@ -241,32 +245,38 @@ void MainMenu::confirmExit() // chưa có đẹp, nữa chỉnh lại dùm tao
 
     sf::Text yesText("Yes", font, 20);
     yesText.setPosition(yesButton.getPosition().x + (yesButton.getSize().x - yesText.getGlobalBounds().width) / 2,
-        yesButton.getPosition().y + (yesButton.getSize().y - yesText.getGlobalBounds().height) / 2);
+                        yesButton.getPosition().y + (yesButton.getSize().y - yesText.getGlobalBounds().height) / 2);
     yesText.setFillColor(sf::Color::White);
 
     sf::Text noText("No", font, 20);
     noText.setPosition(noButton.getPosition().x + (noButton.getSize().x - noText.getGlobalBounds().width) / 2,
-        noButton.getPosition().y + (noButton.getSize().y - noText.getGlobalBounds().height) / 2);
+                       noButton.getPosition().y + (noButton.getSize().y - noText.getGlobalBounds().height) / 2);
     noText.setFillColor(sf::Color::White);
 
     // Vòng lặp xử lý sự kiện cho cửa sổ xác nhận
-    while (confirmWindow.isOpen()) {
+    while (confirmWindow.isOpen())
+    {
         sf::Event event;
-        while (confirmWindow.pollEvent(event)) {
+        while (confirmWindow.pollEvent(event))
+        {
             if (event.type == sf::Event::Closed ||
-                (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)) {
+                (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape))
+            {
                 confirmWindow.close(); // Đóng cửa sổ nếu ESC được nhấn
             }
-            if (event.type == sf::Event::MouseButtonPressed) {
+            if (event.type == sf::Event::MouseButtonPressed)
+            {
                 sf::Vector2i mousePos = sf::Mouse::getPosition(confirmWindow);
 
                 // Kiểm tra xem người dùng có nhấn vào nút Yes
-                if (yesButton.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                if (yesButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
+                {
                     exit(0); // Thoát game
                 }
 
                 // Kiểm tra xem người dùng có nhấn vào nút No
-                if (noButton.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                if (noButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
+                {
                     confirmWindow.close(); // Đóng cửa sổ xác nhận
                 }
             }

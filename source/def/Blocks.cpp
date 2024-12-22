@@ -1,6 +1,6 @@
 #include "../header/Blocks.h"
 
-Blocks::Blocks(GameEngine& gameEngine, block_t blockType, item_t itemType, float x, float y) : item(gameEngine, itemType, x, y)
+Blocks::Blocks(GameEngine &gameEngine, block_t blockType, item_t itemType, float x, float y) : item(gameEngine, itemType, x, y)
 {
     // Set initial values
     this->gameEngine = &gameEngine;
@@ -47,19 +47,22 @@ Blocks::Blocks(GameEngine& gameEngine, block_t blockType, item_t itemType, float
     blockHight = blockSprite.getGlobalBounds().height;
 }
 
-
-void Blocks::draw(RenderWindow& window) {
+void Blocks::draw(RenderWindow &window)
+{
     item.draw(window);
-    if (display) {
+    if (display)
+    {
         animation();
         window.draw(blockSprite);
     }
 }
 
-
-void Blocks::animation() {
-    if (timer.getElapsedTime().asSeconds() > 0.2f) {
-        switch (blockType) {
+void Blocks::animation()
+{
+    if (timer.getElapsedTime().asSeconds() > 0.2f)
+    {
+        switch (blockType)
+        {
         case QUESTION:
             blockRect.left = questionRect.left + currentRect * questionRect.width;
             break;
@@ -75,7 +78,8 @@ void Blocks::animation() {
             blockRect = rockRect;
             break;
         case SMASH:
-            if (!faid) {
+            if (!faid)
+            {
                 maxRect = 6;
                 currentRect = 0;
                 blockRect = smashRect;
@@ -84,30 +88,37 @@ void Blocks::animation() {
                 blockSprite.setScale(1, 1);
                 faid = true;
             }
-            else {
+            else
+            {
                 blockSprite.setTexture(gameEngine->smashTextures[currentRect]);
-                if (currentRect == maxRect - 1) display = false;
+                if (currentRect == maxRect - 1)
+                    display = false;
             }
         }
 
         blockSprite.setTextureRect(blockRect);
         currentRect++;
 
-        if (currentRect == maxRect) currentRect = 0;
+        if (currentRect == maxRect)
+            currentRect = 0;
 
         timer.restart();
     }
     popUp();
-    if (!faid) checkIntersection();
+    if (!faid)
+        checkIntersection();
 }
 
-void Blocks::smash() {
+void Blocks::smash()
+{
     blockType = SMASH;
     gameEngine->smashSound.play();
 }
 
-void Blocks::startPopUp() {
-    if (!isPopUp) {
+void Blocks::startPopUp()
+{
+    if (!isPopUp)
+    {
         isPopUp = true;
         popUpBlock = true;
 
@@ -116,44 +127,57 @@ void Blocks::startPopUp() {
     }
 }
 
-
-void Blocks::popUp() {
-    if (isPopUp) {
+void Blocks::popUp()
+{
+    if (isPopUp)
+    {
         int currentTime = popUpTimer.getElapsedTime().asMilliseconds();
 
         if (currentTime < 150) // GoingUp Time
         {
-            if (popUpBlock) movingSpeed += -1;
-            else {
-                if (itemType == COIN) movingSpeed += -3;
-                else movingSpeed += -1.05;
+            if (popUpBlock)
+                movingSpeed += -1;
+            else
+            {
+                if (itemType == COIN)
+                    movingSpeed += -3;
+                else
+                    movingSpeed += -1.05;
             }
         }
         else if (currentTime < 200) // StandStill time
         {
             movingSpeed = 0;
-            if (itemType == MASHROOM || itemType == FLOWER) movingSpeed += -1;
+            if (itemType == MASHROOM || itemType == FLOWER)
+                movingSpeed += -1;
         }
         else if (currentTime < 350) // GoingDown Time
         {
-            if (popUpBlock) movingSpeed += 1;
-            else {
-                if (itemType == COIN) movingSpeed += 1.15;
+            if (popUpBlock)
+                movingSpeed += 1;
+            else
+            {
+                if (itemType == COIN)
+                    movingSpeed += 1.15;
             }
         }
         else
         {
-            if (blockType == QUESTION) blockType = BRONZE;
+            if (blockType == QUESTION)
+                blockType = BRONZE;
 
             movingSpeed = 0;
-            if (!popUpBlock) {
-                isPopUp = false; // finish all pop up 
+            if (!popUpBlock)
+            {
+                isPopUp = false;        // finish all pop up
                 item.blockPoped = true; // when its coin its take itself
                 item.itemSprite.setPosition(startPos.x, startPos.y - (blockHight / 2) - (item.itemHeight / 2));
             }
-            if (popUpBlock) {
-                popUpBlock = false; // start item pop up 
-                if (itemType == MASHROOM || itemType == FLOWER) gameEngine->powerUpAppearSound.play(); // start sound effect
+            if (popUpBlock)
+            {
+                popUpBlock = false; // start item pop up
+                if (itemType == MASHROOM || itemType == FLOWER)
+                    gameEngine->powerUpAppearSound.play(); // start sound effect
                 item.display = true;
             }
 
@@ -167,39 +191,46 @@ void Blocks::popUp() {
     }
 }
 
-
-void Blocks::checkIntersection() {
+void Blocks::checkIntersection()
+{
     // Calculate Mario and Block bounds
     FloatRect marioBounds = gameEngine->mario.marioSprite.getGlobalBounds(),
-        blockBounds = blockSprite.getGlobalBounds();
+              blockBounds = blockSprite.getGlobalBounds();
     Vector2f marioPos = gameEngine->mario.marioSprite.getPosition(), blockPos = blockSprite.getPosition();
 
     float blockTopPoint = blockPos.y - (blockBounds.height / 2),
-        blockBottomPoint = blockPos.y + (blockBounds.height / 2),
-        blockRightPoint = blockPos.x + (blockBounds.width / 2),
-        blockLeftPoint = blockPos.x - (blockBounds.width / 2);
+          blockBottomPoint = blockPos.y + (blockBounds.height / 2),
+          blockRightPoint = blockPos.x + (blockBounds.width / 2),
+          blockLeftPoint = blockPos.x - (blockBounds.width / 2);
 
     // In the block bounds
-    if (blockBounds.intersects(marioBounds)) {
-        if (marioPos.x >= blockLeftPoint && marioPos.x <= blockRightPoint) {
-            if (gameEngine->mario.speed[1] > 0 && blockType != SMASH) { // jump on the block
+    if (blockBounds.intersects(marioBounds))
+    {
+        if (marioPos.x >= blockLeftPoint && marioPos.x <= blockRightPoint)
+        {
+            if (gameEngine->mario.speed[1] > 0 && blockType != SMASH)
+            { // jump on the block
                 gameEngine->mario.marioSprite.setPosition(marioPos.x, blockBounds.top);
                 gameEngine->mario.onGround = true;
                 marioOn = true;
             }
-            else if (gameEngine->mario.speed[1] < 0/*marioPos.y - (marioBounds.height/2) >= blockBottomPoint*/) { // Hit the block with head
+            else if (gameEngine->mario.speed[1] < 0 /*marioPos.y - (marioBounds.height/2) >= blockBottomPoint*/)
+            { // Hit the block with head
                 float blockBottom = blockBounds.top + blockBounds.height;
 
                 // Handle large size of smash sprite
-                if (blockType == SMASH) blockBottom = (blockBounds.top + blockBottom) / 2;
+                if (blockType == SMASH)
+                    blockBottom = (blockBounds.top + blockBottom) / 2;
 
                 gameEngine->mario.marioSprite.setPosition(marioPos.x, blockBottom + marioBounds.height);
                 gameEngine->mario.speed[1] = 2;
                 handleHitBlock();
             }
         }
-        else { // touch from side
-            if (gameEngine->mario.speed[1] > 1 && !gameEngine->mario.onGround || gameEngine->mario.speed[1] < 1) {
+        else
+        { // touch from side
+            if (gameEngine->mario.speed[1] > 1 && !gameEngine->mario.onGround || gameEngine->mario.speed[1] < 1)
+            {
                 float blockRight = blockBounds.left + blockBounds.width;
                 if (marioPos.x > blockPos.x)
                     gameEngine->mario.marioSprite.setPosition(blockRight + (marioBounds.width / 2), marioPos.y);
@@ -211,16 +242,20 @@ void Blocks::checkIntersection() {
             }
         }
     }
-    else {
-        if (marioOn && gameEngine->mario.onGround) { // Fall when mario left the block
+    else
+    {
+        if (marioOn && gameEngine->mario.onGround)
+        { // Fall when mario left the block
             marioOn = false;
             gameEngine->mario.onGround = false;
             gameEngine->mario.speed[1] = -5;
         }
 
         // Fix Screen vibration when mario touch block side
-        if (gameEngine->mario.stuck && stuckOn) {
-            if (abs(marioPos.x - blockPos.x) > 60 || abs(marioPos.y - blockPos.y) > 100) {
+        if (gameEngine->mario.stuck && stuckOn)
+        {
+            if (abs(marioPos.x - blockPos.x) > 60 || abs(marioPos.y - blockPos.y) > 100)
+            {
                 gameEngine->mario.stuck = false; // not touching the side anymore
                 stuckOn = false;
             }
@@ -228,12 +263,13 @@ void Blocks::checkIntersection() {
     }
 }
 
-
-void Blocks::handleHitBlock() {
+void Blocks::handleHitBlock()
+{
     switch (blockType)
     {
     case STONE:
-        switch (gameEngine->mario.marioState) {
+        switch (gameEngine->mario.marioState)
+        {
         case SMALL:
             startPopUp();
             break;

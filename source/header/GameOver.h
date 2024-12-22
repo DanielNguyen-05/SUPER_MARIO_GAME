@@ -1,6 +1,6 @@
 #pragma once
-#include "DEFINITION.h" 
+#include "DEFINITION.h"
 
-class GameOver {
-
+class GameOver
+{
 };

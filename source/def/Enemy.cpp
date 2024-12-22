@@ -1,6 +1,7 @@
 #include "../header/Enemy.h"
 
-Enemy::Enemy(GameEngine& gameEngine, enemy_t type, Sprite& minX, Sprite& maxX, RectangleShape& ground, float x, float y) {
+Enemy::Enemy(GameEngine &gameEngine, enemy_t type, Sprite &minX, Sprite &maxX, RectangleShape &ground, float x, float y)
+{
 	// Set initial values
 	this->gameEngine = &gameEngine;
 	this->minX = &minX;
@@ -23,8 +24,8 @@ Enemy::Enemy(GameEngine& gameEngine, enemy_t type, Sprite& minX, Sprite& maxX, R
 	enemySprite.setTexture(gameEngine.enemyTextrue);
 	enemySprite.setPosition(x, y);
 
-
-	switch (enemyType) {
+	switch (enemyType)
+	{
 	case BLACK:
 		enemyRect = blackRect;
 		killScore = 100;
@@ -54,19 +55,23 @@ Enemy::Enemy(GameEngine& gameEngine, enemy_t type, Sprite& minX, Sprite& maxX, R
 	floatingText.setString(to_string(killScore));
 }
 
-
-void Enemy::draw(RenderWindow& window) {
-	if (display) {
+void Enemy::draw(RenderWindow &window)
+{
+	if (display)
+	{
 		animation();
-		if (faid) window.draw(floatingText);
+		if (faid)
+			window.draw(floatingText);
 		window.draw(enemySprite);
 	}
 }
 
-
-void Enemy::animation() {
-	if (timer.getElapsedTime().asSeconds() > 0.2f) {
-		switch (enemyType) {
+void Enemy::animation()
+{
+	if (timer.getElapsedTime().asSeconds() > 0.2f)
+	{
+		switch (enemyType)
+		{
 		case BLACK:
 			enemyRect.left = blackRect.left + CurrentRect * blackRect.width;
 			break;
@@ -80,28 +85,35 @@ void Enemy::animation() {
 			break;
 		}
 		enemySprite.setTextureRect(enemyRect);
-		if (moving)CurrentRect++;
+		if (moving)
+			CurrentRect++;
 
-		if (CurrentRect == maxRect) CurrentRect = 0;
+		if (CurrentRect == maxRect)
+			CurrentRect = 0;
 
 		timer.restart();
 	}
-	if (moving) enemySprite.move(speed[0], speed[1]);
+	if (moving)
+		enemySprite.move(speed[0], speed[1]);
 	changeDirection();
 	checkGround();
 	checkKilled();
 	TextFloat();
-	if (enemyType == SHELL) checkTurtleFaid();
-	if (firstTime && enemyType != SHELL) {
+	if (enemyType == SHELL)
+		checkTurtleFaid();
+	if (firstTime && enemyType != SHELL)
+	{
 		speed[0] = gameEngine->currentPlayer.enemiesSpeed * accSpeed;
 		firstTime = false;
 	}
 }
 
-
-void Enemy::TextFloat() {
-	if (faid) {
-		if (!resetTime) {
+void Enemy::TextFloat()
+{
+	if (faid)
+	{
+		if (!resetTime)
+		{
 			floatingText.setPosition(enemySprite.getPosition());
 			textFloatTimer.restart();
 			resetTime = true;
@@ -125,72 +137,89 @@ void Enemy::TextFloat() {
 		else
 		{
 			floatingText.setFillColor(Color::Transparent);
-			floatingSpeed = 0; //Reseting its value
+			floatingSpeed = 0; // Reseting its value
 
-			if (enemyType == SHELL) {
-				if (firstTime) {
+			if (enemyType == SHELL)
+			{
+				if (firstTime)
+				{
 					resetTime = false;
 					firstTime = false;
 				}
 
 				faid = false;
 			}
-			else display = false;
+			else
+				display = false;
 		}
 		floatingText.move(0, floatingSpeed);
 	}
 }
 
-
-void Enemy::changeDirection() {
-	if (enemySprite.getGlobalBounds().intersects(maxX->getGlobalBounds())) {
+void Enemy::changeDirection()
+{
+	if (enemySprite.getGlobalBounds().intersects(maxX->getGlobalBounds()))
+	{
 		enemySprite.setScale(-scale, abs(scale));
 		speed[0] = -gameEngine->currentPlayer.enemiesSpeed * accSpeed;
-
 	}
-	if (enemySprite.getGlobalBounds().intersects(minX->getGlobalBounds())) {
+	if (enemySprite.getGlobalBounds().intersects(minX->getGlobalBounds()))
+	{
 		enemySprite.setScale(scale, abs(scale));
 		speed[0] = gameEngine->currentPlayer.enemiesSpeed * accSpeed;
 	}
 }
 
-
-void Enemy::checkGround() {
-	if (enemySprite.getGlobalBounds().intersects(ground->getGlobalBounds())) {
+void Enemy::checkGround()
+{
+	if (enemySprite.getGlobalBounds().intersects(ground->getGlobalBounds()))
+	{
 		speed[1] = 0;
-		if (!onGround) enemySprite.setPosition(enemySprite.getPosition().x, ground->getGlobalBounds().top);
+		if (!onGround)
+			enemySprite.setPosition(enemySprite.getPosition().x, ground->getGlobalBounds().top);
 		onGround = true;
 	}
-	else {
+	else
+	{
 		speed[1] = 70;
 		onGround = false;
 	}
 }
 
-void Enemy::checkKilled() {
-	if (!gameEngine->mario.dying) {
-		if (enemySprite.getGlobalBounds().intersects(gameEngine->mario.marioSprite.getGlobalBounds()) && !faid) {
-			if (gameEngine->mario.speed[1] > 1 || (enemyType == SHELL && firstTime)) { // from above
+void Enemy::checkKilled()
+{
+	if (!gameEngine->mario.dying)
+	{
+		if (enemySprite.getGlobalBounds().intersects(gameEngine->mario.marioSprite.getGlobalBounds()) && !faid)
+		{
+			if (gameEngine->mario.speed[1] > 1 || (enemyType == SHELL && firstTime))
+			{ // from above
 				isKilled = true;
-				if (!moving && enemyType == SHELL) {
+				if (!moving && enemyType == SHELL)
+				{
 					moving = true;
 					turtleTimer.restart();
 				}
-				else moving = false;
+				else
+					moving = false;
 			}
-			else {
+			else
+			{
 				gameEngine->mario.startDie();
 			}
 		}
-		if (isKilled) setKilled();
+		if (isKilled)
+			setKilled();
 	}
 }
 
-
-void Enemy::setKilled() {
-	if (isKilled) {
+void Enemy::setKilled()
+{
+	if (isKilled)
+	{
 		gameEngine->killSound.play();
-		switch (enemyType) {
+		switch (enemyType)
+		{
 		case BLACK:
 			enemyType = SMASHED;
 			enemyRect = smashedRect;
@@ -213,7 +242,8 @@ void Enemy::setKilled() {
 	}
 }
 
-void Enemy::checkTurtleFaid() {
+void Enemy::checkTurtleFaid()
+{
 	if (moving && turtleTimer.getElapsedTime().asSeconds() > 10)
 		display = false;
 }

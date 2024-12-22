@@ -16,13 +16,12 @@
 //     sf::SoundBuffer jumpBuffer, damageBuffer, dieBuffer;
 //     sf::Sound jumpSound, damageSound, dieSound;
 
-
 //     virtual void smallState(); // Set Character to Small state
 //     virtual void bigState(); // Set Character to Big state
 //     virtual void superState(); // Set Character to Super state
 
 //     virtual void setCharacterRectForWalk(sf::IntRect& intRect); // Make animation for Character while walking
-//     virtual void standStill(); // Make Character animation stand still 
+//     virtual void standStill(); // Make Character animation stand still
 
 //     virtual void move(); // Character movement animation
 //     virtual void jump(sf::IntRect& intRect, int RectPosition, float waiting); // Make Character jump
@@ -35,7 +34,7 @@
 //     virtual void changeToBig(); // Make animation for Power up to Big state
 //     virtual void changeToSuper(); // Make animation for Power up to Super state
 
-//     virtual void damage(); // Animation of converting Character from big or super state to small 
+//     virtual void damage(); // Animation of converting Character from big or super state to small
 //     virtual void die(); // Animation of Dying
 
 // public:

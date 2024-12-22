@@ -1,10 +1,12 @@
 #include "../header/PlayerOptionsMenu.h"
 
-PlayerOptionsMenu::PlayerOptionsMenu() : user(), levelsList(){
+PlayerOptionsMenu::PlayerOptionsMenu() : user(), levelsList()
+{
     display = false;
 
     // Load fonts from file
-    if (!font.loadFromFile(MAIN_MENU_FONT)) {
+    if (!font.loadFromFile(MAIN_MENU_FONT))
+    {
         cout << "Can't load MAIN_MENU_FONT\n";
     }
 
@@ -12,11 +14,14 @@ PlayerOptionsMenu::PlayerOptionsMenu() : user(), levelsList(){
     selectedPlayerOption = 0;
 
     // Set Back Text Properties
-	setBackText();
-	setChangeOptionSound();
+    setBackText();
+    setChangeOptionSound();
 
-    if (!backGroundTexture.loadFromFile(PLAYER_NAME_BACKGROUND)) { std::cout << "Can't load PLAYER_NAME_BACKGROUND\n"; }
-	backGroundSprite.setTexture(backGroundTexture);
+    if (!backGroundTexture.loadFromFile(PLAYER_NAME_BACKGROUND))
+    {
+        std::cout << "Can't load PLAYER_NAME_BACKGROUND\n";
+    }
+    backGroundSprite.setTexture(backGroundTexture);
     // Cấu hình tiêu đề
     titleText.setFont(font);
     titleText.setString("Super Mario Game");
@@ -27,7 +32,8 @@ PlayerOptionsMenu::PlayerOptionsMenu() : user(), levelsList(){
     // Cấu hình các tùy chọn menu
     std::vector<std::string> options = {"New Game", "Continue"};
     float startY = 400.0f;
-    for (size_t i = 0; i < options.size(); ++i) {
+    for (size_t i = 0; i < options.size(); ++i)
+    {
         PlayerOptions[i].setFont(font);
         PlayerOptions[i].setString(options[i]);
         PlayerOptions[i].setCharacterSize(50);
@@ -44,102 +50,108 @@ PlayerOptionsMenu::PlayerOptionsMenu() : user(), levelsList(){
     }
 }
 
-
 // Vẽ giao diện
-void PlayerOptionsMenu::draw(sf::RenderWindow& window) {
-	if (display) {
+void PlayerOptionsMenu::draw(sf::RenderWindow &window)
+{
+    if (display)
+    {
         window.draw(backGroundSprite);
         window.draw(titleText);
-        for (const auto& option : PlayerOptions)
+        for (const auto &option : PlayerOptions)
             window.draw(option);
-        
+
         window.draw(backText);
     }
     user.draw(window);
     levelsList.draw(window);
 }
 
+void PlayerOptionsMenu::catchEvents(Event event, player &newPlayer)
+{
+    if (display)
+    {
+        switch (event.type)
+        {
+        case Event::KeyReleased:
+            handleKeyReleased(event.key.code, newPlayer);
+            break;
 
-void PlayerOptionsMenu::catchEvents(Event event, player& newPlayer) {
-   if (display) {
-		switch (event.type) {
-		case Event::KeyReleased:
-			handleKeyReleased(event.key.code, newPlayer);
-			break;
-
-		/*case Event::MouseButtonReleased:
-			if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-            sf::Vector2i mousePos(event.mouseButton.x, event.mouseButton.y);
-            for (int i = 0; i < 2; ++i) {
-                if (isHovering(PlayerOptions[i], mousePos)) {
-                    if (i == 0) {
-                        std::cout << "New Game clicked" << std::endl;
-                        // Thêm logic xử lý cho New Game
-                        } else if (i == 1) {
-                            std::cout << "Continue clicked" << std::endl;
-                            // Thêm logic xử lý cho Continue
+            /*case Event::MouseButtonReleased:
+                if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+                sf::Vector2i mousePos(event.mouseButton.x, event.mouseButton.y);
+                for (int i = 0; i < 2; ++i) {
+                    if (isHovering(PlayerOptions[i], mousePos)) {
+                        if (i == 0) {
+                            std::cout << "New Game clicked" << std::endl;
+                            // Thêm logic xử lý cho New Game
+                            } else if (i == 1) {
+                                std::cout << "Continue clicked" << std::endl;
+                                // Thêm logic xử lý cho Continue
+                            }
                         }
-                    }
-            }
-			}
-			break;*/
-		}
-	}
+                }
+                }
+                break;*/
+        }
+    }
     updatePlayerOptionsColors();
     user.catchEvents(event, newPlayer, levelsList);
     levelsList.catchEvents(event, newPlayer);
 }
 
-void PlayerOptionsMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer) {
-    if (!newUser){
+void PlayerOptionsMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player &newPlayer)
+{
+    if (!newUser)
+    {
         newUser = true;
     }
     else
     {
-        switch (keyCode) {
-            case sf::Keyboard::Up:
-                this->moveUp();
-                changingOptionSound.play();
-                break;
-            case sf::Keyboard::Down:
-                this->moveDown();
-                changingOptionSound.play();
-                break;
+        switch (keyCode)
+        {
+        case sf::Keyboard::Up:
+            this->moveUp();
+            changingOptionSound.play();
+            break;
+        case sf::Keyboard::Down:
+            this->moveDown();
+            changingOptionSound.play();
+            break;
 
-            case sf::Keyboard::Enter:
-                this->hide();
-                newUser = false;
-                handleEnter(newPlayer);
-                break;
+        case sf::Keyboard::Enter:
+            this->hide();
+            newUser = false;
+            handleEnter(newPlayer);
+            break;
 
-            case sf::Keyboard::Escape:
-                this->hide();
-                selectedPlayerOption = 0;
-                newUser = false;
-                changingOptionSound.play();
-                break;
+        case sf::Keyboard::Escape:
+            this->hide();
+            selectedPlayerOption = 0;
+            newUser = false;
+            changingOptionSound.play();
+            break;
 
-            default:
-                break;
+        default:
+            break;
         }
     }
 }
 
-void PlayerOptionsMenu::handleEnter(player& newPlayer){
+void PlayerOptionsMenu::handleEnter(player &newPlayer)
+{
     switch (selectedPlayerOption)
     {
     case 0:
         user.show(newPlayer);
-       // controlEnemiesSpeed();
+        // controlEnemiesSpeed();
         break;
     case 1:
         levelsList.show(newPlayer);
         selectedPlayerOption = 0;
-        //controlEnemiesSpeed();
+        // controlEnemiesSpeed();
         break;
-    }     
+    }
 }
-
 
 void PlayerOptionsMenu::moveDown()
 {
@@ -173,10 +185,7 @@ void PlayerOptionsMenu::updatePlayerOptionsColors()
     }
 }
 
-bool PlayerOptionsMenu::isHovering(const sf::Text& text, const sf::Vector2i& mousePos) {
+bool PlayerOptionsMenu::isHovering(const sf::Text &text, const sf::Vector2i &mousePos)
+{
     return text.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 }
-
-
-
-

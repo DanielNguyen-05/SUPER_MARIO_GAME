@@ -2,7 +2,8 @@
 #include "DEFINITION.h"
 #include "Mario.h"
 
-class GameEngine {
+class GameEngine
+{
     /*          Properties          */
 private:
     Font headerFont;
@@ -46,7 +47,7 @@ public:
     void timeToScore();
 
     // draw GameEngine objects into screen
-    void draw(RenderWindow& window);
+    void draw(RenderWindow &window);
 
     // Increase coins counter by one
     void updateCoins();
@@ -63,13 +64,12 @@ public:
     // make coin spin during time
     void coinAnimation();
 
-    //update life times when mario dies
+    // update life times when mario dies
     void updateLifes();
 
     // Set header position to move with Camera
     void setHeaderPosition(position screenCenter);
 
     // Start Life Screen
-    void startLifeScreen(RenderWindow& window);
+    void startLifeScreen(RenderWindow &window);
 };
-

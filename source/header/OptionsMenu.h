@@ -2,7 +2,8 @@
 #include "DEFINITION.h"
 #include "Menu.h"
 
-class OptionsMenu : public Menu {
+class OptionsMenu : public Menu
+{
 private:
     // Properties
     sf::Texture optionShadowTexture;
@@ -13,6 +14,7 @@ private:
     sf::Sprite controlBallSprite;
     sf::SoundBuffer menuBuffer;
     int activeSlide;
+
 public:
     sf::Sound menuSound;
     bool muteMusic, handControlled;
@@ -21,13 +23,13 @@ public:
     OptionsMenu();
 
     /***        Methods         ***/
-    void draw(sf::RenderWindow& window) override;
-    void catchEvents(sf::Event event, player& newPlayer);
+    void draw(sf::RenderWindow &window) override;
+    void catchEvents(sf::Event event, player &newPlayer);
     void moveRight();
     void moveLeft();
-    void changeSettings(bool up, player& newPlayer);
-    void changeActiveMusicOption(); // Change Music ball (on and off)
-    void updateMusicSettings(); // mute or unmute music
+    void changeSettings(bool up, player &newPlayer);
+    void changeActiveMusicOption();   // Change Music ball (on and off)
+    void updateMusicSettings();       // mute or unmute music
     void changeActiveControlOption(); // Change Control ball (hand or keyboard)
-    void updateControlSettings(); // Change control settings
+    void updateControlSettings();     // Change control settings
 };

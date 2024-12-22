@@ -3,7 +3,8 @@
 #include "GameEngine.h"
 #include "Items.h"
 
-class Blocks {
+class Blocks
+{
 private:
     /***			Properties				***/
     sf::IntRect blockRect, stoneRect, questionRect, bronzeRect, smashRect, rockRect;
@@ -14,24 +15,21 @@ private:
     position startPos;
     block_t blockType;
     item_t itemType;
-    GameEngine* gameEngine;
+    GameEngine *gameEngine;
     Items item;
 
 public:
     sf::Sprite blockSprite;
 
-    Blocks(GameEngine& gameEngine, block_t blockType, item_t itemType, float x, float y); // Constructor
-
+    Blocks(GameEngine &gameEngine, block_t blockType, item_t itemType, float x, float y); // Constructor
 
     /***			Methods				***/
 
     // Draw item on screen
-    void draw(sf::RenderWindow& window);
-
+    void draw(sf::RenderWindow &window);
 
     // start animation of popping up
     void startPopUp();
-
 
     // Smash stone block then disappear
     void smash();
@@ -40,14 +38,11 @@ private:
     // handle animation for the block
     void animation();
 
-
     // Block moving up then down.
     void popUp();
 
-
     // Check if Mario hits this block
     void checkIntersection();
-
 
     // Handle actions when Mario hits the block with his head
     void handleHitBlock();

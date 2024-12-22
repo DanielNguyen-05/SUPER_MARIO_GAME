@@ -1,7 +1,7 @@
 #include "../header/Mario.h"
 
-
-Mario::Mario(float x, float y) {
+Mario::Mario(float x, float y)
+{
     // Init Mario motion varible
     acceleration[0] = 57;
     acceleration[1] = 80;
@@ -13,15 +13,21 @@ Mario::Mario(float x, float y) {
     PoweringUpToSuper = PoweringUpToBig = damaging = dying = stuck = dead = false;
 
     // Set Mario Sprite Properties
-    if (!marioTexture.loadFromFile(MARIO_CHARACTER)) { std::cout << "Can't load MARIO_CHARACTER\n"; }
-    if (!marioSuperTexture.loadFromFile(MARIO_SUPER_CHARACTER)) { std::cout << "Can't load MARIO_SUPER_CHARACTER\n"; }
+    if (!marioTexture.loadFromFile(MARIO_CHARACTER))
+    {
+        std::cout << "Can't load MARIO_CHARACTER\n";
+    }
+    if (!marioSuperTexture.loadFromFile(MARIO_SUPER_CHARACTER))
+    {
+        std::cout << "Can't load MARIO_SUPER_CHARACTER\n";
+    }
     marioTexture.setSmooth(true);
     marioSprite.setTexture(marioTexture);
     marioSprite.setPosition(x, y);
     marioSprite.setScale(2, 2);
     smallState();
 
-    //Set Sound effect Properties
+    // Set Sound effect Properties
     jumpBuffer.loadFromFile(JUMP_SOUND);
     jumpSound.setBuffer(jumpBuffer);
 
@@ -32,15 +38,15 @@ Mario::Mario(float x, float y) {
     dieSound.setBuffer(dieBuffer);
 }
 
-
-void Mario::draw(RenderWindow& window) {
+void Mario::draw(RenderWindow &window)
+{
     window.draw(marioSprite);
 
     animation();
 }
 
-
-void Mario::animation() {
+void Mario::animation()
+{
     if ((!PoweringUpToBig && !PoweringUpToSuper) && !damaging)
         move();
 
@@ -50,8 +56,8 @@ void Mario::animation() {
     die();
 }
 
-
-void Mario::smallState() {
+void Mario::smallState()
+{
     marioSprite.setTexture(marioTexture);
     marioState = SMALL;
     marioArea.width = 28;
@@ -60,8 +66,8 @@ void Mario::smallState() {
     marioSprite.setOrigin(marioArea.width / 2, marioArea.height);
 }
 
-
-void Mario::bigState() {
+void Mario::bigState()
+{
     marioSprite.setTexture(marioTexture);
     marioState = BIG;
     marioArea.width = 31;
@@ -70,17 +76,19 @@ void Mario::bigState() {
     marioSprite.setOrigin(marioArea.width / 2, marioArea.height);
 }
 
-
-void Mario::superState() {
+void Mario::superState()
+{
     bigState();
     marioState = SUPER;
     marioSprite.setTexture(marioSuperTexture);
 }
 
-
-void Mario::catchEvents(Event& event) {
-    if (!dying) {
-        switch (event.type) {
+void Mario::catchEvents(Event &event)
+{
+    if (!dying)
+    {
+        switch (event.type)
+        {
         case Event::KeyPressed:
             switch (event.key.code)
             {
@@ -100,7 +108,7 @@ void Mario::catchEvents(Event& event) {
                 goDown = true;
                 break;
             case Keyboard::Key::Z:
-                //startDie();
+                // startDie();
                 break;
             }
             break;
@@ -121,10 +129,11 @@ void Mario::catchEvents(Event& event) {
     }
 }
 
+void Mario::move()
+{
 
-void Mario::move() {
-
-    if (onGround) jumping = false;
+    if (onGround)
+        jumping = false;
     IntRect marioRect = marioSprite.getTextureRect();
 
     // used timer to make motion slower
@@ -133,12 +142,15 @@ void Mario::move() {
     {
         // Jump when press arrow up
         int jumpRectPosition = 161; // Big and Super position = 161
-        if (marioState == SMALL) jumpRectPosition += 1.5; // Small position = 162.5
+        if (marioState == SMALL)
+            jumpRectPosition += 1.5; // Small position = 162.5
 
-        if (goUp) {
+        if (goUp)
+        {
             marioRect.left = jumpRectPosition;
             marioSprite.setTextureRect(marioRect);
-            if (jumping == false) {
+            if (jumping == false)
+            {
                 jumpSound.play(); // jumping sound
                 startJumpPosition = marioSprite.getPosition().y;
                 speed[1] = -60;
@@ -150,20 +162,26 @@ void Mario::move() {
         jump(marioRect, jumpRectPosition, waitingTime);
 
         waitingTime += 0.07;
-        if (timer2.getElapsedTime().asSeconds() > waitingTime) {
+        if (timer2.getElapsedTime().asSeconds() > waitingTime)
+        {
 
-            if (goRight) { // Move to right
+            if (goRight)
+            { // Move to right
                 moveRight(marioRect);
             }
 
-            else if (goLeft) { // Move to left
+            else if (goLeft)
+            { // Move to left
                 moveLeft(marioRect);
             }
-            else {
+            else
+            {
                 // acceleration movement when release keyboard
-                if (speed[0] >= 1 || speed[0] <= -1) {
+                if (speed[0] >= 1 || speed[0] <= -1)
+                {
                     setMarioRectForWalk(marioRect);
-                    if (!jumping) marioSprite.setTextureRect(marioRect);
+                    if (!jumping)
+                        marioSprite.setTextureRect(marioRect);
 
                     // Calculate Mario Speed - X axis
                     speed[0] = speed[0] + acceleration[0] * waitingTime;
@@ -171,7 +189,8 @@ void Mario::move() {
             }
 
             // set down when press arrow down
-            if (goDown && marioState != SMALL) {
+            if (goDown && marioState != SMALL)
+            {
 
                 goDown = false;
             }
@@ -184,13 +203,14 @@ void Mario::move() {
         timer1.restart();
     }
 
-    if (speed[0] < 1 && speed[0] > -1 && onGround) {
+    if (speed[0] < 1 && speed[0] > -1 && onGround)
+    {
         standStill();
     }
 }
 
-
-void Mario::setMarioRectForWalk(IntRect& intRect) {
+void Mario::setMarioRectForWalk(IntRect &intRect)
+{
     int maxLeft = 0, picWidth = 0;
 
     if (marioState == SMALL)
@@ -203,7 +223,9 @@ void Mario::setMarioRectForWalk(IntRect& intRect) {
         maxLeft = 96;
         picWidth = 32;
     }
-    else {/* Do Nothing */ }
+    else
+    { /* Do Nothing */
+    }
 
     if (intRect.left >= maxLeft)
     {
@@ -217,7 +239,8 @@ void Mario::setMarioRectForWalk(IntRect& intRect) {
     return;
 }
 
-void Mario::standStill() {
+void Mario::standStill()
+{
     speed[0] = 0;
     switch (marioState)
     {
@@ -235,68 +258,83 @@ void Mario::standStill() {
     }
 }
 
-
-void Mario::jump(IntRect& intRect, int RectPosition, float waiting) {
-    if (onGround) {
+void Mario::jump(IntRect &intRect, int RectPosition, float waiting)
+{
+    if (onGround)
+    {
         speed[1] = 0;
         jumping = false;
     }
-    else {
+    else
+    {
         if (speed[1] > 0)
-            acceleration[1] = 200;//200
+            acceleration[1] = 200; // 200
         else
-            acceleration[1] = 120;//120
+            acceleration[1] = 120; // 120
 
         // Calculate Mario Speed - Y axis
         speed[1] = speed[1] + acceleration[1] * waiting;
     }
 }
 
-
-void Mario::moveRight(IntRect& intRect) {
+void Mario::moveRight(IntRect &intRect)
+{
     // check turnAround
-    if (speed[0] <= -1) {
+    if (speed[0] <= -1)
+    {
         intRect.left = 129; // Big and Super position
-        if (marioState == SMALL) intRect.left = 132; // Small Position	
+        if (marioState == SMALL)
+            intRect.left = 132; // Small Position
     }
-    else {
+    else
+    {
         setMarioRectForWalk(intRect);
     }
 
-    if (!jumping) marioSprite.setTextureRect(intRect);
+    if (!jumping)
+        marioSprite.setTextureRect(intRect);
     marioSprite.setScale(2, 2);
 
     speed[0] = 21;
 
     // Make acceleration work in the opposite side
-    if (acceleration[0] > 0) acceleration[0] *= -1;
+    if (acceleration[0] > 0)
+        acceleration[0] *= -1;
 }
 
-
-void Mario::moveLeft(IntRect& intRect) {
+void Mario::moveLeft(IntRect &intRect)
+{
     // check turnAround
-    if (speed[0] >= 1) {
+    if (speed[0] >= 1)
+    {
         intRect.left = 129; // Big and Super position
-        if (marioState == SMALL) intRect.left = 132; // Small Position	
+        if (marioState == SMALL)
+            intRect.left = 132; // Small Position
     }
-    else {
+    else
+    {
         setMarioRectForWalk(intRect);
     }
 
-    if (!jumping) marioSprite.setTextureRect(intRect);
+    if (!jumping)
+        marioSprite.setTextureRect(intRect);
     marioSprite.setScale(-2, 2);
 
     speed[0] = -21;
 
     // Make acceleration work in the oppsite side
-    if (acceleration[0] < 0) acceleration[0] *= -1;
+    if (acceleration[0] < 0)
+        acceleration[0] *= -1;
 }
 
-
-void Mario::changeToBig() {
-    if (PoweringUpToBig) {
-        if (changeStateCounter < 8) { // The last one will be 7 (odd)
-            if (changeStateTimer.getElapsedTime().asSeconds() > 0.18) {
+void Mario::changeToBig()
+{
+    if (PoweringUpToBig)
+    {
+        if (changeStateCounter < 8)
+        { // The last one will be 7 (odd)
+            if (changeStateTimer.getElapsedTime().asSeconds() > 0.18)
+            {
                 if (changeStateCounter % 2 == 0)
                     smallState();
                 else
@@ -306,18 +344,22 @@ void Mario::changeToBig() {
                 changeStateTimer.restart();
             }
         }
-        else {
+        else
+        {
             changeStateCounter = 0;
             PoweringUpToBig = false;
         }
     }
 }
 
-
-void Mario::changeToSuper() {
-    if (PoweringUpToSuper) {
-        if (changeStateCounter < 8) { // The last one will be 7 (odd)
-            if (changeStateTimer.getElapsedTime().asSeconds() > 0.18) {
+void Mario::changeToSuper()
+{
+    if (PoweringUpToSuper)
+    {
+        if (changeStateCounter < 8)
+        { // The last one will be 7 (odd)
+            if (changeStateTimer.getElapsedTime().asSeconds() > 0.18)
+            {
                 if (changeStateCounter % 2 == 0)
                     smallState();
                 else
@@ -327,22 +369,28 @@ void Mario::changeToSuper() {
                 changeStateTimer.restart();
             }
         }
-        else {
+        else
+        {
             changeStateCounter = 0;
             PoweringUpToSuper = false;
         }
     }
 }
 
-
-void Mario::damage() {
-    if (damaging) {
-        if (changeStateCounter < 8) { // The last one will be 7 (odd)
-            if (changeStateTimer.getElapsedTime().asSeconds() > 0.18) {
-                if (changeStateCounter % 2 == 0) {
+void Mario::damage()
+{
+    if (damaging)
+    {
+        if (changeStateCounter < 8)
+        { // The last one will be 7 (odd)
+            if (changeStateTimer.getElapsedTime().asSeconds() > 0.18)
+            {
+                if (changeStateCounter % 2 == 0)
+                {
                     marioSprite.setTextureRect(IntRect(400, 36, 40, 60));
                 }
-                else {
+                else
+                {
                     marioSprite.setTextureRect(IntRect(286, 96, 30, 32));
                 }
 
@@ -350,7 +398,8 @@ void Mario::damage() {
                 changeStateTimer.restart();
             }
         }
-        else {
+        else
+        {
             smallState();
             changeStateCounter = 0;
             damaging = false;
@@ -358,26 +407,29 @@ void Mario::damage() {
     }
 }
 
-
-void Mario::startDamage() {
+void Mario::startDamage()
+{
     damaging = true;
-    onGround = false; // to fall after animation finished
+    onGround = false;   // to fall after animation finished
     damageSound.play(); // play damage sound effect
     marioSprite.move(-50, -130);
 }
 
-
-void Mario::die() {
-    if (dying) {
-        onGround = false; // to leave the ground 
+void Mario::die()
+{
+    if (dying)
+    {
+        onGround = false; // to leave the ground
 
         marioSprite.setTextureRect(IntRect(192, 96, 30, 32));
-        if (changeStateCounter == 1) { // Execute only for the first time
+        if (changeStateCounter == 1)
+        { // Execute only for the first time
             speed[1] = -60;
             marioSprite.move(-75, 0);
             changeStateCounter = 0;
         }
-        if (marioSprite.getPosition().y > 900) {
+        if (marioSprite.getPosition().y > 900)
+        {
             dead = true;
             dying = goLeft = goRight = false;
             speed[0] = 0;
@@ -387,8 +439,8 @@ void Mario::die() {
     }
 }
 
-
-void Mario::startDie() {
+void Mario::startDie()
+{
     dying = true;
     dieSound.play();
     changeStateCounter = 1;
@@ -396,7 +448,8 @@ void Mario::startDie() {
     speed[1] = 0;
 }
 
-void Mario::reset() {
+void Mario::reset()
+{
     // Reset Mario motion variables
     acceleration[0] = 57;
     acceleration[1] = 80;
@@ -414,4 +467,3 @@ void Mario::reset() {
     // Reset to small state by default
     smallState();
 }
-

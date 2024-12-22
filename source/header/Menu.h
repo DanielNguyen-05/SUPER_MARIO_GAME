@@ -1,7 +1,8 @@
 #pragma once
 #include "DEFINITION.h"
 
-class Menu {
+class Menu
+{
 protected:
     // Set Back Text Properties
     virtual void setBackText();
@@ -20,7 +21,7 @@ public:
     sf::Sound changingOptionSound;
 
     // Draw Menu Options
-    virtual void draw(sf::RenderWindow& window);
+    virtual void draw(sf::RenderWindow &window);
 
     // Control Menu events
     virtual void catchEvents(sf::Event event);
@@ -31,4 +32,3 @@ public:
     // Close Menu
     virtual void hide();
 };
-

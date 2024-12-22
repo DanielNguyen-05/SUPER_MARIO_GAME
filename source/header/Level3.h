@@ -1,6 +1,6 @@
 #pragma once
 #include "DEFINITION.h"
-#include "Blocks.h"	
+#include "Blocks.h"
 #include "Enemy.h"
 
 #define COINS_NUM 1500
@@ -23,7 +23,7 @@ private:
     vector<Items> coin;
     vector<Blocks> stone, question, rock;
     vector<Enemy> black, turtle;
-    GameEngine* gameEngine;
+    GameEngine *gameEngine;
     position coinPosition[COINS_NUM], stonePosition[STONE_NUM], stoneCoinPosition[STONE_WITH_COIN_NUM],
         questCoinPosition[QUESTION_WITH_COIN_NUM], questMashPosition[QUESTION_WITH_MASH_NUM],
         questFLowerPosition[QUESTION_WITH_FLOWER_NUM], rockPosition[ROCK_NUM];
@@ -33,36 +33,29 @@ private:
     Texture backGroundTexture, groundTexture;
     RectangleShape backGroundShape, groundShape[GROUNDS_NUM];
     View camera;
-    position screenCenter = { 0, 0 };
+    position screenCenter = {0, 0};
 
 public:
-    Level3(GameEngine& gameEngine);
-
+    Level3(GameEngine &gameEngine);
 
     /***			Methods				***/
     // Draw Levels contents
-    void draw(RenderWindow& window);
-
+    void draw(RenderWindow &window);
 
     // Control all level event
     void catchEvents(Event event);
 
-
     // Make Level start
     void start();
-
 
     // Close Level
     void end();
 
-
     // Check weather mario in ground or not
     void checkGround(int num);
 
-
     // Set Camera View with mario movement
-    void handleView(RenderWindow& window);
-
+    void handleView(RenderWindow &window);
 
     // Check end of the level
     void checkEnd();
@@ -71,8 +64,6 @@ private:
     // Arrange Array for Grounds Properties on screen
     void setGroundProperties();
 
-
     // Set Positions for all blocks in the level
     void arrangeLevelBlocks();
 };
-

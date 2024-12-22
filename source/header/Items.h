@@ -6,7 +6,7 @@ class Items
 {
 private:
     /***            Properties                ***/
-    GameEngine* gameEngine;
+    GameEngine *gameEngine;
     sf::IntRect itemIntRect, coinIntRect, flowerIntRect, mashroomIntRect, sparklsIntRect;
     sf::Clock timer, textFloatTimer;
     sf::Text floatingText;
@@ -20,12 +20,12 @@ public:
     float itemHeight;
 
     /***            Constructor             ***/
-    Items(GameEngine& gameEngine, item_t item, float x, float y);
+    Items(GameEngine &gameEngine, item_t item, float x, float y);
 
     /***            Methods                ***/
 
     // Draw item on screen
-    void draw(sf::RenderWindow& window);
+    void draw(sf::RenderWindow &window);
 
 private:
     // Handle animation for the item

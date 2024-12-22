@@ -1,6 +1,7 @@
 #include "../header/GameEngine.h"
 
-GameEngine::GameEngine() : mario(500, 200){
+GameEngine::GameEngine() : mario(500, 200)
+{
 	// Set initial values
 	levelTime = 300;
 	scoreInt = coinsInt = currentTime = counterTime = 0;
@@ -11,7 +12,10 @@ GameEngine::GameEngine() : mario(500, 200){
 	lifeScreen = gameRunning = false;
 
 	// Load font from file
-	if(!headerFont.loadFromFile(GAME_HEADER_FONT)) { std::cout << "Can't load GAME_HEADER_FONT\n"; }
+	if (!headerFont.loadFromFile(GAME_HEADER_FONT))
+	{
+		std::cout << "Can't load GAME_HEADER_FONT\n";
+	}
 	floatingTextFont.loadFromFile(FLOATING_FONT);
 
 	// set Score Text properties
@@ -21,7 +25,7 @@ GameEngine::GameEngine() : mario(500, 200){
 	scoreText.setString(scoreStr.str());
 
 	// set Timer Text Properties
-	timerText.setPosition(1395,5);
+	timerText.setPosition(1395, 5);
 	timerText.setFont(headerFont);
 	timerText.setCharacterSize(fontSize);
 
@@ -49,9 +53,9 @@ GameEngine::GameEngine() : mario(500, 200){
 	// Set levels Map values
 	levelsMap["level 1"] = 1;
 	levelsMap["level 2"] = 2;
-    levelsMap["level 3"] = 3;
+	levelsMap["level 3"] = 3;
 
-	//Set Lifes Text Properties
+	// Set Lifes Text Properties
 	lifeText.setCharacterSize(50);
 	lifeText.setFont(headerFont);
 	lifeText.setPosition(820, 420);
@@ -81,7 +85,10 @@ GameEngine::GameEngine() : mario(500, 200){
 	killBuffer.loadFromFile(KILL_SOUND);
 	killSound.setBuffer(killBuffer);
 
-	if (!powerUpAppearBuffer.loadFromFile(POWERUP_APPEAR_SOUND)) { cout << "faild to load powerup appear\n"; }
+	if (!powerUpAppearBuffer.loadFromFile(POWERUP_APPEAR_SOUND))
+	{
+		cout << "faild to load powerup appear\n";
+	}
 	powerUpAppearSound.setBuffer(powerUpAppearBuffer);
 
 	// Load Game Textures
@@ -90,13 +97,14 @@ GameEngine::GameEngine() : mario(500, 200){
 	itemTexture.loadFromFile(ITEMS);
 	enemyTextrue.loadFromFile(ENEMY);
 
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < 6; i++)
+	{
 		smashTextures[i].loadFromFile(SMASH_STONE_BLOCK + to_string(i) + ".png");
 	}
 }
 
-
-void GameEngine::updateScore(int IncScore) {
+void GameEngine::updateScore(int IncScore)
+{
 	// Increase current score
 	scoreInt += IncScore;
 	// clear score_str
@@ -105,47 +113,53 @@ void GameEngine::updateScore(int IncScore) {
 	scoreText.setString(scoreStr.str());
 }
 
-
-void GameEngine::startCountDown() {
+void GameEngine::startCountDown()
+{
 	timer.restart();
 }
 
-
-void GameEngine::updateTimer() {
+void GameEngine::updateTimer()
+{
 	// clear timer_str
 	timerStr.str(string());
 	currentTime = timer.getElapsedTime().asSeconds();
 	counterTime = levelTime - currentTime;
 
-	if (counterTime >= 0) {
+	if (counterTime >= 0)
+	{
 		timerStr << "TIME: " << setw(3) << setfill('0') << counterTime;
 		timerText.setString(timerStr.str());
 	}
-	else {/* Do Nothing */ }
+	else
+	{ /* Do Nothing */
+	}
 
-	if (counterTime == 0 && remainTime == -1) mario.startDie();
+	if (counterTime == 0 && remainTime == -1)
+		mario.startDie();
 }
 
-
-void GameEngine::updateCoins() {
+void GameEngine::updateCoins()
+{
 	coinsInt++;
 	coinsStr.str(string());
 	coinsStr << "x" << setw(2) << setfill('0') << coinsInt;
 	coinsText.setString(coinsStr.str());
 }
 
-
-bool GameEngine::isTimerFinished() {
+bool GameEngine::isTimerFinished()
+{
 	if (counterTime == 0)
 		return true;
 	else
 		return false;
 }
 
-
-void GameEngine::timeToScore() {
-	if (remainTime > 0) {
-		if (convertTimer.getElapsedTime().asMilliseconds() >= 6) {
+void GameEngine::timeToScore()
+{
+	if (remainTime > 0)
+	{
+		if (convertTimer.getElapsedTime().asMilliseconds() >= 6)
+		{
 			remainTime--;
 			levelTime = remainTime;
 
@@ -158,13 +172,13 @@ void GameEngine::timeToScore() {
 	}
 }
 
-
-void GameEngine::startTimeToScore() {
+void GameEngine::startTimeToScore()
+{
 	remainTime = counterTime;
 }
 
-
-void GameEngine::draw(RenderWindow& window) {
+void GameEngine::draw(RenderWindow &window)
+{
 	coinAnimation();
 	updateTimer();
 	updateLifes();
@@ -175,12 +189,15 @@ void GameEngine::draw(RenderWindow& window) {
 	window.draw(levelText);
 	window.draw(coinSprite);
 
-	if (lifeScreen) startLifeScreen(window);
+	if (lifeScreen)
+		startLifeScreen(window);
 }
 
-void GameEngine::startLifeScreen(RenderWindow& window) {
+void GameEngine::startLifeScreen(RenderWindow &window)
+{
 	Clock lifeScreenClock;
-	while (lifeScreenClock.getElapsedTime().asSeconds() < 3) {
+	while (lifeScreenClock.getElapsedTime().asSeconds() < 3)
+	{
 		window.clear();
 		window.draw(scoreText);
 		window.draw(timerText);
@@ -194,55 +211,62 @@ void GameEngine::startLifeScreen(RenderWindow& window) {
 	lifeScreen = false;
 }
 
-void GameEngine::setLevelName(string levelName) {
+void GameEngine::setLevelName(string levelName)
+{
 	levelText.setString(levelName);
 }
 
-void GameEngine::addPlayerInfo() {
+void GameEngine::addPlayerInfo()
+{
 	playersFile.open(ACCOUNT_FILE, ios::app);
 	playersFile << currentPlayer.username << ' ' << scoreInt << ' ' << levelsMap[std::string(levelText.getString())] << '\n';
 	playersFile.close();
 	playersFile.clear();
 }
 
-void GameEngine::coinAnimation() {
-	if (coinTimer.getElapsedTime().asSeconds() > 0.2f) {
+void GameEngine::coinAnimation()
+{
+	if (coinTimer.getElapsedTime().asSeconds() > 0.2f)
+	{
 		coinRect.left += 33;
-		if (coinRect.left > 99) coinRect.left = 0;
+		if (coinRect.left > 99)
+			coinRect.left = 0;
 
 		coinSprite.setTextureRect(coinRect);
 		coinTimer.restart();
 	}
-
 }
 
-
-void GameEngine::setHeaderPosition(position screenCenter) {
+void GameEngine::setHeaderPosition(position screenCenter)
+{
 	float topLeft = screenCenter.x - (WINDOW_WIDTH / 2);
-	scoreText.setPosition(topLeft + 20, 5); //Score
-	timerText.setPosition(topLeft + 1395, 5); // Timer
-	coinsText.setPosition(topLeft + 600, 5); // Coins Counter
+	scoreText.setPosition(topLeft + 20, 5);	   // Score
+	timerText.setPosition(topLeft + 1395, 5);  // Timer
+	coinsText.setPosition(topLeft + 600, 5);   // Coins Counter
 	coinSprite.setPosition(topLeft + 575, 38); // Coin sprite
-	levelText.setPosition(topLeft + 1000, 5); // Level Name
+	levelText.setPosition(topLeft + 1000, 5);  // Level Name
 	lifeText.setPosition(topLeft + 820, 420);
 	marioLifeSprite.setPosition(topLeft + 780, 450);
 }
 
-
-void GameEngine::updateLifes() {
+void GameEngine::updateLifes()
+{
 	lifeStr.str(string());
-	if (mario.dead) {
-		if (currentPlayer.lifes > 1) {
+	if (mario.dead)
+	{
+		if (currentPlayer.lifes > 1)
+		{
 			currentPlayer.lifes--;
 			lifeStr << "x" << currentPlayer.lifes;
 		}
-		else {
+		else
+		{
 			lifeStr << "Game Over";
 			gameRunning = false;
 		}
 		mario.dead = false;
 		lifeScreen = true;
 	}
-	
+
 	lifeText.setString(lifeStr.str());
-} 
+}

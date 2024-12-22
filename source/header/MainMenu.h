@@ -29,7 +29,7 @@ public: // attributes
 
 private: // methods
     // Draw Main Menu contents
-    void draw(sf::RenderWindow& window) override;
+    void draw(sf::RenderWindow &window) override;
 
     // Handle all events happening on Main Menu
     void catchEvents(sf::Event event) override;
@@ -59,7 +59,7 @@ public: // methods
     void handleAllEvents(sf::Event event);
 
     // Draw Menu and its children contents
-    void drawAll(sf::RenderWindow& window);
+    void drawAll(sf::RenderWindow &window);
 
     // Make Menu display
     void checkShow();
