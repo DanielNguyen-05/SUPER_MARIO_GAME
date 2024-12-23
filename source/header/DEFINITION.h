@@ -100,7 +100,7 @@ struct position
 
 #define CONTROL_BALL "assets/textures/Menu/controlBall.png"
 
-#define MENU_SOUND "assets/music/MenuMusic.ogg"
+#define MENU_SOUND "assets/music/menu.ogg"
 
 #define CHANGING_OPTION_SOUND "assets/sounds/fireball.wav"
 
@@ -126,8 +126,8 @@ struct position
 /***					GameEngine						***/
 #define PLAYERS_FILE "Files/Players.txt"
 #define ACCOUNT_FILE "Files/users.txt"
-#define GAME_HEADER_FONT "assets/fonts/some_font.ttf"
-#define GAME_FONT "assets/fonts/Super_Mario_Bros.ttf"
+#define GAME_HEADER_FONT "assets/fonts/legacy.ttf"
+#define GAME_FONT "assets/fonts/legacy.ttf"
 
 /**********************************************************/
 

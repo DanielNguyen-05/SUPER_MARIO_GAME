@@ -10,25 +10,7 @@ int main()
 
     window.setFramerateLimit(60); // Limit the framerate to 60 FPS.
 
-    // Check if ignore.txt exists
-    std::ifstream ignoreFile("ignore.txt");
-
-    bool skipMainMenu = ignoreFile.good();
-    cout << "skipMainMenu : " << skipMainMenu << endl;
-    ignoreFile.close();
-
-    // Pointer to MainMenu, initialize to nullptr
-    MainMenu *menu = nullptr;
-
-    if (!skipMainMenu)
-    {
-        std::cout << "Not found ignore.txt -> Menu not skipping!" << std::endl;
-        menu = new MainMenu(); // Create the menu if ignore.txt does not exist
-    }
-    else
-    {
-        std::cout << "ignore.txt founded -> Menu skipped!" << std::endl;
-    }
+    MainMenu menu = MainMenu();
 
     /*** Game Loop ***/
     while (window.isOpen())
@@ -42,27 +24,14 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
 
-            // Handle menu events only if the menu exists
-            if (menu)
-                menu->handleAllEvents(event);
+            menu.handleAllEvents(event);
         }
 
         // Clear the window
         window.clear();
-
-        // Draw the menu if it exists
-        if (menu)
-            menu->drawAll(window);
-
+        menu.drawAll(window);
         // Display the contents of the window
         window.display();
-    }
-
-    // Free allocated memory
-    if (menu)
-    {
-        delete menu;
-        menu = nullptr;
     }
 
     return 0;
