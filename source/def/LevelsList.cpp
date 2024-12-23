@@ -50,7 +50,7 @@ void LevelsList::show(player newPlayer)
 	// Find the last level this player has finished
 }
 
-void LevelsList::draw(RenderWindow &window)
+void LevelsList::draw(RenderWindow& window)
 {
 	if (level1.finished)
 		display = true;
@@ -84,7 +84,7 @@ void LevelsList::checkShow(player& newPlayer)
 	}
 }*/
 
-void LevelsList::catchEvents(Event event, player &newPlayer)
+void LevelsList::catchEvents(Event event, player& newPlayer)
 {
 	if (display)
 	{
@@ -190,36 +190,18 @@ void LevelsList::setOpendLevels()
 	}
 }
 
-void LevelsList::moveDown()
-{
-	// if box in last postion set to first
-	if (selectedLevel < maxLevel)
-	{
-		if (selectedLevel == maxLevel - 1)
-		{
-			selectedLevel = 0;
-		}
-		else
-		{
-			selectedLevel++;
-		}
-	}
-	optionShadowSprite.setPosition(695, 350 + selectedLevel * 120);
+void LevelsList::moveUp() {
+	if (selectedLevel >= maxLevel) return;
+	selectedLevel = (selectedLevel == maxLevel - 1) ? 0 : selectedLevel + 1;
+	updateShadowPosition();
 }
 
-void LevelsList::moveUp()
-{
-	if (selectedLevel < maxLevel)
-	{
-		// if box in first postion set to last
-		if (selectedLevel == 0)
-		{
-			selectedLevel = maxLevel - 1;
-		}
-		else
-		{
-			selectedLevel--;
-		}
-	}
+void LevelsList::moveDown() {
+	if (selectedLevel >= maxLevel) return;
+	selectedLevel = (selectedLevel == 0) ? maxLevel - 1 : selectedLevel - 1;
+	updateShadowPosition();
+}
+
+void LevelsList::updateShadowPosition() {
 	optionShadowSprite.setPosition(695, 350 + selectedLevel * 120);
 }

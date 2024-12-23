@@ -28,10 +28,10 @@ public:
 	LevelsList();
 
 	// Draw LevelList Menu
-	void draw(RenderWindow &window) override;
+	void draw(RenderWindow& window) override;
 
 	// Handle all event happend on Levels List window
-	void catchEvents(Event event, player &newPlayer);
+	void catchEvents(Event event, player& newPlayer);
 
 	// Make LevelList Menu display
 	void show(player newPlayer);
@@ -51,4 +51,6 @@ private:
 
 	// Move to the next level
 	void moveDown();
+
+	void updateShadowPosition();
 };
