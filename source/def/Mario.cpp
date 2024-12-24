@@ -1,5 +1,7 @@
 #include "../header/Mario.h"
 
+const float deathBoundaryY = 900;
+
 Mario::Mario(float x, float y)
 {
     // Init Mario motion varible
@@ -43,6 +45,7 @@ void Mario::draw(RenderWindow &window)
     window.draw(marioSprite);
 
     animation();
+
 }
 
 void Mario::animation()
@@ -131,7 +134,6 @@ void Mario::catchEvents(Event &event)
 
 void Mario::move()
 {
-
     if (onGround)
         jumping = false;
     IntRect marioRect = marioSprite.getTextureRect();
@@ -202,6 +204,16 @@ void Mario::move()
 
         timer1.restart();
     }
+    
+    if (marioSprite.getPosition().y > deathBoundaryY)
+    {
+        this->dead = true;
+       dying = goLeft = goRight = false;
+            speed[0] = 0;
+            speed[1] = 0;
+            marioSprite.setPosition(500, 200);
+    }
+
 
     if (speed[0] < 1 && speed[0] > -1 && onGround)
     {
@@ -425,17 +437,17 @@ void Mario::die()
         if (changeStateCounter == 1)
         { // Execute only for the first time
             speed[1] = -60;
-            marioSprite.move(-75, 0);
+            marioSprite.move(-75, 200);
             changeStateCounter = 0;
         }
-        if (marioSprite.getPosition().y > 900)
+        /*if (marioSprite.getPosition().y > 900)
         {
             dead = true;
             dying = goLeft = goRight = false;
             speed[0] = 0;
             speed[1] = 0;
             marioSprite.setPosition(500, 200);
-        }
+        }*/
     }
 }
 
