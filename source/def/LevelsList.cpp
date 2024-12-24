@@ -52,11 +52,9 @@ void LevelsList::show(player newPlayer)
 
 void LevelsList::draw(RenderWindow& window)
 {
-	if (level1.finished)
-		display = true;
 	// checkShow(gameEngine.currentPlayer);
 	// cout << level1.finished;
-	if (display /*|| level2.finished*/)
+	if (display || level1.finished/*|| level2.finished*/)
 	{
 		// std::cout <<"a";
 		window.draw(backGroundSprite);

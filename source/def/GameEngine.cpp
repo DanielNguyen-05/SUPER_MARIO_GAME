@@ -6,9 +6,9 @@ GameEngine::GameEngine() : mario(500, 200)
 	levelTime = 300;
 	scoreInt = coinsInt = currentTime = counterTime = 0;
 	remainTime = -1;
-	scoreStr << "MARIO: 000000";
+	scoreStr << "MARIO:\n000000";
 	coinsStr << "x00";
-	fontSize = 45;
+	fontSize = 40;
 	lifeScreen = gameRunning = false;
 
 	// Load font from file
@@ -19,18 +19,18 @@ GameEngine::GameEngine() : mario(500, 200)
 	floatingTextFont.loadFromFile(FLOATING_FONT);
 
 	// set Score Text properties
-	scoreText.setPosition(20, 5);
+	scoreText.setPosition(20, 20);
 	scoreText.setFont(headerFont);
 	scoreText.setCharacterSize(fontSize);
 	scoreText.setString(scoreStr.str());
 
 	// set Timer Text Properties
-	timerText.setPosition(1395, 5);
+	timerText.setPosition(1220, 5);
 	timerText.setFont(headerFont);
 	timerText.setCharacterSize(fontSize);
 
 	// Set Coins Text Properties
-	coinsText.setPosition(600, 5);
+	coinsText.setPosition(700, 5);
 	coinsText.setFont(headerFont);
 	coinsText.setCharacterSize(fontSize);
 	coinsText.setString(coinsStr.str());
@@ -40,7 +40,7 @@ GameEngine::GameEngine() : mario(500, 200)
 	coinTexture.loadFromFile(ITEMS);
 	coinSprite.setTexture(coinTexture);
 	coinSprite.setTextureRect(coinRect);
-	coinSprite.setPosition(575, 38);
+	coinSprite.setPosition(675, 38);
 	coinSprite.setScale(1.5, 1.5);
 	coinSprite.setOrigin(coinRect.width / 2, coinRect.height / 2);
 
@@ -109,7 +109,7 @@ void GameEngine::updateScore(int IncScore)
 	scoreInt += IncScore;
 	// clear score_str
 	scoreStr.str(string());
-	scoreStr << "MARIO: " << setw(6) << setfill('0') << scoreInt;
+	scoreStr << "MARIO:\n" << setw(6) << setfill('0') << scoreInt;
 	scoreText.setString(scoreStr.str());
 }
 
@@ -231,7 +231,6 @@ void GameEngine::coinAnimation()
 		coinRect.left += 33;
 		if (coinRect.left > 99)
 			coinRect.left = 0;
-
 		coinSprite.setTextureRect(coinRect);
 		coinTimer.restart();
 	}
@@ -240,10 +239,10 @@ void GameEngine::coinAnimation()
 void GameEngine::setHeaderPosition(position screenCenter)
 {
 	float topLeft = screenCenter.x - (WINDOW_WIDTH / 2);
-	scoreText.setPosition(topLeft + 20, 5);	   // Score
-	timerText.setPosition(topLeft + 1395, 5);  // Timer
-	coinsText.setPosition(topLeft + 600, 5);   // Coins Counter
-	coinSprite.setPosition(topLeft + 575, 38); // Coin sprite
+	scoreText.setPosition(topLeft + 20, 20);	   // Score
+	timerText.setPosition(topLeft + 1220, 5);  // Timer
+	coinsText.setPosition(topLeft + 700, 5);   // Coins Counter
+	coinSprite.setPosition(topLeft + 675, 38); // Coin sprite
 	levelText.setPosition(topLeft + 1000, 5);  // Level Name
 	lifeText.setPosition(topLeft + 820, 420);
 	marioLifeSprite.setPosition(topLeft + 780, 450);
