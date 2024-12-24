@@ -56,13 +56,16 @@ Level2::Level2(GameEngine &gameEngine)
         question.push_back(*new Blocks(gameEngine, QUESTION, FLOWER, questFLowerPosition[i - (quesMashCnt + quesCoinCnt)].x, questFLowerPosition[i - (quesMashCnt + quesCoinCnt)].y));
 
     // Call Constructer for all Rock Blocks
+    std::cout << rockCnt << "\n";
     for (int i = 0; i < rockCnt; i++)
     {
         rock.push_back(*new Blocks(gameEngine, ROCK, NONE, rockPosition[i].x, rockPosition[i].y));
+        //std::cout << i << "\t" << rockPosition[i].x << " \t" << rockPosition[i].y << "\n";
         rock[i].blockSprite.setColor(Color(70, 50, 180)); // blue filter
     }
 
-    // black.push_back(*new Enemy(gameEngine, TURTLE, rock[1].blockSprite, rock[2].blockSprite, groundShape[0], 900, 200));
+    black.push_back(*new Enemy(gameEngine, BLACK, rock[55].blockSprite, rock[56].blockSprite, groundShape[0], 4062, 200));
+    //turtle.push_back(*new Enemy(gameEngine, TURTLE, rock[58].blockSprite, rock[59].blockSprite, groundShape[0], 4434, 200));
 }
 
 void Level2::draw(RenderWindow &window)
@@ -91,11 +94,11 @@ void Level2::draw(RenderWindow &window)
         for (int i = 0; i < quesMashCnt + quesCoinCnt + quesFlowerCnt; i++)
             question[i].draw(window);
 
-        /*for (int i = 0; i < BLACK_NUM; i++)
+        for (int i = 0; i < BLACK_NUM; i++)
             black[i].draw(window);
 
-        for (int i = 0; i < 0; i++)
-            turtle[i].draw(window);*/
+       // for (int i = 0; i < TURTLE_NUM; i++)
+          //  turtle[i].draw(window);
 
         gameEngine->mario.draw(window);
         gameEngine->draw(window);
