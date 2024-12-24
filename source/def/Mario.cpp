@@ -1,6 +1,6 @@
 #include "../header/Mario.h"
 
-const float deathBoundaryY = 900;
+const float deathBoundaryY = 1100;
 
 Mario::Mario(float x, float y)
 {
@@ -208,10 +208,12 @@ void Mario::move()
     if (marioSprite.getPosition().y > deathBoundaryY)
     {
         this->dead = true;
-       dying = goLeft = goRight = false;
-            speed[0] = 0;
-            speed[1] = 0;
-            marioSprite.setPosition(500, 200);
+        smallState();
+        dying = goLeft = goRight = false; 
+        speed[0] = 0;
+        speed[1] = 0;
+            
+        marioSprite.setPosition(500, 200);
     }
 
 
@@ -432,12 +434,12 @@ void Mario::die()
     if (dying)
     {
         onGround = false; // to leave the ground
-
+        smallState();
         marioSprite.setTextureRect(IntRect(192, 96, 30, 32));
         if (changeStateCounter == 1)
         { // Execute only for the first time
             speed[1] = -60;
-            marioSprite.move(-75, 200);
+            marioSprite.move(-75, 0);
             changeStateCounter = 0;
         }
         /*if (marioSprite.getPosition().y > 900)
