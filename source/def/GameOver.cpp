@@ -80,7 +80,7 @@ void GameOver::initializeShapes() {
     }
 }
 
-
+// Chỗ này thì lấy cái score và coins của người dùng truyền vô, này tao truyền mặc định 12350 và 47
 GameOver::GameOver(sf::RenderWindow& window, int finalScore = 12350, int finalCoins = 47)
     : window(window), score(finalScore), coins(finalCoins) {
     initializeTexts();
