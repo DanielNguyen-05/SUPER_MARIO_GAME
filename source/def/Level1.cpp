@@ -74,6 +74,10 @@ void Level1::draw(RenderWindow &window)
             camera.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
             cout << "omar";
         }
+        else if (!finished) // Không cập nhật camera nếu game đã kết thúc
+        {
+            handleView(window);
+        }
         window.draw(backGroundShape);
 
         for (int i = 0; i < GROUNDS_NUM; i++)
