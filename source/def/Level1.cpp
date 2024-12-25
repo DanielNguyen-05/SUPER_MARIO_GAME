@@ -68,17 +68,13 @@ Level1::Level1(GameEngine &gameEngine)
 void Level1::draw(RenderWindow &window)
 {
     //View defaultView(FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
-	//window.setView(defaultView);
+	//window.setView(camera);
     if (display)
     {
         if (gameEngine->mario.dying)
         {
             camera.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
             cout << "omar";
-        }
-        else if (!finished) // Không cập nhật camera nếu game đã kết thúc
-        {
-            handleView(window);
         }
         window.draw(backGroundShape);
 
@@ -186,9 +182,7 @@ void Level1::start()
 
 void Level1::end()
 {
-    std::cout << "end";
     display = false;
-    gameEngine->currentPlayer.level = "2";
     gameEngine->gameRunning = false;
     finished = true;
 }

@@ -29,6 +29,8 @@ public:
 
     LevelsList levelsList;
 
+    std::fstream playersFile;
+
     PlayerOptionsMenu();
 
     // Vẽ giao diện
@@ -42,4 +44,10 @@ public:
     void handleKeyReleased(sf::Keyboard::Key keyCode, player &newPlayer);
 
     void handleEnter(player &newPlayer);
+
+    // Get how many lines in players file
+	int getNumberOfLines();
+
+    // Search for player name in files to get his last checkpoint
+	void handleLevelsList(player& newPlayer);
 };

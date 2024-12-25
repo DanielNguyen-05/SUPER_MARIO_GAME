@@ -133,7 +133,6 @@ void PlayerNameMenu::handleEnter(player &newPlayer, LevelsList &levelsList)
 {
 	if (!username.isEmpty())
 	{
-		std::cout << "t4";
 		handleLogin(newPlayer, levelsList);
 		changingOptionSound.play();
 	}
@@ -236,8 +235,9 @@ void PlayerNameMenu::handleLogin(player &newPlayer, LevelsList &levelsList)
 		{
 			setErrorMessage("Login successful!");
 			this->hide();
-			levelsList.show(newPlayer);
 			newPlayer.username = std::string(username);
+			newPlayer.level = to_string(1);
+			levelsList.show(newPlayer);
 			saveUsernameToFile();
 			resetFields();
 		}

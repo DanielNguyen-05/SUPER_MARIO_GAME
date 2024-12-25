@@ -1,6 +1,6 @@
 #include "../header/Mario.h"
 
-const float deathBoundaryY = 950;
+const float deathBoundaryY = 1100;
 
 Mario::Mario(float x, float y)
 {

@@ -301,4 +301,10 @@ void GameEngine::reset(){
 	coinSprite.setPosition(675, 38);
 	coinSprite.setScale(1.5, 1.5);
 	coinSprite.setOrigin(coinRect.width / 2, coinRect.height / 2);
+
+	// set Timer Text Properties
+	timerText.setPosition(1220, 5);
+	timerText.setFont(headerFont);
+	timerText.setCharacterSize(fontSize);
+
 }

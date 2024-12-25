@@ -56,7 +56,6 @@ Level2::Level2(GameEngine &gameEngine)
         question.push_back(*new Blocks(gameEngine, QUESTION, FLOWER, questFLowerPosition[i - (quesMashCnt + quesCoinCnt)].x, questFLowerPosition[i - (quesMashCnt + quesCoinCnt)].y));
 
     // Call Constructer for all Rock Blocks
-    std::cout << rockCnt << "\n";
     for (int i = 0; i < rockCnt; i++)
     {
         rock.push_back(*new Blocks(gameEngine, ROCK, NONE, rockPosition[i].x, rockPosition[i].y));
@@ -121,6 +120,7 @@ void Level2::catchEvents(Event event)
 void Level2::start()
 {
     resetLevel();
+    camera.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
     display = true;
     gameEngine->startCountDown();
 }

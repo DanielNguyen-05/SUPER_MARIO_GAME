@@ -37,6 +37,7 @@ public:
 	// Make LevelList Menu display
 	void show(player newPlayer);
 
+
 private:
 	// Search for player name in files to get his last checkpoint
 	void checkOpendLevels();
