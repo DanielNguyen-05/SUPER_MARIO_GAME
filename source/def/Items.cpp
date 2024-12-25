@@ -142,9 +142,9 @@ void Items::TextFloat()
 
 void Items::checkTaken()
 {
-    if (!gameEngine->mario.dying)
+    if (!gameEngine->character.dying)
     {
-        if (itemSprite.getGlobalBounds().intersects(gameEngine->mario.marioSprite.getGlobalBounds()) && !faid || (blockPoped && itemType == COIN))
+        if (itemSprite.getGlobalBounds().intersects(gameEngine->character.charSprite.getGlobalBounds()) && !faid || (blockPoped && itemType == COIN))
         {
             isTaken = true;
             switch (itemType)
@@ -179,10 +179,10 @@ void Items::setTaken()
             maxRect = 6;
             break;
         case MASHROOM:
-            gameEngine->mario.PoweringUpToBig = true;
+            gameEngine->character.PoweringUpToBig = true;
             break;
         case FLOWER:
-            gameEngine->mario.PoweringUpToSuper = true;
+            gameEngine->character.PoweringUpToSuper = true;
             break;
         }
         faid = true;

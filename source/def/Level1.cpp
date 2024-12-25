@@ -5,7 +5,7 @@ Level1::Level1(GameEngine &gameEngine)
     // Set initial values
     this->gameEngine = &gameEngine;
     display = finished = false;
-    memset(marioOnGround, false, sizeof marioOnGround);
+    memset(charOnGround, false, sizeof charOnGround);
     coinCnt = stoneCnt = stoneCoinCnt = quesCoinCnt = quesMashCnt = quesFlowerCnt = rockCnt = 0;
     levelWidth = 13397;
 
@@ -67,11 +67,11 @@ Level1::Level1(GameEngine &gameEngine)
 
 void Level1::draw(RenderWindow &window)
 {
-    //View defaultView(FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
-	//window.setView(camera);
+    // View defaultView(FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
+    // window.setView(camera);
     if (display)
     {
-        if (gameEngine->mario.dying)
+        if (gameEngine->character.dying)
         {
             camera.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
             cout << "omar";
@@ -104,7 +104,7 @@ void Level1::draw(RenderWindow &window)
         for (int i = 0; i < TURTLE_NUM; i++)
             turtle[i].draw(window);
 
-        gameEngine->mario.draw(window);
+        gameEngine->character.draw(window);
         gameEngine->draw(window);
     }
 }
@@ -113,7 +113,7 @@ void Level1::catchEvents(Event event)
 {
     if (display)
     {
-        gameEngine->mario.catchEvents(event);
+        gameEngine->character.catchEvents(event);
 
         if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)
         {
@@ -167,8 +167,8 @@ void Level1::resetLevel()
 
     black.push_back(*new Enemy(*gameEngine, BLACK, rock[39].blockSprite, rock[40].blockSprite, groundShape[0], 2500, 200));
     turtle.push_back(*new Enemy(*gameEngine, TURTLE, rock[41].blockSprite, rock[42].blockSprite, groundShape[1], 5700, 200));
-    // Reset lại trạng thái mario*/
-    gameEngine->mario.reset();
+    // Reset lại trạng thái character*/
+    gameEngine->character.reset();
 }
 
 void Level1::start()
@@ -189,21 +189,21 @@ void Level1::end()
 
 void Level1::checkGround(int num)
 {
-    if (!gameEngine->mario.dying)
+    if (!gameEngine->character.dying)
     {
-        if (groundShape[num].getGlobalBounds().intersects(gameEngine->mario.marioSprite.getGlobalBounds()))
+        if (groundShape[num].getGlobalBounds().intersects(gameEngine->character.charSprite.getGlobalBounds()))
         {
-            gameEngine->mario.marioSprite.setPosition(gameEngine->mario.marioSprite.getPosition().x, groundShape[num].getGlobalBounds().top);
-            gameEngine->mario.onGround = true;
-            marioOnGround[num] = true;
+            gameEngine->character.charSprite.setPosition(gameEngine->character.charSprite.getPosition().x, groundShape[num].getGlobalBounds().top);
+            gameEngine->character.onGround = true;
+            charOnGround[num] = true;
         }
         else
         {
-            if (marioOnGround[num] && gameEngine->mario.onGround)
+            if (charOnGround[num] && gameEngine->character.onGround)
             {
-                marioOnGround[num] = false;
-                gameEngine->mario.onGround = false;
-                gameEngine->mario.speed[1] = -5;
+                charOnGround[num] = false;
+                gameEngine->character.onGround = false;
+                gameEngine->character.speed[1] = -5;
             }
         }
     }
@@ -212,10 +212,10 @@ void Level1::checkGround(int num)
 void Level1::handleView(RenderWindow &window)
 {
     // a + (b - a) * c
-    if (/*!gameEngine->mario.stuck*/ !gameEngine->mario.dying)
+    if (/*!gameEngine->character.stuck*/ !gameEngine->character.dying)
     {
         float fr = (1 / 50.0);
-        screenCenter = {screenCenter.x + (gameEngine->mario.marioSprite.getPosition().x - screenCenter.x) * fr * 20, 450};
+        screenCenter = {screenCenter.x + (gameEngine->character.charSprite.getPosition().x - screenCenter.x) * fr * 20, 450};
 
         if (screenCenter.x > WINDOW_WIDTH / 2 && screenCenter.x < levelWidth - (WINDOW_WIDTH / 2))
         {
@@ -228,17 +228,17 @@ void Level1::handleView(RenderWindow &window)
 
 void Level1::checkEnd()
 {
-    Vector2f marioPos = gameEngine->mario.marioSprite.getPosition();
+    Vector2f marioPos = gameEngine->character.charSprite.getPosition();
     int space = 70;
     if (marioPos.x < space)
     {
-        gameEngine->mario.marioSprite.setPosition(space, marioPos.y);
-        gameEngine->mario.speed[0] = 0;
+        gameEngine->character.charSprite.setPosition(space, marioPos.y);
+        gameEngine->character.speed[0] = 0;
     }
     else if (marioPos.x > levelWidth - space)
     {
-        gameEngine->mario.marioSprite.setPosition(levelWidth - space, marioPos.y);
-        gameEngine->mario.speed[0] = 0;
+        gameEngine->character.charSprite.setPosition(levelWidth - space, marioPos.y);
+        gameEngine->character.speed[0] = 0;
         gameEngine->addPlayerInfo(1);
         end();
     }
@@ -328,14 +328,14 @@ void Level1::arrangeLevelBlocks()
 /*
 void Level1::checkEnemyCollision() {
     for (int i = 0; i < BLACK_NUM; i++) {
-        if (gameEngine->mario.marioSprite.getGlobalBounds().intersects(black[i].enemySprite.getGlobalBounds())) {
-            gameEngine->mario.dying = true; // Trigger Mario death
+        if (gameEngine->character.charSprite.getGlobalBounds().intersects(black[i].enemySprite.getGlobalBounds())) {
+            gameEngine->character.dying = true; // Trigger Mario death
             return; // Stop further checks
         }
     }
     for (int i = 0; i < TURTLE_NUM; i++) {
-        if (gameEngine->mario.marioSprite.getGlobalBounds().intersects(turtle[i].enemySprite.getGlobalBounds())) {
-            gameEngine->mario.dying = true; // Trigger Mario death
+        if (gameEngine->character.charSprite.getGlobalBounds().intersects(turtle[i].enemySprite.getGlobalBounds())) {
+            gameEngine->character.dying = true; // Trigger Mario death
             return;
         }
     }

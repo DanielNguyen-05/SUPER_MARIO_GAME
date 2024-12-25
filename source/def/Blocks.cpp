@@ -16,7 +16,7 @@ Blocks::Blocks(GameEngine &gameEngine, block_t blockType, item_t itemType, float
     currentRect = movingSpeed = 0;
     display = true;
     item.display = false;
-    faid = isPopUp = marioOn = stuckOn = popUpBlock = false;
+    faid = isPopUp = charOn = stuckOn = popUpBlock = false;
     startPos.x = x;
     startPos.y = y;
 
@@ -194,9 +194,9 @@ void Blocks::popUp()
 void Blocks::checkIntersection()
 {
     // Calculate Mario and Block bounds
-    FloatRect marioBounds = gameEngine->mario.marioSprite.getGlobalBounds(),
+    FloatRect marioBounds = gameEngine->character.charSprite.getGlobalBounds(),
               blockBounds = blockSprite.getGlobalBounds();
-    Vector2f marioPos = gameEngine->mario.marioSprite.getPosition(), blockPos = blockSprite.getPosition();
+    Vector2f marioPos = gameEngine->character.charSprite.getPosition(), blockPos = blockSprite.getPosition();
 
     float blockTopPoint = blockPos.y - (blockBounds.height / 2),
           blockBottomPoint = blockPos.y + (blockBounds.height / 2),
@@ -208,13 +208,13 @@ void Blocks::checkIntersection()
     {
         if (marioPos.x >= blockLeftPoint && marioPos.x <= blockRightPoint)
         {
-            if (gameEngine->mario.speed[1] > 0 && blockType != SMASH)
+            if (gameEngine->character.speed[1] > 0 && blockType != SMASH)
             { // jump on the block
-                gameEngine->mario.marioSprite.setPosition(marioPos.x, blockBounds.top);
-                gameEngine->mario.onGround = true;
-                marioOn = true;
+                gameEngine->character.charSprite.setPosition(marioPos.x, blockBounds.top);
+                gameEngine->character.onGround = true;
+                charOn = true;
             }
-            else if (gameEngine->mario.speed[1] < 0 /*marioPos.y - (marioBounds.height/2) >= blockBottomPoint*/)
+            else if (gameEngine->character.speed[1] < 0 /*marioPos.y - (marioBounds.height/2) >= blockBottomPoint*/)
             { // Hit the block with head
                 float blockBottom = blockBounds.top + blockBounds.height;
 
@@ -222,41 +222,41 @@ void Blocks::checkIntersection()
                 if (blockType == SMASH)
                     blockBottom = (blockBounds.top + blockBottom) / 2;
 
-                gameEngine->mario.marioSprite.setPosition(marioPos.x, blockBottom + marioBounds.height);
-                gameEngine->mario.speed[1] = 2;
+                gameEngine->character.charSprite.setPosition(marioPos.x, blockBottom + marioBounds.height);
+                gameEngine->character.speed[1] = 2;
                 handleHitBlock();
             }
         }
         else
         { // touch from side
-            if (gameEngine->mario.speed[1] > 1 && !gameEngine->mario.onGround || gameEngine->mario.speed[1] < 1)
+            if (gameEngine->character.speed[1] > 1 && !gameEngine->character.onGround || gameEngine->character.speed[1] < 1)
             {
                 float blockRight = blockBounds.left + blockBounds.width;
                 if (marioPos.x > blockPos.x)
-                    gameEngine->mario.marioSprite.setPosition(blockRight + (marioBounds.width / 2), marioPos.y);
+                    gameEngine->character.charSprite.setPosition(blockRight + (marioBounds.width / 2), marioPos.y);
                 else
-                    gameEngine->mario.marioSprite.setPosition(blockBounds.left - (marioBounds.width / 2), marioPos.y);
-                gameEngine->mario.speed[0] = 0;
-                gameEngine->mario.stuck = true;
+                    gameEngine->character.charSprite.setPosition(blockBounds.left - (marioBounds.width / 2), marioPos.y);
+                gameEngine->character.speed[0] = 0;
+                gameEngine->character.stuck = true;
                 stuckOn = true;
             }
         }
     }
     else
     {
-        if (marioOn && gameEngine->mario.onGround)
-        { // Fall when mario left the block
-            marioOn = false;
-            gameEngine->mario.onGround = false;
-            gameEngine->mario.speed[1] = -5;
+        if (charOn && gameEngine->character.onGround)
+        { // Fall when character left the block
+            charOn = false;
+            gameEngine->character.onGround = false;
+            gameEngine->character.speed[1] = -5;
         }
 
-        // Fix Screen vibration when mario touch block side
-        if (gameEngine->mario.stuck && stuckOn)
+        // Fix Screen vibration when character touch block side
+        if (gameEngine->character.stuck && stuckOn)
         {
             if (abs(marioPos.x - blockPos.x) > 60 || abs(marioPos.y - blockPos.y) > 100)
             {
-                gameEngine->mario.stuck = false; // not touching the side anymore
+                gameEngine->character.stuck = false; // not touching the side anymore
                 stuckOn = false;
             }
         }
@@ -268,7 +268,7 @@ void Blocks::handleHitBlock()
     switch (blockType)
     {
     case STONE:
-        switch (gameEngine->mario.marioState)
+        switch (gameEngine->character.charState)
         {
         case SMALL:
             startPopUp();

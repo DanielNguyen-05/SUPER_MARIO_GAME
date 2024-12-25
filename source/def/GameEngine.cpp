@@ -1,6 +1,6 @@
 #include "../header/GameEngine.h"
 
-GameEngine::GameEngine() : mario(500, 200)
+GameEngine::GameEngine() : character(500, 200)
 {
 	// Set initial values
 	levelTime = 300;
@@ -63,11 +63,11 @@ GameEngine::GameEngine() : mario(500, 200)
 	lifeText.setString(lifeStr.str());
 
 	// Set Mario Sprite Properties
-	marioLifeSprite.setTexture(mario.marioTexture);
-	marioLifeSprite.setTextureRect(IntRect(0, 96, 28, 32));
-	marioLifeSprite.setScale(2, 2);
-	marioLifeSprite.setOrigin(14, 16);
-	marioLifeSprite.setPosition(780, 450);
+	charLifeSprite.setTexture(character.charTexture);
+	charLifeSprite.setTextureRect(IntRect(0, 96, 28, 32));
+	charLifeSprite.setScale(2, 2);
+	charLifeSprite.setOrigin(14, 16);
+	charLifeSprite.setPosition(780, 450);
 
 	// Load Game Sound Effects
 	popUpBuffer.loadFromFile(POPUP_SOUND);
@@ -109,7 +109,8 @@ void GameEngine::updateScore(int IncScore)
 	scoreInt += IncScore;
 	// clear score_str
 	scoreStr.str(string());
-	scoreStr << "MARIO:\n" << setw(6) << setfill('0') << scoreInt;
+	scoreStr << "MARIO:\n"
+			 << setw(6) << setfill('0') << scoreInt;
 	scoreText.setString(scoreStr.str());
 }
 
@@ -135,7 +136,7 @@ void GameEngine::updateTimer()
 	}
 
 	if (counterTime == 0 && remainTime == -1)
-		mario.startDie();
+		character.startDie();
 }
 
 void GameEngine::updateCoins()
@@ -177,7 +178,7 @@ void GameEngine::startTimeToScore()
 	remainTime = counterTime;
 }
 
-void GameEngine::draw(RenderWindow& window)
+void GameEngine::draw(RenderWindow &window)
 {
 	coinAnimation();
 	updateTimer();
@@ -193,7 +194,7 @@ void GameEngine::draw(RenderWindow& window)
 		startLifeScreen(window);
 }
 
-void GameEngine::startLifeScreen(RenderWindow& window)
+void GameEngine::startLifeScreen(RenderWindow &window)
 {
 	Clock lifeScreenClock;
 	while (lifeScreenClock.getElapsedTime().asSeconds() < 3)
@@ -205,7 +206,7 @@ void GameEngine::startLifeScreen(RenderWindow& window)
 		window.draw(levelText);
 		window.draw(coinSprite);
 		window.draw(lifeText);
-		window.draw(marioLifeSprite);
+		window.draw(charLifeSprite);
 		window.display();
 	}
 	lifeScreen = false;
@@ -226,43 +227,54 @@ void GameEngine::addPlayerInfo(int level)
 
 	// Đọc toàn bộ file và xử lý từng dòng
 	std::string line;
-	while (std::getline(inputFile, line)) {
+	while (std::getline(inputFile, line))
+	{
 		std::istringstream iss(line);
 		std::string fileUsername;
 		int level1Score, level2Score, level3Score;
 
 		// Giả định file có cấu trúc: username level0Score level1Score level2Score
-		if (iss >> fileUsername >> level1Score >> level2Score >> level3Score) {
-			if (fileUsername == currentPlayer.username) {
+		if (iss >> fileUsername >> level1Score >> level2Score >> level3Score)
+		{
+			if (fileUsername == currentPlayer.username)
+			{
 				userFound = true;
-				if (level == 1) {
+				if (level == 1)
+				{
 					level1Score = currentScore;
-					if (level2Score == -1) level2Score = 0;
+					if (level2Score == -1)
+						level2Score = 0;
 				}
-				else if (level == 2) {
+				else if (level == 2)
+				{
 					level2Score = currentScore;
-					if (level3Score == -1) level3Score = 0;
+					if (level3Score == -1)
+						level3Score = 0;
 				}
-				else if (level == 3) {
+				else if (level == 3)
+				{
 					level3Score = currentScore;
 				}
 
 				// Ghi lại dòng đã cập nhật
 				tempBuffer << fileUsername << ' ' << level1Score << ' ' << level2Score << ' ' << level3Score << '\n';
 			}
-			else {
+			else
+			{
 				// Ghi lại dòng không liên quan
 				tempBuffer << line << '\n';
 			}
 		}
-		else {
+		else
+		{
 			// Nếu dòng không đúng định dạng, giữ nguyên
 			tempBuffer << line << '\n';
 		}
 	}
 	inputFile.close();
 
-	if (!userFound) {
+	if (!userFound)
+	{
 		// Nếu không tìm thấy user, thêm mới
 		tempBuffer << currentPlayer.username << " 0 -1 -1\n";
 	}
@@ -288,19 +300,19 @@ void GameEngine::coinAnimation()
 void GameEngine::setHeaderPosition(position screenCenter)
 {
 	float topLeft = screenCenter.x - (WINDOW_WIDTH / 2);
-	scoreText.setPosition(topLeft + 20, 20);	   // Score
+	scoreText.setPosition(topLeft + 20, 20);   // Score
 	timerText.setPosition(topLeft + 1220, 5);  // Timer
 	coinsText.setPosition(topLeft + 700, 5);   // Coins Counter
 	coinSprite.setPosition(topLeft + 675, 38); // Coin sprite
 	levelText.setPosition(topLeft + 1000, 5);  // Level Name
 	lifeText.setPosition(topLeft + 820, 420);
-	marioLifeSprite.setPosition(topLeft + 780, 450);
+	charLifeSprite.setPosition(topLeft + 780, 450);
 }
 
 void GameEngine::updateLifes()
 {
 	lifeStr.str(string());
-	if (mario.dead)
+	if (character.dead)
 	{
 		if (currentPlayer.lifes > 1)
 		{
@@ -312,19 +324,21 @@ void GameEngine::updateLifes()
 			lifeStr << "Game Over";
 			gameRunning = false;
 		}
-		mario.dead = false;
+		character.dead = false;
 		lifeScreen = true;
 	}
 
 	lifeText.setString(lifeStr.str());
 }
 
-void GameEngine::reset() {
+void GameEngine::reset()
+{
 	scoreInt = 0;
 	coinsInt = 0;
 
 	scoreStr.str(string());
-	scoreStr << "MARIO:\n" << setw(6) << setfill('0') << scoreInt;
+	scoreStr << "MARIO:\n"
+			 << setw(6) << setfill('0') << scoreInt;
 	scoreText.setString(scoreStr.str());
 
 	scoreText.setPosition(20, 20);
@@ -355,5 +369,4 @@ void GameEngine::reset() {
 	timerText.setPosition(1220, 5);
 	timerText.setFont(headerFont);
 	timerText.setCharacterSize(fontSize);
-
 }

@@ -27,7 +27,7 @@ private:
     position coinPosition[COINS_NUM], stonePosition[STONE_NUM], stoneCoinPosition[STONE_WITH_COIN_NUM],
         questCoinPosition[QUESTION_WITH_COIN_NUM], questMashPosition[QUESTION_WITH_MASH_NUM],
         questFLowerPosition[QUESTION_WITH_FLOWER_NUM], rockPosition[ROCK_NUM];
-    bool display, marioOnGround[GROUNDS_NUM];
+    bool display, charOnGround[GROUNDS_NUM];
     float levelWidth;
     int coinCnt, stoneCnt, stoneCoinCnt, quesCoinCnt, quesMashCnt, quesFlowerCnt, rockCnt;
     Texture backGroundTexture, groundTexture;
