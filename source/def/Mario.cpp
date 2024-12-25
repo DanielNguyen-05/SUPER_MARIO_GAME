@@ -2,6 +2,11 @@
 
 const float deathBoundaryY = 1100;
 
+bool DEBUG_MODE = true;
+
+// [0] đại diện cho x.
+// [1] đại diện cho y.
+
 Mario::Mario(float x, float y)
 {
     // Init Mario motion varible
@@ -27,7 +32,16 @@ Mario::Mario(float x, float y)
     marioSprite.setTexture(marioTexture);
     marioSprite.setPosition(x, y);
     marioSprite.setScale(2, 2);
-    smallState();
+    bigState();
+
+    if (DEBUG_MODE)
+    {
+        debugBox.setSize(sf::Vector2f(50, 100));       // Set box size
+        debugBox.setFillColor(sf::Color::Transparent); // Transparent fill
+        debugBox.setOutlineThickness(2);               // Outline thickness
+        debugBox.setOutlineColor(sf::Color::Red);      // Outline color
+        debugBox.setPosition(x, y);                    // Initial position
+    }
 
     // Set Sound effect Properties
     jumpBuffer.loadFromFile(JUMP_SOUND);
@@ -42,8 +56,11 @@ Mario::Mario(float x, float y)
 
 void Mario::draw(RenderWindow &window)
 {
+    if (DEBUG_MODE)
+    {
+        window.draw(debugBox);
+    }
     window.draw(marioSprite);
-
     animation();
 }
 
@@ -51,7 +68,6 @@ void Mario::animation()
 {
     if ((!PoweringUpToBig && !PoweringUpToSuper) && !damaging)
         move();
-
     changeToBig();
     changeToSuper();
     damage();
@@ -202,7 +218,6 @@ void Mario::move()
             // set down when press arrow down
             if (goDown && marioState != SMALL)
             {
-
                 goDown = false;
             }
 
@@ -211,11 +226,15 @@ void Mario::move()
 
         marioSprite.move(speed[0], speed[1]);
 
+        if (DEBUG_MODE)
+        {
+            debugBox.setPosition(marioSprite.getPosition());
+        }
+
         timer1.restart();
     }
     if (marioSprite.getPosition().y >= deathBoundaryY)
     {
-        cout << "Entered death boundary";
         this->dead = true;
         dying = goLeft = goRight = false;
         speed[0] = 0;
@@ -448,14 +467,6 @@ void Mario::die()
             marioSprite.move(-75, 0);
             changeStateCounter = 0;
         }
-        /*if (marioSprite.getPosition().y > 900)
-        {
-            dead = true;
-            dying = goLeft = goRight = false;
-            speed[0] = 0;
-            speed[1] = 0;
-            marioSprite.setPosition(500, 200);
-        }*/
     }
 }
 
@@ -483,7 +494,10 @@ void Mario::reset()
     // Reset Mario's position and scale
     marioSprite.setPosition(500, 200);
     marioSprite.setScale(2, 2);
-
+    if (DEBUG_MODE)
+    {
+        debugBox.setPosition(500, 200);
+    }
     // Reset to small state by default
     smallState();
 }

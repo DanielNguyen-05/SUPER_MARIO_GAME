@@ -12,6 +12,7 @@ private:
     area marioArea;
     SoundBuffer jumpBuffer, damageBuffer, dieBuffer;
     Sound jumpSound, damageSound, dieSound;
+    sf::RectangleShape debugBox;
 
 public:
     Texture marioTexture, marioSuperTexture;
