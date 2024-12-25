@@ -21,7 +21,7 @@ Luigi::Luigi(float x, float y)
     {
         std::cout << "Can't load Luigi_SUPER_CHARACTER\n";
     }
-    LuigiTexture.setSmooth(true);
+    LuigiTexture.setSmooth(false);
     LuigiSprite.setTexture(LuigiTexture);
     LuigiSprite.setPosition(x, y);
     LuigiSprite.setScale(2, 2);
