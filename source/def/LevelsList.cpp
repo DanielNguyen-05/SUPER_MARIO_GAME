@@ -40,6 +40,7 @@ LevelsList::LevelsList() : level1(gameEngine), level2(gameEngine), level3(gameEn
 
 void LevelsList::show(player newPlayer)
 {
+	maxLevel = stoi(newPlayer.level);
 	checkOpendLevels();
 	display = true;
 	gameEngine.currentPlayer = newPlayer;
@@ -52,13 +53,12 @@ void LevelsList::show(player newPlayer)
 
 void LevelsList::draw(RenderWindow& window)
 {
-	View defaultView(FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
-	window.setView(defaultView);
 	// checkShow(gameEngine.currentPlayer);
 	// cout << level1.finished;
-	if (display || level1.finished/*|| level2.finished*/)
+	if (display || level1.finished || level2.finished)
 	{
-		// std::cout <<"a";
+		View defaultView(FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
+		window.setView(defaultView);
 		window.draw(backGroundSprite);
 		window.draw(optionShadowSprite);
 		window.draw(backText);
@@ -77,7 +77,7 @@ void LevelsList::draw(RenderWindow& window)
 
 void LevelsList::catchEvents(Event event, player& newPlayer)
 {
-	if (display || level1.finished)
+	if (display || level1.finished || level2.finished)
 	{
 		switch (event.type)
 		{
@@ -94,15 +94,17 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 				break;
 			case Keyboard::Enter:
 				this->hide();
-				std::cout << "t3";
 				gameEngine.gameRunning = true;
 				switch (selectedLevel)
 				{
 				case 0:
 					level1.finished = false;
+					level2.finished = false;
 					level1.start();
 					break;
 				case 1:
+					level1.finished = false;
+					level2.finished = false;
 					level2.start();
 					break;
 				case 2:
@@ -110,13 +112,19 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 					break;
 				}
 				break;
-			case Keyboard::Escape:
+			}
+			break;
+		case Event::KeyReleased:
+			switch(event.key.code){
+				case Keyboard::Escape:
+				level1.finished = false;
+				level2.finished = false;
 				this->hide();
 				newPlayer.username = "";
 				changingOptionSound.play();
 				break;
-			}
-			break;
+				}
+			break;	
 		}
 	}
 	level1.catchEvents(event);
@@ -126,7 +134,8 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 
 void LevelsList::checkOpendLevels()
 {
-	int lines = getNumberOfLines();
+	//maxLevel = stoi(gameEngine.currentPlayer.level);
+	/*int lines = getNumberOfLines();
 	player tempPlayer;
 	maxLevel = 1; // Default to level 1
 
@@ -149,7 +158,7 @@ void LevelsList::checkOpendLevels()
 	}
 
 	// Đóng file
-	playersFile.close();
+	playersFile.close();*/
 
 	// Cập nhật các level đã mở
 	setOpendLevels();

@@ -95,6 +95,7 @@ void PlayerOptionsMenu::catchEvents(Event event, player &newPlayer)
         }
     }
     updatePlayerOptionsColors();
+    if (user.display)
     user.catchEvents(event, newPlayer, levelsList);
     levelsList.catchEvents(event, newPlayer);
 }
@@ -146,6 +147,7 @@ void PlayerOptionsMenu::handleEnter(player &newPlayer)
         // controlEnemiesSpeed();
         break;
     case 1:
+        handleLevelsList(newPlayer);
         levelsList.show(newPlayer);
         selectedPlayerOption = 0;
         // controlEnemiesSpeed();
@@ -188,4 +190,52 @@ void PlayerOptionsMenu::updatePlayerOptionsColors()
 bool PlayerOptionsMenu::isHovering(const sf::Text &text, const sf::Vector2i &mousePos)
 {
     return text.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
+}
+
+void PlayerOptionsMenu::handleLevelsList(player& newPlayer)
+{
+	//maxLevel = stoi(gameEngine.currentPlayer.level);
+	int lines = getNumberOfLines();
+
+
+	// Mở file
+	playersFile.open(ACCOUNT_FILE);
+	if (!playersFile.is_open())
+	{
+		cerr << "Error: Unable to open file " << ACCOUNT_FILE << endl;
+		return;
+	}
+
+	// Đọc thông tin người chơi từ file
+	for (int i = 0; i < lines; i++)
+	{
+		playersFile >> newPlayer.username >> newPlayer.level1Score >> newPlayer.level2Score >> newPlayer.level3Score;
+	}
+    int maxLevel = 1;
+    if(newPlayer.level2Score != "-1")
+        maxLevel = 2;
+    if(newPlayer.level3Score != "-1")
+        maxLevel = 3;
+    newPlayer.level = std::to_string(maxLevel);
+
+	// Đóng file
+	playersFile.close();
+
+}
+
+int PlayerOptionsMenu::getNumberOfLines()
+{
+	// Open the file to read
+	playersFile.open(ACCOUNT_FILE);
+
+	// Count how many lines in the file
+	int cnt = 0;
+	string temp;
+	while (getline(playersFile, temp))
+		cnt++;
+
+	playersFile.close();
+	playersFile.clear();
+
+	return cnt;
 }

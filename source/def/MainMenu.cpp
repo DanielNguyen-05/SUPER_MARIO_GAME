@@ -124,7 +124,7 @@ void MainMenu::draw(RenderWindow &window)
 void MainMenu::checkShow()
 {
     // Nếu tất cả menu con đóng và không trong trạng thái game, hiển thị lại menu chính
-    if (!playerOptions.display && !playerOptions.levelsList.display && !highScore.display && !gameRunning)
+    if (!playerOptions.display && !playerOptions.levelsList.display && !playerOptions.levelsList.level1.finished && !playerOptions.levelsList.level2.finished && !highScore.display && !playerOptions.levelsList.gameEngine.gameRunning)
     {
         show();
     }
@@ -173,7 +173,7 @@ void MainMenu::mainMenuHandleSelection()
 void MainMenu::controlMusic()
 {
     // Nếu đang chạy game, kiểm soát âm nhạc
-    if (gameRunning)
+    if (!playerOptions.levelsList.gameEngine.gameRunning)
     {
         if (options.menuSound.getStatus() == options.menuSound.Playing)
             options.menuSound.stop();

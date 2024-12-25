@@ -269,3 +269,42 @@ void GameEngine::updateLifes()
 
 	lifeText.setString(lifeStr.str());
 }
+
+void GameEngine::reset(){
+	scoreInt = 0;
+	coinsInt = 0;
+
+	scoreStr.str(string());
+	scoreStr << "MARIO:\n" << setw(6) << setfill('0') << scoreInt;
+	scoreText.setString(scoreStr.str());
+
+	scoreText.setPosition(20, 20);
+	scoreText.setFont(headerFont);
+	scoreText.setCharacterSize(fontSize);
+	scoreText.setString(scoreStr.str());
+
+	coinsStr.str(string());
+	coinsStr << "x" << setw(2) << setfill('0') << coinsInt;
+	coinsText.setString(coinsStr.str());
+
+	// Set Coins Text Properties
+	coinsText.setPosition(700, 5);
+	coinsText.setFont(headerFont);
+	coinsText.setCharacterSize(fontSize);
+	coinsText.setString(coinsStr.str());
+
+	// Set Coin Sprite Properties
+	coinRect = IntRect(0, 86, 33, 30);
+	coinTexture.loadFromFile(ITEMS);
+	coinSprite.setTexture(coinTexture);
+	coinSprite.setTextureRect(coinRect);
+	coinSprite.setPosition(675, 38);
+	coinSprite.setScale(1.5, 1.5);
+	coinSprite.setOrigin(coinRect.width / 2, coinRect.height / 2);
+
+	// set Timer Text Properties
+	timerText.setPosition(1220, 5);
+	timerText.setFont(headerFont);
+	timerText.setCharacterSize(fontSize);
+
+}

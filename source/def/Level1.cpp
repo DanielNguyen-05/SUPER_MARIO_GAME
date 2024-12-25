@@ -67,16 +67,14 @@ Level1::Level1(GameEngine &gameEngine)
 
 void Level1::draw(RenderWindow &window)
 {
+    //View defaultView(FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
+	//window.setView(camera);
     if (display)
     {
         if (gameEngine->mario.dying)
         {
             camera.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
             cout << "omar";
-        }
-        else if (!finished) // Không cập nhật camera nếu game đã kết thúc
-        {
-            handleView(window);
         }
         window.draw(backGroundShape);
 
@@ -126,20 +124,57 @@ void Level1::catchEvents(Event event)
 
 void Level1::resetLevel()
 {
+    gameEngine->reset();
     coin.clear();
     stone.clear();
     question.clear();
     rock.clear();
     black.clear();
     turtle.clear();
-    // Reset lại trạng thái mario
-    this->gameEngine = new GameEngine();
+    // Call Constructer for all coins
+    for (int i = 0; i < coinCnt; i++)
+        coin.push_back(*new Items(*gameEngine, COIN, coinPosition[i].x, coinPosition[i].y));
+
+    // Call Constructer for all Stone Blocks
+    for (int i = 0; i < stoneCnt; i++)
+    { // Null
+        stone.push_back(*new Blocks(*gameEngine, STONE, NONE, stonePosition[i].x, stonePosition[i].y));
+        stone[i].blockSprite.setColor(Color(70, 50, 180)); // Blue filter
+    }
+
+    for (int i = stoneCnt; i < (stoneCnt + stoneCoinCnt); i++)
+    { // With Coin
+        stone.push_back(*new Blocks(*gameEngine, STONE, COIN, stoneCoinPosition[i - stoneCnt].x, stoneCoinPosition[i - stoneCnt].y));
+        stone[i].blockSprite.setColor(Color(70, 50, 180)); // Blue filter
+    }
+
+    // Call Constructer for all Question Blocks
+    for (int i = 0; i < quesCoinCnt; i++) // With Coin
+        question.push_back(*new Blocks(*gameEngine, QUESTION, COIN, questCoinPosition[i].x, questCoinPosition[i].y));
+
+    for (int i = quesCoinCnt; i < quesMashCnt + quesCoinCnt; i++) // With Coin
+        question.push_back(*new Blocks(*gameEngine, QUESTION, MASHROOM, questMashPosition[i - quesCoinCnt].x, questMashPosition[i - quesCoinCnt].y));
+
+    for (int i = quesMashCnt + quesCoinCnt; i < quesFlowerCnt + quesMashCnt + quesCoinCnt; i++) // With Coin
+        question.push_back(*new Blocks(*gameEngine, QUESTION, FLOWER, questFLowerPosition[i - (quesMashCnt + quesCoinCnt)].x, questFLowerPosition[i - (quesMashCnt + quesCoinCnt)].y));
+
+    // Call Constructer for all Rock Blocks
+    for (int i = 0; i < rockCnt; i++)
+    {
+        rock.push_back(*new Blocks(*gameEngine, ROCK, NONE, rockPosition[i].x, rockPosition[i].y));
+        rock[i].blockSprite.setColor(Color(70, 50, 180)); // blue filter
+    }
+
+    black.push_back(*new Enemy(*gameEngine, BLACK, rock[39].blockSprite, rock[40].blockSprite, groundShape[0], 2500, 200));
+    turtle.push_back(*new Enemy(*gameEngine, TURTLE, rock[41].blockSprite, rock[42].blockSprite, groundShape[1], 5700, 200));
+    // Reset lại trạng thái mario*/
     gameEngine->mario.reset();
 }
 
 void Level1::start()
 {
     camera.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+    resetLevel();
     gameEngine->lifeScreen = true;
     display = true;
     gameEngine->startCountDown();
@@ -147,10 +182,7 @@ void Level1::start()
 
 void Level1::end()
 {
-    std::cout << "end";
-    // resetLevel();
     display = false;
-    gameEngine->currentPlayer.level = "2";
     gameEngine->gameRunning = false;
     finished = true;
 }
