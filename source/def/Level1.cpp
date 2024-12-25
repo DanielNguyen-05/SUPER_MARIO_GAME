@@ -239,7 +239,7 @@ void Level1::checkEnd()
     {
         gameEngine->mario.marioSprite.setPosition(levelWidth - space, marioPos.y);
         gameEngine->mario.speed[0] = 0;
-        gameEngine->addPlayerInfo();
+        gameEngine->addPlayerInfo(1);
         end();
     }
 }

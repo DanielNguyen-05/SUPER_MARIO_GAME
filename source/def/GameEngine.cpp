@@ -177,7 +177,7 @@ void GameEngine::startTimeToScore()
 	remainTime = counterTime;
 }
 
-void GameEngine::draw(RenderWindow &window)
+void GameEngine::draw(RenderWindow& window)
 {
 	coinAnimation();
 	updateTimer();
@@ -193,7 +193,7 @@ void GameEngine::draw(RenderWindow &window)
 		startLifeScreen(window);
 }
 
-void GameEngine::startLifeScreen(RenderWindow &window)
+void GameEngine::startLifeScreen(RenderWindow& window)
 {
 	Clock lifeScreenClock;
 	while (lifeScreenClock.getElapsedTime().asSeconds() < 3)
@@ -216,12 +216,61 @@ void GameEngine::setLevelName(string levelName)
 	levelText.setString(levelName);
 }
 
-void GameEngine::addPlayerInfo()
+// level truyền vào là để biết coi nó nên cập nhật điểm của level nào (trường hợp nó chơi xong lv1 mà nó không chơi lv2, nó quay lại chơi lv1 để cải thiện điểm)
+void GameEngine::addPlayerInfo(int level)
 {
-	playersFile.open(ACCOUNT_FILE, ios::app);
-	playersFile << currentPlayer.username << ' ' << scoreInt << ' ' << levelsMap[std::string(levelText.getString())] << '\n';
-	playersFile.close();
-	playersFile.clear();
+	int currentScore = scoreInt;
+	std::ifstream inputFile(ACCOUNT_FILE);
+	std::ostringstream tempBuffer;
+	bool userFound = false;
+
+	// Đọc toàn bộ file và xử lý từng dòng
+	std::string line;
+	while (std::getline(inputFile, line)) {
+		std::istringstream iss(line);
+		std::string fileUsername;
+		int level1Score, level2Score, level3Score;
+
+		// Giả định file có cấu trúc: username level0Score level1Score level2Score
+		if (iss >> fileUsername >> level1Score >> level2Score >> level3Score) {
+			if (fileUsername == currentPlayer.username) {
+				userFound = true;
+				if (level == 1) {
+					level1Score = currentScore;
+					if (level2Score == -1) level2Score = 0;
+				}
+				else if (level == 2) {
+					level2Score = currentScore;
+					if (level3Score == -1) level3Score = 0;
+				}
+				else if (level == 3) {
+					level3Score = currentScore;
+				}
+
+				// Ghi lại dòng đã cập nhật
+				tempBuffer << fileUsername << ' ' << level1Score << ' ' << level2Score << ' ' << level3Score << '\n';
+			}
+			else {
+				// Ghi lại dòng không liên quan
+				tempBuffer << line << '\n';
+			}
+		}
+		else {
+			// Nếu dòng không đúng định dạng, giữ nguyên
+			tempBuffer << line << '\n';
+		}
+	}
+	inputFile.close();
+
+	if (!userFound) {
+		// Nếu không tìm thấy user, thêm mới
+		tempBuffer << currentPlayer.username << " 0 -1 -1\n";
+	}
+
+	// Ghi nội dung đã cập nhật lại vào file
+	std::ofstream outputFile(ACCOUNT_FILE);
+	outputFile << tempBuffer.str();
+	outputFile.close();
 }
 
 void GameEngine::coinAnimation()
@@ -270,7 +319,7 @@ void GameEngine::updateLifes()
 	lifeText.setString(lifeStr.str());
 }
 
-void GameEngine::reset(){
+void GameEngine::reset() {
 	scoreInt = 0;
 	coinsInt = 0;
 

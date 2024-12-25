@@ -47,13 +47,13 @@ public:
     void timeToScore();
 
     // draw GameEngine objects into screen
-    void draw(RenderWindow &window);
+    void draw(RenderWindow& window);
 
     // Increase coins counter by one
     void updateCoins();
 
     // Add player name , his score and level to Players file
-    void addPlayerInfo();
+    void addPlayerInfo(int level);
 
     // Set level Name text
     void setLevelName(std::string levelName);
@@ -71,7 +71,7 @@ public:
     void setHeaderPosition(position screenCenter);
 
     // Start Life Screen
-    void startLifeScreen(RenderWindow &window);
+    void startLifeScreen(RenderWindow& window);
 
     void reset();
 };
