@@ -119,20 +119,24 @@ void HighScoreMenu::arrangePlayersInfo()
     int lines = getNumberOfLines(); // Số dòng trong file
     player tempPlayer;
 
-    playersFile.open(PLAYERS_FILE);
+    playersFile.open(ACCOUNT_FILE);
 
     // Đọc dữ liệu từ file
     for (int i = 0; i < lines; i++)
     {
+        int level;
         playersFile >> tempPlayer.username >> tempPlayer.level1Score >> tempPlayer.level2Score >> tempPlayer.level3Score;
-        if (tempPlayer.level2Score != "-1")
-            tempPlayer.level = "2";
-        if (tempPlayer.level3Score != "-1")
-            tempPlayer.level = "3";
-        int totalScore = atoi(tempPlayer.level1Score.c_str()) +
-                         atoi(tempPlayer.level2Score.c_str()) +
-                         atoi(tempPlayer.level3Score.c_str());
-        players.push_back({totalScore, {stoi(tempPlayer.level), tempPlayer.username}});
+        int totalScore = stoi(tempPlayer.level1Score);
+        if (tempPlayer.level2Score != to_string(-1)){
+            totalScore += stoi(tempPlayer.level2Score);
+            level = 2;
+        }
+        if (tempPlayer.level3Score != to_string(-1))
+        {
+            totalScore += stoi(tempPlayer.level3Score);
+            level = 3;
+        }
+        players.push_back({totalScore, {level, tempPlayer.username}});
     }
     playersFile.close();
     playersFile.clear();
@@ -141,7 +145,7 @@ void HighScoreMenu::arrangePlayersInfo()
 // Đếm số dòng trong file
 int HighScoreMenu::getNumberOfLines()
 {
-    playersFile.open(PLAYERS_FILE);
+    playersFile.open(ACCOUNT_FILE);
 
     int cnt = 0;
     string temp;

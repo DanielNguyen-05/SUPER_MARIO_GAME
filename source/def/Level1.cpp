@@ -76,6 +76,8 @@ void Level1::draw(RenderWindow &window)
             camera.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
             cout << "omar";
         }
+        if(!gameEngine->gameRunning)
+            end();
         window.draw(backGroundShape);
 
         for (int i = 0; i < GROUNDS_NUM; i++)

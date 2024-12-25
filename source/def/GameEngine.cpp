@@ -257,13 +257,13 @@ void GameEngine::updateLifes()
 		{
 			currentPlayer.lifes--;
 			lifeStr << "x" << currentPlayer.lifes;
+			mario.dead = false;
 		}
 		else
 		{
 			lifeStr << "Game Over";
 			gameRunning = false;
 		}
-		mario.dead = false;
 		lifeScreen = true;
 	}
 
