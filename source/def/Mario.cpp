@@ -1,6 +1,6 @@
 #include "../header/Mario.h"
 
-const float deathBoundaryY = 900;
+const float deathBoundaryY = 950;
 
 Mario::Mario(float x, float y)
 {
@@ -45,7 +45,6 @@ void Mario::draw(RenderWindow &window)
     window.draw(marioSprite);
 
     animation();
-
 }
 
 void Mario::animation()
@@ -95,21 +94,27 @@ void Mario::catchEvents(Event &event)
         case Event::KeyPressed:
             switch (event.key.code)
             {
+            case Keyboard::Key::D:
             case Keyboard::Key::Right:
                 goRight = true;
                 break;
 
+            case Keyboard::Key::A:
             case Keyboard::Key::Left:
                 goLeft = true;
                 break;
 
+            case Keyboard::Key::W:
+            case Keyboard::Key::Up:
             case Keyboard::Key::Space:
                 goUp = true;
                 break;
 
+            case Keyboard::Key::S:
             case Keyboard::Key::Down:
                 goDown = true;
                 break;
+
             case Keyboard::Key::Z:
                 // startDie();
                 break;
@@ -119,10 +124,12 @@ void Mario::catchEvents(Event &event)
         case Event::KeyReleased:
             switch (event.key.code)
             {
+            case Keyboard::Key::D:
             case Keyboard::Key::Right:
                 goRight = false;
                 break;
 
+            case Keyboard::Key::A:
             case Keyboard::Key::Left:
                 goLeft = false;
                 break;
@@ -135,7 +142,9 @@ void Mario::catchEvents(Event &event)
 void Mario::move()
 {
     if (onGround)
+    {
         jumping = false;
+    }
     IntRect marioRect = marioSprite.getTextureRect();
 
     // used timer to make motion slower
@@ -204,16 +213,16 @@ void Mario::move()
 
         timer1.restart();
     }
-    
-    if (marioSprite.getPosition().y > deathBoundaryY)
+    cout << marioSprite.getPosition().y << endl;
+    if (marioSprite.getPosition().y >= deathBoundaryY)
     {
+        cout << "Entered death boundary";
         this->dead = true;
-       dying = goLeft = goRight = false;
-            speed[0] = 0;
-            speed[1] = 0;
-            marioSprite.setPosition(500, 200);
+        dying = goLeft = goRight = false;
+        speed[0] = 0;
+        speed[1] = 0;
+        marioSprite.setPosition(500, 200);
     }
-
 
     if (speed[0] < 1 && speed[0] > -1 && onGround)
     {
