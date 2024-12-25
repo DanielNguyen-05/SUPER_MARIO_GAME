@@ -225,16 +225,16 @@ void Level2::handleView(RenderWindow &window)
 
 void Level2::checkEnd()
 {
-    Vector2f marioPos = gameEngine->character.charSprite.getPosition();
+    Vector2f charPos = gameEngine->character.charSprite.getPosition();
     int space = 70;
-    if (marioPos.x < space)
+    if (charPos.x < space)
     {
-        gameEngine->character.charSprite.setPosition(space, marioPos.y);
+        gameEngine->character.charSprite.setPosition(space, charPos.y);
         gameEngine->character.speed[0] = 0;
     }
-    else if (marioPos.x > levelWidth - space)
+    else if (charPos.x > levelWidth - space)
     {
-        gameEngine->character.charSprite.setPosition(levelWidth - space, marioPos.y);
+        gameEngine->character.charSprite.setPosition(levelWidth - space, charPos.y);
         gameEngine->character.speed[0] = 0;
         gameEngine->addPlayerInfo(2);
         end();
