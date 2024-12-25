@@ -95,6 +95,7 @@ void PlayerOptionsMenu::catchEvents(Event event, player &newPlayer)
         }
     }
     updatePlayerOptionsColors();
+    if (user.display)
     user.catchEvents(event, newPlayer, levelsList);
     levelsList.catchEvents(event, newPlayer);
 }

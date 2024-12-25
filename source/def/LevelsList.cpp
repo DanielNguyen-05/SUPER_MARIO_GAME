@@ -56,9 +56,8 @@ void LevelsList::draw(RenderWindow& window)
 	window.setView(defaultView);
 	// checkShow(gameEngine.currentPlayer);
 	// cout << level1.finished;
-	if (display || level1.finished/*|| level2.finished*/)
+	if (display || level1.finished || level2.finished)
 	{
-		// std::cout <<"a";
 		window.draw(backGroundSprite);
 		window.draw(optionShadowSprite);
 		window.draw(backText);
@@ -77,7 +76,7 @@ void LevelsList::draw(RenderWindow& window)
 
 void LevelsList::catchEvents(Event event, player& newPlayer)
 {
-	if (display || level1.finished)
+	if (display || level1.finished || level2.finished)
 	{
 		switch (event.type)
 		{
@@ -100,9 +99,12 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 				{
 				case 0:
 					level1.finished = false;
+					level2.finished = false;
 					level1.start();
 					break;
 				case 1:
+					level1.finished = false;
+					level2.finished = false;
 					level2.start();
 					break;
 				case 2:
@@ -110,13 +112,19 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 					break;
 				}
 				break;
-			case Keyboard::Escape:
+			}
+			break;
+		case Event::KeyReleased:
+			switch(event.key.code){
+				case Keyboard::Escape:
+				level1.finished = false;
+				level2.finished = false;
 				this->hide();
 				newPlayer.username = "";
 				changingOptionSound.play();
 				break;
-			}
-			break;
+				}
+			break;	
 		}
 	}
 	level1.catchEvents(event);

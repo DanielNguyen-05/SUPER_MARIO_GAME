@@ -11,9 +11,6 @@
 class LevelsList : public Menu
 {
 private:
-	Level1 level1;
-	Level2 level2;
-	Level3 level3;
 	Text levelsNameText[NUMBER_OF_LEVELS];
 	Texture optionShadowTexture;
 	Sprite optionShadowSprite;
@@ -22,6 +19,10 @@ private:
 	fstream playersFile;
 
 public:
+	Level1 level1;
+	Level2 level2;
+	Level3 level3;
+
 	GameEngine gameEngine;
 
 	// Constructor

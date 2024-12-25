@@ -36,6 +36,7 @@ private:
     position screenCenter = {0, 0};
 
 public:
+    bool finished;
     Level2(GameEngine &gameEngine);
 
     /***			Methods				***/
@@ -66,4 +67,6 @@ private:
 
     // Set Positions for all blocks in the level
     void arrangeLevelBlocks();
+
+    void resetLevel();
 };

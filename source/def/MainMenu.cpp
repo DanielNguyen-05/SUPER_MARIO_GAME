@@ -124,7 +124,7 @@ void MainMenu::draw(RenderWindow &window)
 void MainMenu::checkShow()
 {
     // Nếu tất cả menu con đóng và không trong trạng thái game, hiển thị lại menu chính
-    if (!playerOptions.display && !playerOptions.levelsList.display && !highScore.display && !gameRunning)
+    if (!playerOptions.display && !playerOptions.levelsList.display && !playerOptions.levelsList.level1.finished && !playerOptions.levelsList.level2.finished && !highScore.display && !gameRunning)
     {
         show();
     }

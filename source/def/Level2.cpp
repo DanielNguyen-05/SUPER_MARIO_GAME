@@ -4,7 +4,7 @@ Level2::Level2(GameEngine &gameEngine)
 {
     // Set initial values
     this->gameEngine = &gameEngine;
-    display = false;
+    display = finished = false;
     memset(marioOnGround, false, sizeof marioOnGround);
     coinCnt = stoneCnt = stoneCoinCnt = quesCoinCnt = quesMashCnt = quesFlowerCnt = rockCnt = 0;
     levelWidth = 13397;
@@ -120,6 +120,7 @@ void Level2::catchEvents(Event event)
 
 void Level2::start()
 {
+    resetLevel();
     display = true;
     gameEngine->startCountDown();
 }
@@ -127,6 +128,60 @@ void Level2::start()
 void Level2::end()
 {
     display = false;
+    gameEngine->currentPlayer.level = "3";
+    gameEngine->gameRunning = false;
+    finished = true;
+}
+
+void Level2::resetLevel(){
+    gameEngine->reset();
+    coin.clear();
+    stone.clear();
+    question.clear();
+    rock.clear();
+    black.clear();
+    turtle.clear();
+
+    // Call Constructer for all coins
+    for (int i = 0; i < coinCnt; i++)
+        coin.push_back(*new Items(*gameEngine, COIN, coinPosition[i].x, coinPosition[i].y));
+
+    // Call Constructer for all Stone Blocks
+    for (int i = 0; i < stoneCnt; i++)
+    { // Null
+        stone.push_back(*new Blocks(*gameEngine, STONE, NONE, stonePosition[i].x, stonePosition[i].y));
+        stone[i].blockSprite.setColor(Color(900, 0, -500)); // Red filter
+    }
+
+    for (int i = stoneCnt; i < (stoneCnt + stoneCoinCnt); i++)
+    { // With Coin
+        stone.push_back(*new Blocks(*gameEngine, STONE, COIN, stoneCoinPosition[i - stoneCnt].x, stoneCoinPosition[i - stoneCnt].y));
+        stone[i].blockSprite.setColor(Color(900, 0, -500)); // Red filter
+    }
+
+    // Call Constructer for all Question Blocks
+    for (int i = 0; i < quesCoinCnt; i++) // With Coin
+        question.push_back(*new Blocks(*gameEngine, QUESTION, COIN, questCoinPosition[i].x, questCoinPosition[i].y));
+
+    for (int i = quesCoinCnt; i < quesMashCnt + quesCoinCnt; i++) // With Coin
+        question.push_back(*new Blocks(*gameEngine, QUESTION, MASHROOM, questMashPosition[i - quesCoinCnt].x, questMashPosition[i - quesCoinCnt].y));
+
+    for (int i = quesMashCnt + quesCoinCnt; i < quesFlowerCnt + quesMashCnt + quesCoinCnt; i++) // With Coin
+        question.push_back(*new Blocks(*gameEngine, QUESTION, FLOWER, questFLowerPosition[i - (quesMashCnt + quesCoinCnt)].x, questFLowerPosition[i - (quesMashCnt + quesCoinCnt)].y));
+
+    // Call Constructer for all Rock Blocks
+    std::cout << rockCnt << "\n";
+    for (int i = 0; i < rockCnt; i++)
+    {
+        rock.push_back(*new Blocks(*gameEngine, ROCK, NONE, rockPosition[i].x, rockPosition[i].y));
+        //std::cout << i << "\t" << rockPosition[i].x << " \t" << rockPosition[i].y << "\n";
+        rock[i].blockSprite.setColor(Color(70, 50, 180)); // blue filter
+    }
+
+    black.push_back(*new Enemy(*gameEngine, BLACK, rock[55].blockSprite, rock[56].blockSprite, groundShape[0], 4062, 200));
+    // Reset lại trạng thái mario*/
+    gameEngine->mario.reset();
+
 }
 
 void Level2::checkGround(int num)

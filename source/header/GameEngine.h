@@ -72,4 +72,6 @@ public:
 
     // Start Life Screen
     void startLifeScreen(RenderWindow &window);
+
+    void reset();
 };
