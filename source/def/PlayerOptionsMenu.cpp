@@ -62,11 +62,7 @@ void PlayerOptionsMenu::draw(sf::RenderWindow &window)
 
         window.draw(backText);
     }
-    if(user.display)
-    std::cout <<"user";
     user.draw(window);
-    if(levelsList.display)
-    std::cout<<"list";
     levelsList.draw(window);
 }
 
@@ -99,9 +95,7 @@ void PlayerOptionsMenu::catchEvents(Event event, player &newPlayer)
         }
     }
     updatePlayerOptionsColors();
-    if (user.display)
     user.catchEvents(event, newPlayer, levelsList);
-    //if(levelsList.display)
     levelsList.catchEvents(event, newPlayer);
 }
 

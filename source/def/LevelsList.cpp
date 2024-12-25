@@ -52,6 +52,8 @@ void LevelsList::show(player newPlayer)
 
 void LevelsList::draw(RenderWindow& window)
 {
+	View defaultView(FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
+	window.setView(defaultView);
 	// checkShow(gameEngine.currentPlayer);
 	// cout << level1.finished;
 	if (display || level1.finished/*|| level2.finished*/)
@@ -72,19 +74,10 @@ void LevelsList::draw(RenderWindow& window)
 		level3.draw(window);
 	}
 }
-/*
-void LevelsList::checkShow(player& newPlayer)
-{
-	// Nếu tất cả menu con đóng và không trong trạng thái game, hiển thị lại menu chính
-	if (level1.finished && !gameEngine.gameRunning)
-	{
-		show(newPlayer);
-	}
-}*/
 
 void LevelsList::catchEvents(Event event, player& newPlayer)
 {
-	if (display)
+	if (display || level1.finished)
 	{
 		switch (event.type)
 		{
@@ -106,6 +99,7 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 				switch (selectedLevel)
 				{
 				case 0:
+					level1.finished = false;
 					level1.start();
 					break;
 				case 1:
