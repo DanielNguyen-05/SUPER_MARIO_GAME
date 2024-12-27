@@ -11,6 +11,7 @@
 #include <string>
 #include <memory>
 #include <cstring>
+#include <memory>
 
 using namespace std;
 using namespace sf;
@@ -94,6 +95,8 @@ struct position
 
 #define CREDITS_BACKGROUND "assets/textures/Menu/Credits.jpg"
 
+#define GAME_OVER_BACKGROUND "assets/textures/Backgrounds/GameOver.jpg"
+
 #define MUSIC_BALL "assets/textures/Menu/musicBall.png"
 
 // #define DIFFICULTY_BALL "assets/textures/Menu/difficultyBall.png"
@@ -108,6 +111,8 @@ struct position
 
 /***						Mario						***/
 #define MARIO_CHARACTER "assets/textures/Mario.png"
+
+#define MARIO "assets/textures/mario2.png"
 
 #define MARIO_SUPER_CHARACTER "assets/textures/MarioSuper.png"
 

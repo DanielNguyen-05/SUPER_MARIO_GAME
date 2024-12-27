@@ -62,8 +62,6 @@ public:
     // Check end of the level
     void checkEnd();
 
-    void checkEnemyCollision();
-
 private:
     // Arrange Array for Grounds Properties on screen
     void setGroundProperties();

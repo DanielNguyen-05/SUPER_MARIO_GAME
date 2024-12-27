@@ -331,19 +331,3 @@ void Level1::arrangeLevelBlocks()
         }
     }
 }
-
-/*
-void Level1::checkEnemyCollision() {
-    for (int i = 0; i < BLACK_NUM; i++) {
-        if (gameEngine->character.charSprite.getGlobalBounds().intersects(black[i].enemySprite.getGlobalBounds())) {
-            gameEngine->character.dying = true; // Trigger Mario death
-            return; // Stop further checks
-        }
-    }
-    for (int i = 0; i < TURTLE_NUM; i++) {
-        if (gameEngine->character.charSprite.getGlobalBounds().intersects(turtle[i].enemySprite.getGlobalBounds())) {
-            gameEngine->character.dying = true; // Trigger Mario death
-            return;
-        }
-    }
-}*/
