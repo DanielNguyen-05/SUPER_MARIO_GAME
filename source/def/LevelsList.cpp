@@ -115,16 +115,16 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 			}
 			break;
 		case Event::KeyReleased:
-			switch(event.key.code){
-				case Keyboard::Escape:
+			switch (event.key.code) {
+			case Keyboard::Escape:
 				level1.finished = false;
 				level2.finished = false;
 				this->hide();
 				newPlayer.username = "";
 				changingOptionSound.play();
 				break;
-				}
-			break;	
+			}
+			break;
 		}
 	}
 	level1.catchEvents(event);
@@ -191,13 +191,13 @@ void LevelsList::setOpendLevels()
 	}
 }
 
-void LevelsList::moveUp() {
+void LevelsList::moveDown() {
 	if (selectedLevel >= maxLevel) return;
 	selectedLevel = (selectedLevel == maxLevel - 1) ? 0 : selectedLevel + 1;
 	updateShadowPosition();
 }
 
-void LevelsList::moveDown() {
+void LevelsList::moveUp() {
 	if (selectedLevel >= maxLevel) return;
 	selectedLevel = (selectedLevel == 0) ? maxLevel - 1 : selectedLevel - 1;
 	updateShadowPosition();
