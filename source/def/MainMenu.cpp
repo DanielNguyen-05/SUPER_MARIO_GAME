@@ -134,7 +134,7 @@ void MainMenu::checkShow()
 {
     gameRunning = playerOptions.levelsList.gameEngine.gameRunning;
     // Nếu tất cả menu con đóng và không trong trạng thái game, hiển thị lại menu chính
-    if (!playerOptions.display && !playerOptions.levelsList.display && !playerOptions.levelsList.level1.finished && !playerOptions.levelsList.level2.finished && !highScore.display && !playerOptions.levelsList.gameEngine.gameRunning)
+    if (!playerOptions.display && !playerOptions.levelsList.display && !playerOptions.levelsList.level1.finished && !playerOptions.levelsList.level2.finished && !highScore.display && !howToPlay.display && !options.display && !credits.display && !gameRunning)
     {
         show();
     }
