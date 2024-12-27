@@ -110,8 +110,12 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 				case 2:
 					level3.start();
 					break;
+				default:
+					break; // mới thêm
 				}
 				break;
+			default:
+				break; // mới thêm
 			}
 			break;
 		case Event::KeyReleased:
@@ -123,8 +127,12 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 				newPlayer.username = "";
 				changingOptionSound.play();
 				break;
+			default:
+				break; // mới thêm
 			}
 			break;
+		default:
+			break; // mới thêm
 		}
 	}
 	level1.catchEvents(event);
@@ -134,7 +142,7 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 
 void LevelsList::checkOpendLevels()
 {
-	//maxLevel = stoi(gameEngine.currentPlayer.level);
+	// maxLevel = stoi(gameEngine.currentPlayer.level);
 	/*int lines = getNumberOfLines();
 	player tempPlayer;
 	maxLevel = 1; // Default to level 1

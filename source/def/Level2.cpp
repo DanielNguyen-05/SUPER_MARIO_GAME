@@ -1,6 +1,6 @@
 #include "../header/Level2.h"
 
-Level2::Level2(GameEngine &gameEngine)
+Level2::Level2(GameEngine& gameEngine)
 {
     // Set initial values
     this->gameEngine = &gameEngine;
@@ -36,13 +36,13 @@ Level2::Level2(GameEngine &gameEngine)
     for (int i = 0; i < stoneCnt; i++)
     { // Null
         stone.push_back(*new Blocks(gameEngine, STONE, NONE, stonePosition[i].x, stonePosition[i].y));
-        stone[i].blockSprite.setColor(Color(900, 0, -500)); // Red filter
+        stone[i].blockSprite.setColor(Color(255, 0, 0)); // Red filter
     }
 
     for (int i = stoneCnt; i < (stoneCnt + stoneCoinCnt); i++)
     { // With Coin
         stone.push_back(*new Blocks(gameEngine, STONE, COIN, stoneCoinPosition[i - stoneCnt].x, stoneCoinPosition[i - stoneCnt].y));
-        stone[i].blockSprite.setColor(Color(900, 0, -500)); // Red filter
+        stone[i].blockSprite.setColor(Color(255, 0, 0)); // Red filter
     }
 
     // Call Constructer for all Question Blocks
@@ -67,7 +67,7 @@ Level2::Level2(GameEngine &gameEngine)
     // turtle.push_back(*new Enemy(gameEngine, TURTLE, rock[58].blockSprite, rock[59].blockSprite, groundShape[0], 4434, 200));
 }
 
-void Level2::draw(RenderWindow &window)
+void Level2::draw(RenderWindow& window)
 {
     if (display)
     {
@@ -151,13 +151,13 @@ void Level2::resetLevel()
     for (int i = 0; i < stoneCnt; i++)
     { // Null
         stone.push_back(*new Blocks(*gameEngine, STONE, NONE, stonePosition[i].x, stonePosition[i].y));
-        stone[i].blockSprite.setColor(Color(900, 0, -500)); // Red filter
+        stone[i].blockSprite.setColor(Color(255, 0, 0)); // Red filter
     }
 
     for (int i = stoneCnt; i < (stoneCnt + stoneCoinCnt); i++)
     { // With Coin
         stone.push_back(*new Blocks(*gameEngine, STONE, COIN, stoneCoinPosition[i - stoneCnt].x, stoneCoinPosition[i - stoneCnt].y));
-        stone[i].blockSprite.setColor(Color(900, 0, -500)); // Red filter
+        stone[i].blockSprite.setColor(Color(255, 0, 0)); // Red filter
     }
 
     // Call Constructer for all Question Blocks
@@ -206,13 +206,13 @@ void Level2::checkGround(int num)
     }
 }
 
-void Level2::handleView(RenderWindow &window)
+void Level2::handleView(RenderWindow& window)
 {
     // a + (b - a) * c
     if (/*!gameEngine->character.stuck*/ !gameEngine->character.dying)
     {
         float fr = (1 / 60.0);
-        screenCenter = {screenCenter.x + (gameEngine->character.charSprite.getPosition().x - screenCenter.x) * fr * 20, 450};
+        screenCenter = { screenCenter.x + (gameEngine->character.charSprite.getPosition().x - screenCenter.x) * fr * 20, 450 };
 
         if (screenCenter.x > WINDOW_WIDTH / 2 && screenCenter.x < levelWidth - (WINDOW_WIDTH / 2))
         {
@@ -280,7 +280,7 @@ void Level2::arrangeLevelBlocks()
         {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 1, 2, 2, 1, 6, 0, 0, 7, 7, 7, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 2, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 2, 3, 2, 0, 0, 0, 0, 0, 0, 2, 3, 2, 0, 0, 0, 0, 0, 2, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 3, 2, 2, 3, 2, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0},
         {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 6, 0, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0},
         {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 2, 2, 2, 2, 2, 6, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 6, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+        {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 2, 2, 2, 2, 2, 6, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 6, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
 
     for (int i = 0; i < ROW_NUM; i++)
     {
@@ -289,31 +289,31 @@ void Level2::arrangeLevelBlocks()
             switch (arr[i][j])
             {
             case 1:
-                stoneCoinPosition[stoneCoinCnt] = {float(31 + j * 62), float(31 + i * 62)};
+                stoneCoinPosition[stoneCoinCnt] = { float(31 + j * 62), float(31 + i * 62) };
                 stoneCoinCnt++;
                 break;
             case 2:
-                stonePosition[stoneCnt] = {float(31 + j * 62), float(31 + i * 62)};
+                stonePosition[stoneCnt] = { float(31 + j * 62), float(31 + i * 62) };
                 stoneCnt++;
                 break;
             case 3:
-                questCoinPosition[quesCoinCnt] = {float(31 + j * 62), float(31 + i * 62)};
+                questCoinPosition[quesCoinCnt] = { float(31 + j * 62), float(31 + i * 62) };
                 quesCoinCnt++;
                 break;
             case 4:
-                questFLowerPosition[quesFlowerCnt] = {float(31 + j * 62), float(31 + i * 62)};
+                questFLowerPosition[quesFlowerCnt] = { float(31 + j * 62), float(31 + i * 62) };
                 quesFlowerCnt++;
                 break;
             case 5:
-                questMashPosition[quesMashCnt] = {float(31 + j * 62), float(31 + i * 62)};
+                questMashPosition[quesMashCnt] = { float(31 + j * 62), float(31 + i * 62) };
                 quesMashCnt++;
                 break;
             case 6:
-                rockPosition[rockCnt] = {float(31 + j * 62), float(31 + i * 62)};
+                rockPosition[rockCnt] = { float(31 + j * 62), float(31 + i * 62) };
                 rockCnt++;
                 break;
             case 7:
-                coinPosition[coinCnt] = {float(31 + j * 62), float(31 + i * 62)};
+                coinPosition[coinCnt] = { float(31 + j * 62), float(31 + i * 62) };
                 coinCnt++;
                 break;
             default:

@@ -36,13 +36,13 @@ Level3::Level3(GameEngine& gameEngine)
     for (int i = 0; i < stoneCnt; i++)
     { // Null
         stone.push_back(*new Blocks(gameEngine, STONE, NONE, stonePosition[i].x, stonePosition[i].y));
-        stone[i].blockSprite.setColor(Color(900, 0, -500)); // Red filter
+        stone[i].blockSprite.setColor(Color(255, 0, 0)); // Red filter
     }
 
     for (int i = stoneCnt; i < (stoneCnt + stoneCoinCnt); i++)
     { // With Coin
         stone.push_back(*new Blocks(gameEngine, STONE, COIN, stoneCoinPosition[i - stoneCnt].x, stoneCoinPosition[i - stoneCnt].y));
-        stone[i].blockSprite.setColor(Color(900, 0, -500)); // Red filter
+        stone[i].blockSprite.setColor(Color(255, 0, 0)); // Red filter
     }
 
     // Call Constructer for all Question Blocks

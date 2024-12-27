@@ -1,6 +1,6 @@
 #include "../header/Enemy.h"
 
-Enemy::Enemy(GameEngine &gameEngine, enemy_t type, Sprite &minX, Sprite &maxX, RectangleShape &ground, float x, float y)
+Enemy::Enemy(GameEngine& gameEngine, enemy_t type, Sprite& minX, Sprite& maxX, RectangleShape& ground, float x, float y)
 {
 	// Set initial values
 	this->gameEngine = &gameEngine;
@@ -55,7 +55,7 @@ Enemy::Enemy(GameEngine &gameEngine, enemy_t type, Sprite &minX, Sprite &maxX, R
 	floatingText.setString(to_string(killScore));
 }
 
-void Enemy::draw(RenderWindow &window)
+void Enemy::draw(RenderWindow& window)
 {
 	if (display)
 	{
@@ -235,6 +235,8 @@ void Enemy::setKilled()
 			speed[0] = gameEngine->currentPlayer.enemiesSpeed * accSpeed;
 			firstTime = true;
 			break;
+		default:
+			break; // mới thêm
 		}
 		faid = true;
 		isKilled = false;

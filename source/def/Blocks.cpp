@@ -1,6 +1,6 @@
 #include "../header/Blocks.h"
 
-Blocks::Blocks(GameEngine &gameEngine, block_t blockType, item_t itemType, float x, float y) : item(gameEngine, itemType, x, y)
+Blocks::Blocks(GameEngine& gameEngine, block_t blockType, item_t itemType, float x, float y) : item(gameEngine, itemType, x, y)
 {
     // Set initial values
     this->gameEngine = &gameEngine;
@@ -38,6 +38,8 @@ Blocks::Blocks(GameEngine &gameEngine, block_t blockType, item_t itemType, float
         blockRect = rockRect;
         maxRect = 1;
         break;
+    default:
+        break; // mới thêm
     }
 
     blockSprite.setOrigin(blockRect.width / 2, blockRect.height / 2);
@@ -47,7 +49,7 @@ Blocks::Blocks(GameEngine &gameEngine, block_t blockType, item_t itemType, float
     blockHight = blockSprite.getGlobalBounds().height;
 }
 
-void Blocks::draw(RenderWindow &window)
+void Blocks::draw(RenderWindow& window)
 {
     item.draw(window);
     if (display)
@@ -94,6 +96,9 @@ void Blocks::animation()
                 if (currentRect == maxRect - 1)
                     display = false;
             }
+            break; // moi them
+        default:
+            break; // mới thêm
         }
 
         blockSprite.setTextureRect(blockRect);
@@ -195,13 +200,13 @@ void Blocks::checkIntersection()
 {
     // Calculate Mario and Block bounds
     FloatRect marioBounds = gameEngine->character.charSprite.getGlobalBounds(),
-              blockBounds = blockSprite.getGlobalBounds();
+        blockBounds = blockSprite.getGlobalBounds();
     Vector2f marioPos = gameEngine->character.charSprite.getPosition(), blockPos = blockSprite.getPosition();
 
     float blockTopPoint = blockPos.y - (blockBounds.height / 2),
-          blockBottomPoint = blockPos.y + (blockBounds.height / 2),
-          blockRightPoint = blockPos.x + (blockBounds.width / 2),
-          blockLeftPoint = blockPos.x - (blockBounds.width / 2);
+        blockBottomPoint = blockPos.y + (blockBounds.height / 2),
+        blockRightPoint = blockPos.x + (blockBounds.width / 2),
+        blockLeftPoint = blockPos.x - (blockBounds.width / 2);
 
     // In the block bounds
     if (blockBounds.intersects(marioBounds))

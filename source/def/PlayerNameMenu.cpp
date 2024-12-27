@@ -74,20 +74,17 @@ void PlayerNameMenu::catchEvents(Event event, player& newPlayer, LevelsList& lev
 		case Event::KeyReleased:
 			handleKeyReleased(event.key.code, newPlayer, levelsList);
 			break;
-
 		case Event::TextEntered:
 			handleTextEntered(event.text.unicode);
 			break;
-
 		case Event::MouseButtonReleased:
 			if (event.mouseButton.button == sf::Mouse::Left)
 			{
 				handleMouseClick({ event.mouseButton.x, event.mouseButton.y }, newPlayer, event);
 			}
 			break;
-
-			//		default:
-			//	break;
+		default:
+			break; // mới thêm	
 		}
 	}
 	levelsList.catchEvents(event, newPlayer);
@@ -100,18 +97,15 @@ void PlayerNameMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPla
 	case sf::Keyboard::Backspace:
 		handleBackspace();
 		break;
-
 	case sf::Keyboard::Enter:
 		handleEnter(newPlayer, levelsList);
 		break;
-
 	case sf::Keyboard::Escape:
 		this->hide();
 		changingOptionSound.play();
 		break;
-
-		// default:
-		// break;
+	default:
+		break; // mới thêm
 	}
 }
 

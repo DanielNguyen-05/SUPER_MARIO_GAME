@@ -1,6 +1,6 @@
 #include "../header/Items.h"
 
-Items::Items(GameEngine &gameEngine, item_t item, float x, float y)
+Items::Items(GameEngine& gameEngine, item_t item, float x, float y)
 {
     // Set initial values
     this->gameEngine = &gameEngine;
@@ -10,7 +10,7 @@ Items::Items(GameEngine &gameEngine, item_t item, float x, float y)
     itemType = item;
     coinIntRect = IntRect(0, 86, 32, 30);
     flowerIntRect = IntRect(32, 213, 32, 30);
-    mashroomIntRect = IntRect(128, 150, 32.5, 32);
+    mashroomIntRect = IntRect(128, 150, 32, 32); // mới sửa cái 32 đầu tiên (từ 32.5)
     sparklsIntRect = IntRect(0, 116, 40, 32);
 
     // Set item Sprite properties
@@ -39,6 +39,8 @@ Items::Items(GameEngine &gameEngine, item_t item, float x, float y)
         itemIntRect = IntRect(0, 0, 0, 0);
         takenScore = 0;
         break;
+    default:
+        break; // mới thêm
     }
 
     itemSprite.setTextureRect(itemIntRect);
@@ -57,7 +59,7 @@ Items::Items(GameEngine &gameEngine, item_t item, float x, float y)
     floatingText.setString(to_string(takenScore));
 }
 
-void Items::draw(RenderWindow &window)
+void Items::draw(RenderWindow& window)
 {
     if (display && itemType != NONE)
     {
@@ -92,6 +94,8 @@ void Items::animation()
             if (CurrentRect == maxRect - 1)
                 itemSprite.setColor(Color::Transparent);
             break;
+        default:
+            break; // mới thêm  
         }
         itemSprite.setTextureRect(itemIntRect);
         CurrentRect++;
@@ -184,6 +188,8 @@ void Items::setTaken()
         case FLOWER:
             gameEngine->character.PoweringUpToSuper = true;
             break;
+        default:
+            break; // mới thêm
         }
         faid = true;
         isTaken = false;
