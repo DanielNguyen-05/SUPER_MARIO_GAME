@@ -21,6 +21,11 @@ OptionsMenu::OptionsMenu()
     menuSound.setLoop(true);
     menuSound.play();
 
+    // Set Levels Sound Properties
+	levelBuffer.loadFromFile(LEVEL_MUSIC);
+	levelSound.setBuffer(levelBuffer);
+	levelSound.setLoop(true);
+
     setChangeOptionSound();
 
     // Set shadow properties
@@ -199,11 +204,11 @@ void OptionsMenu::updateMusicSettings()
     if (muteMusic)
     {
         menuSound.pause();
-        // levelSound.setVolume(0);
+        levelSound.setVolume(0);
     }
     else
     {
         menuSound.play();
-        // levelSound.setVolume(100);
+        levelSound.setVolume(100);
     }
 }

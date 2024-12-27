@@ -59,7 +59,6 @@ Level2::Level2(GameEngine& gameEngine)
     for (int i = 0; i < rockCnt; i++)
     {
         rock.push_back(*new Blocks(gameEngine, ROCK, NONE, rockPosition[i].x, rockPosition[i].y));
-        // std::cout << i << "\t" << rockPosition[i].x << " \t" << rockPosition[i].y << "\n";
         rock[i].blockSprite.setColor(Color(70, 50, 180)); // blue filter
     }
 
@@ -128,6 +127,7 @@ void Level2::start()
 void Level2::end()
 {
     display = false;
+    if(finished)
     gameEngine->currentPlayer.level = "3";
     gameEngine->gameRunning = false;
     finished = true;
@@ -234,6 +234,7 @@ void Level2::checkEnd()
     }
     else if (charPos.x > levelWidth - space)
     {
+        finished = true;
         gameEngine->character.charSprite.setPosition(levelWidth - space, charPos.y);
         gameEngine->character.speed[0] = 0;
         gameEngine->addPlayerInfo(2);

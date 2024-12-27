@@ -12,11 +12,11 @@ private:
     sf::Sprite optionShadowSprite;
     sf::Sprite musicBallSprite;
     sf::Sprite controlBallSprite;
-    sf::SoundBuffer menuBuffer;
+    sf::SoundBuffer menuBuffer, levelBuffer;
     int activeSlide;
 
 public:
-    sf::Sound menuSound;
+    sf::Sound menuSound, levelSound;
     bool muteMusic, handControlled;
 
     // Constructors

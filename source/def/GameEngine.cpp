@@ -325,7 +325,6 @@ void GameEngine::updateLifes()
 			lifeStr << "Game Over";
 			gameRunning = false;
 		}
-		character.dead = false;
 		lifeScreen = true;
 	}
 
@@ -336,6 +335,7 @@ void GameEngine::reset()
 {
 	scoreInt = 0;
 	coinsInt = 0;
+	currentPlayer.lifes = 3;
 
 	scoreStr.str(string());
 	scoreStr << "MARIO:\n"

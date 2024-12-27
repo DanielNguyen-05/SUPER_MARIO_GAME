@@ -119,6 +119,7 @@ void Level1::catchEvents(Event event)
 
         if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)
         {
+            finished = false;
             this->end();
         }
     }
@@ -186,6 +187,8 @@ void Level1::end()
 {
     display = false;
     gameEngine->gameRunning = false;
+    if(finished && stoi(gameEngine->currentPlayer.level) < 2)
+    gameEngine->currentPlayer.level = to_string(2);
     finished = true;
 }
 
@@ -239,6 +242,7 @@ void Level1::checkEnd()
     }
     else if (charPos.x > levelWidth - space)
     {
+        finished = true;
         gameEngine->character.charSprite.setPosition(levelWidth - space, charPos.y);
         gameEngine->character.speed[0] = 0;
         gameEngine->addPlayerInfo(1);

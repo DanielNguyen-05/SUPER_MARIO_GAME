@@ -99,7 +99,8 @@ void PlayerOptionsMenu::catchEvents(Event event, player& newPlayer)
     updatePlayerOptionsColors();
     if (user.display)
         user.catchEvents(event, newPlayer, levelsList);
-    levelsList.catchEvents(event, newPlayer);
+    else
+        levelsList.catchEvents(event, newPlayer);
 }
 
 void PlayerOptionsMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer)

@@ -100,7 +100,7 @@ struct position
 
 #define CONTROL_BALL "assets/textures/Menu/controlBall.png"
 
-#define MENU_SOUND "assets/music/menu.ogg"
+#define MENU_SOUND "assets/music/MenuMusic.ogg"
 
 #define CHANGING_OPTION_SOUND "assets/sounds/fireball.wav"
 

@@ -40,10 +40,9 @@ LevelsList::LevelsList() : level1(gameEngine), level2(gameEngine), level3(gameEn
 
 void LevelsList::show(player newPlayer)
 {
-	maxLevel = stoi(newPlayer.level);
+	gameEngine.currentPlayer = newPlayer;
 	checkOpendLevels();
 	display = true;
-	gameEngine.currentPlayer = newPlayer;
 
 	selectedLevel = 0;
 	optionShadowSprite.setPosition(695, 350 + selectedLevel * 120);
@@ -57,6 +56,7 @@ void LevelsList::draw(RenderWindow& window)
 	// cout << level1.finished;
 	if (display || level1.finished || level2.finished)
 	{
+		checkOpendLevels();
 		View defaultView(FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
 		window.setView(defaultView);
 		window.draw(backGroundSprite);
@@ -142,31 +142,7 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 
 void LevelsList::checkOpendLevels()
 {
-	// maxLevel = stoi(gameEngine.currentPlayer.level);
-	/*int lines = getNumberOfLines();
-	player tempPlayer;
-	maxLevel = 1; // Default to level 1
-
-	// Mở file
-	playersFile.open(ACCOUNT_FILE);
-	if (!playersFile.is_open())
-	{
-		cerr << "Error: Unable to open file " << ACCOUNT_FILE << endl;
-		return;
-	}
-
-	// Đọc thông tin người chơi từ file
-	for (int i = 0; i < lines; i++)
-	{
-		playersFile >> tempPlayer.username >> tempPlayer.level1Score >> tempPlayer.level2Score >> tempPlayer.level3Score;
-		if (stoi(tempPlayer.level2Score) != -1)
-			maxLevel = 2;
-		if (stoi(tempPlayer.level3Score) != -1)
-			maxLevel = 3;
-	}
-
-	// Đóng file
-	playersFile.close();*/
+	maxLevel = stoi(gameEngine.currentPlayer.level);
 
 	// Cập nhật các level đã mở
 	setOpendLevels();
