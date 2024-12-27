@@ -19,6 +19,7 @@ public:
     float speed[2];
     Sprite charSprite;
     characterState_t charState;
+
     Characters(float x, float y);
 
     // Methods

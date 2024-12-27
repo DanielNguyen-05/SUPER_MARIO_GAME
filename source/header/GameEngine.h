@@ -1,6 +1,8 @@
 #pragma once
 #include "DEFINITION.h"
 #include "Characters.h"
+#include "Mario.h"
+#include "Luigi.h"
 
 class GameEngine
 {
@@ -19,7 +21,7 @@ private:
 
 public:
     bool lifeScreen, gameRunning;
-    Characters character;
+    Luigi character;
     Text timerText, scoreText, coinsText, levelText, lifeText;
     Font floatingTextFont;
     Texture stoneTexture, questionTexture, smashTextures[6], itemTexture, enemyTextrue;
