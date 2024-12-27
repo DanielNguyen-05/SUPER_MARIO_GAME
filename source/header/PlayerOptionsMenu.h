@@ -46,8 +46,8 @@ public:
     void handleEnter(player &newPlayer);
 
     // Get how many lines in players file
-	int getNumberOfLines();
+    int getNumberOfLines();
 
     // Search for player name in files to get his last checkpoint
-	void handleLevelsList(player& newPlayer);
+    void handleLevelsList(player &newPlayer);
 };

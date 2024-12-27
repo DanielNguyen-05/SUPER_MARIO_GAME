@@ -58,9 +58,9 @@ void GameOver::initializeShapes() {
     marioHead.setFillColor(sf::Color::Red);
     marioHead.setPosition(750, 150);
 
-    marioBody.setSize(sf::Vector2f(100, 20));
-    marioBody.setFillColor(sf::Color::Red);
-    marioBody.setPosition(720, 240);
+    charBody.setSize(sf::Vector2f(100, 20));
+    charBody.setFillColor(sf::Color::Red);
+    charBody.setPosition(720, 240);
 
     // Bottom decorations
     for (int i = 0; i < 5; i++) {
@@ -103,7 +103,7 @@ void GameOver::draw() {
     window.draw(background);
     window.draw(border);
     window.draw(marioHead);
-    window.draw(marioBody);
+    window.draw(charBody);
     window.draw(gameOverText);
     window.draw(scoreText);
     window.draw(coinsText);

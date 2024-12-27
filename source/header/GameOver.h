@@ -11,7 +11,7 @@ private:
     sf::Text continueText;
     sf::RectangleShape background;
     sf::RectangleShape border;
-    sf::RectangleShape marioBody;
+    sf::RectangleShape charBody;
     sf::CircleShape marioHead;
     std::vector<sf::RectangleShape> decorations;
     sf::Clock blinkClock;

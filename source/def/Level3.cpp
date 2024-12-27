@@ -1,11 +1,11 @@
 #include "../header/Level3.h"
 
-Level3::Level3(GameEngine &gameEngine)
+Level3::Level3(GameEngine& gameEngine)
 {
     // Set initial values
     this->gameEngine = &gameEngine;
     display = false;
-    memset(marioOnGround, false, sizeof marioOnGround);
+    memset(charOnGround, false, sizeof charOnGround);
     coinCnt = stoneCnt = stoneCoinCnt = quesCoinCnt = quesMashCnt = quesFlowerCnt = rockCnt = 0;
     levelWidth = 13397;
 
@@ -65,7 +65,7 @@ Level3::Level3(GameEngine &gameEngine)
     // black.push_back(*new Enemy(gameEngine, TURTLE, rock[1].blockSprite, rock[2].blockSprite, groundShape[0], 900, 200));
 }
 
-void Level3::draw(RenderWindow &window)
+void Level3::draw(RenderWindow& window)
 {
     if (display)
     {
@@ -97,7 +97,7 @@ void Level3::draw(RenderWindow &window)
         for (int i = 0; i < 0; i++)
             turtle[i].draw(window);*/
 
-        gameEngine->mario.draw(window);
+        gameEngine->character.draw(window);
         gameEngine->draw(window);
     }
 }
@@ -106,7 +106,7 @@ void Level3::catchEvents(Event event)
 {
     if (display)
     {
-        gameEngine->mario.catchEvents(event);
+        gameEngine->character.catchEvents(event);
 
         if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)
         {
@@ -128,33 +128,33 @@ void Level3::end()
 
 void Level3::checkGround(int num)
 {
-    if (!gameEngine->mario.dying)
+    if (!gameEngine->character.dying)
     {
-        if (groundShape[num].getGlobalBounds().intersects(gameEngine->mario.marioSprite.getGlobalBounds()))
+        if (groundShape[num].getGlobalBounds().intersects(gameEngine->character.charSprite.getGlobalBounds()))
         {
-            gameEngine->mario.marioSprite.setPosition(gameEngine->mario.marioSprite.getPosition().x, groundShape[num].getGlobalBounds().top);
-            gameEngine->mario.onGround = true;
-            marioOnGround[num] = true;
+            gameEngine->character.charSprite.setPosition(gameEngine->character.charSprite.getPosition().x, groundShape[num].getGlobalBounds().top);
+            gameEngine->character.onGround = true;
+            charOnGround[num] = true;
         }
         else
         {
-            if (marioOnGround[num] && gameEngine->mario.onGround)
+            if (charOnGround[num] && gameEngine->character.onGround)
             {
-                marioOnGround[num] = false;
-                gameEngine->mario.onGround = false;
-                gameEngine->mario.speed[1] = -5;
+                charOnGround[num] = false;
+                gameEngine->character.onGround = false;
+                gameEngine->character.speed[1] = -5;
             }
         }
     }
 }
 
-void Level3::handleView(RenderWindow &window)
+void Level3::handleView(RenderWindow& window)
 {
     // a + (b - a) * c
-    if (/*!gameEngine->mario.stuck*/ !gameEngine->mario.dying)
+    if (/*!gameEngine->character.stuck*/ !gameEngine->character.dying)
     {
         float fr = (1 / 60.0);
-        screenCenter = {screenCenter.x + (gameEngine->mario.marioSprite.getPosition().x - screenCenter.x) * fr * 20, 450};
+        screenCenter = { screenCenter.x + (gameEngine->character.charSprite.getPosition().x - screenCenter.x) * fr * 20, 450 };
 
         if (screenCenter.x > WINDOW_WIDTH / 2 && screenCenter.x < levelWidth - (WINDOW_WIDTH / 2))
         {
@@ -167,17 +167,19 @@ void Level3::handleView(RenderWindow &window)
 
 void Level3::checkEnd()
 {
-    Vector2f marioPos = gameEngine->mario.marioSprite.getPosition();
+    Vector2f charPos = gameEngine->character.charSprite.getPosition();
     int space = 70;
-    if (marioPos.x < space)
+    if (charPos.x < space)
     {
-        gameEngine->mario.marioSprite.setPosition(space, marioPos.y);
-        gameEngine->mario.speed[0] = 0;
+        gameEngine->character.charSprite.setPosition(space, charPos.y);
+        gameEngine->character.speed[0] = 0;
     }
-    else if (marioPos.x > levelWidth - space)
+    else if (charPos.x > levelWidth - space)
     {
-        gameEngine->mario.marioSprite.setPosition(levelWidth - space, marioPos.y);
-        gameEngine->mario.speed[0] = 0;
+        gameEngine->character.charSprite.setPosition(levelWidth - space, charPos.y);
+        gameEngine->character.speed[0] = 0;
+        gameEngine->addPlayerInfo(3);
+        end();
     }
 }
 
@@ -220,7 +222,7 @@ void Level3::arrangeLevelBlocks()
         {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 1, 2, 2, 1, 6, 0, 0, 7, 7, 7, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 2, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 2, 3, 2, 0, 0, 0, 0, 0, 0, 2, 3, 2, 0, 0, 0, 0, 0, 2, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 3, 2, 2, 3, 2, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0},
         {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 6, 0, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0},
         {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 2, 2, 2, 2, 2, 6, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 6, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+        {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 2, 2, 2, 2, 2, 6, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 6, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 6, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
 
     for (int i = 0; i < ROW_NUM; i++)
     {
@@ -229,31 +231,31 @@ void Level3::arrangeLevelBlocks()
             switch (arr[i][j])
             {
             case 1:
-                stoneCoinPosition[stoneCoinCnt] = {float(31 + j * 62), float(31 + i * 62)};
+                stoneCoinPosition[stoneCoinCnt] = { float(31 + j * 62), float(31 + i * 62) };
                 stoneCoinCnt++;
                 break;
             case 2:
-                stonePosition[stoneCnt] = {float(31 + j * 62), float(31 + i * 62)};
+                stonePosition[stoneCnt] = { float(31 + j * 62), float(31 + i * 62) };
                 stoneCnt++;
                 break;
             case 3:
-                questCoinPosition[quesCoinCnt] = {float(31 + j * 62), float(31 + i * 62)};
+                questCoinPosition[quesCoinCnt] = { float(31 + j * 62), float(31 + i * 62) };
                 quesCoinCnt++;
                 break;
             case 4:
-                questFLowerPosition[quesFlowerCnt] = {float(31 + j * 62), float(31 + i * 62)};
+                questFLowerPosition[quesFlowerCnt] = { float(31 + j * 62), float(31 + i * 62) };
                 quesFlowerCnt++;
                 break;
             case 5:
-                questMashPosition[quesMashCnt] = {float(31 + j * 62), float(31 + i * 62)};
+                questMashPosition[quesMashCnt] = { float(31 + j * 62), float(31 + i * 62) };
                 quesMashCnt++;
                 break;
             case 6:
-                rockPosition[rockCnt] = {float(31 + j * 62), float(31 + i * 62)};
+                rockPosition[rockCnt] = { float(31 + j * 62), float(31 + i * 62) };
                 rockCnt++;
                 break;
             case 7:
-                coinPosition[coinCnt] = {float(31 + j * 62), float(31 + i * 62)};
+                coinPosition[coinCnt] = { float(31 + j * 62), float(31 + i * 62) };
                 coinCnt++;
                 break;
             default:

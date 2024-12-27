@@ -1,6 +1,6 @@
 #pragma once
 #include "DEFINITION.h"
-#include "Mario.h"
+#include "Characters.h"
 
 class GameEngine
 {
@@ -13,13 +13,13 @@ private:
     fstream playersFile;
     map<string, int> levelsMap;
     Texture coinTexture;
-    Sprite coinSprite, marioLifeSprite;
+    Sprite coinSprite, charLifeSprite;
     SoundBuffer popUpBuffer, smashBuffer, coinBuffer, powerUpBuffer, powerUpAppearBuffer, killBuffer;
     IntRect coinRect;
 
 public:
     bool lifeScreen, gameRunning;
-    Mario mario;
+    Characters character;
     Text timerText, scoreText, coinsText, levelText, lifeText;
     Font floatingTextFont;
     Texture stoneTexture, questionTexture, smashTextures[6], itemTexture, enemyTextrue;
@@ -53,7 +53,7 @@ public:
     void updateCoins();
 
     // Add player name , his score and level to Players file
-    void addPlayerInfo();
+    void addPlayerInfo(int level);
 
     // Set level Name text
     void setLevelName(std::string levelName);

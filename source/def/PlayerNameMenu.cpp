@@ -43,7 +43,7 @@ PlayerNameMenu::PlayerNameMenu()
 }
 
 // Vẽ giao diện
-void PlayerNameMenu::draw(sf::RenderWindow &window)
+void PlayerNameMenu::draw(sf::RenderWindow& window)
 {
 	if (display)
 	{
@@ -56,7 +56,7 @@ void PlayerNameMenu::draw(sf::RenderWindow &window)
 	}
 }
 
-void PlayerNameMenu::show(player &newPlayer)
+void PlayerNameMenu::show(player& newPlayer)
 {
 	display = true;
 }
@@ -65,7 +65,7 @@ void PlayerNameMenu::show(player &newPlayer)
 	return username;
 }*/
 
-void PlayerNameMenu::catchEvents(Event event, player &newPlayer, LevelsList &levelsList)
+void PlayerNameMenu::catchEvents(Event event, player& newPlayer, LevelsList& levelsList)
 {
 	if (display)
 	{
@@ -82,7 +82,7 @@ void PlayerNameMenu::catchEvents(Event event, player &newPlayer, LevelsList &lev
 		case Event::MouseButtonReleased:
 			if (event.mouseButton.button == sf::Mouse::Left)
 			{
-				handleMouseClick({event.mouseButton.x, event.mouseButton.y}, newPlayer, event);
+				handleMouseClick({ event.mouseButton.x, event.mouseButton.y }, newPlayer, event);
 			}
 			break;
 
@@ -93,7 +93,7 @@ void PlayerNameMenu::catchEvents(Event event, player &newPlayer, LevelsList &lev
 	levelsList.catchEvents(event, newPlayer);
 }
 
-void PlayerNameMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player &newPlayer, LevelsList &levelsList)
+void PlayerNameMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer, LevelsList& levelsList)
 {
 	switch (keyCode)
 	{
@@ -129,7 +129,7 @@ void PlayerNameMenu::handleBackspace()
 	updateInputFields();
 }
 
-void PlayerNameMenu::handleEnter(player &newPlayer, LevelsList &levelsList)
+void PlayerNameMenu::handleEnter(player& newPlayer, LevelsList& levelsList)
 {
 	if (!username.isEmpty())
 	{
@@ -153,7 +153,7 @@ void PlayerNameMenu::handleTextEntered(sf::Uint32 unicode)
 	updateInputFields();
 }
 
-bool PlayerNameMenu::isValidInput(const sf::String &input) const
+bool PlayerNameMenu::isValidInput(const sf::String& input) const
 {
 	// Kiểm tra nếu chuỗi chứa bất kỳ khoảng trắng nào
 	for (size_t i = 0; i < input.getSize(); ++i)
@@ -179,7 +179,7 @@ void PlayerNameMenu::updateInputFields()
 	inputFieldName.setString(username + (enterName ? "_" : ""));
 }
 
-bool PlayerNameMenu::checkCredentials(const sf::String &username)
+bool PlayerNameMenu::checkCredentials(const sf::String& username)
 {
 	std::ifstream file(ACCOUNT_FILE);
 	if (!file.is_open())
@@ -205,12 +205,12 @@ bool PlayerNameMenu::checkCredentials(const sf::String &username)
 	return true;
 }
 
-void PlayerNameMenu::setErrorMessage(const sf::String &message)
+void PlayerNameMenu::setErrorMessage(const sf::String& message)
 {
 	errorMessage.setString(message);
 }
 
-void PlayerNameMenu::handleMouseClick(sf::Vector2i mousePos, player &newPlayer, Event event)
+void PlayerNameMenu::handleMouseClick(sf::Vector2i mousePos, player& newPlayer, Event event)
 {
 	if (display)
 	{
@@ -222,7 +222,7 @@ void PlayerNameMenu::handleMouseClick(sf::Vector2i mousePos, player &newPlayer, 
 	}
 }
 
-void PlayerNameMenu::handleLogin(player &newPlayer, LevelsList &levelsList)
+void PlayerNameMenu::handleLogin(player& newPlayer, LevelsList& levelsList)
 {
 	if (!isValidInput(username))
 	{
