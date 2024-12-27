@@ -1,5 +1,7 @@
 #include "../header/MainMenu.h"
 
+MainMenu* MainMenu::instance = nullptr;
+
 MainMenu::MainMenu()
 {
     // Set initial values
@@ -32,7 +34,7 @@ MainMenu::MainMenu()
         " LEADERBOARD", // Top 3 players
         "   CREDITS",   // Introduce the team
         "   OPTIONS",   // Music control
-        "    EXIT"};
+        "    EXIT" };
 
     for (int i = 0; i < 6; i++)
     {
@@ -55,6 +57,13 @@ MainMenu::MainMenu()
         menuOptions[i].setPosition(width, hight);
         menuOptionsOutline[i].setPosition(width - 2, hight - 2); // Dịch viền một chút
     }
+}
+
+MainMenu* MainMenu::getInstance() {
+    if (instance == nullptr) {
+        instance = new MainMenu();
+    }
+    return instance;
 }
 
 void MainMenu::handleAllEvents(Event event)
@@ -95,7 +104,7 @@ void MainMenu::catchEvents(Event event)
     updateMenuOptionsColors();
 }
 
-void MainMenu::drawAll(RenderWindow &window)
+void MainMenu::drawAll(RenderWindow& window)
 {
     this->draw(window);
     playerOptions.draw(window);
@@ -105,7 +114,7 @@ void MainMenu::drawAll(RenderWindow &window)
     options.draw(window);
 }
 
-void MainMenu::draw(RenderWindow &window)
+void MainMenu::draw(RenderWindow& window)
 {
     checkShow();
     controlMusic();
@@ -245,12 +254,12 @@ void MainMenu::confirmExit() // chưa có đẹp, nữa chỉnh lại dùm tao
 
     sf::Text yesText("Yes", font, 20);
     yesText.setPosition(yesButton.getPosition().x + (yesButton.getSize().x - yesText.getGlobalBounds().width) / 2,
-                        yesButton.getPosition().y + (yesButton.getSize().y - yesText.getGlobalBounds().height) / 2);
+        yesButton.getPosition().y + (yesButton.getSize().y - yesText.getGlobalBounds().height) / 2);
     yesText.setFillColor(sf::Color::White);
 
     sf::Text noText("No", font, 20);
     noText.setPosition(noButton.getPosition().x + (noButton.getSize().x - noText.getGlobalBounds().width) / 2,
-                       noButton.getPosition().y + (noButton.getSize().y - noText.getGlobalBounds().height) / 2);
+        noButton.getPosition().y + (noButton.getSize().y - noText.getGlobalBounds().height) / 2);
     noText.setFillColor(sf::Color::White);
 
     // Vòng lặp xử lý sự kiện cho cửa sổ xác nhận

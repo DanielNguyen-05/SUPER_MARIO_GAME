@@ -10,7 +10,7 @@ int main()
 
     window.setFramerateLimit(60); // Limit the framerate to 60 FPS.
 
-    MainMenu menu = MainMenu();
+    MainMenu* menu = MainMenu::getInstance();
 
     /*** Game Loop ***/
     while (window.isOpen())
@@ -24,12 +24,12 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
 
-            menu.handleAllEvents(event);
+            menu->handleAllEvents(event);
         }
 
         // Clear the window
         window.clear();
-        menu.drawAll(window);
+        menu->drawAll(window);
         // Display the contents of the window
         window.display();
     }

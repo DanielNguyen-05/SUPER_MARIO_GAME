@@ -22,6 +22,12 @@ private: // attributes
     int selectedOption;
     sf::Sprite optionShadowSprite;
 
+    //Singleton attribute
+    static MainMenu* instance;
+
+    // Constructor
+    MainMenu();
+
 public: // attributes
     bool gameRunning;
     player newPlayer;
@@ -52,8 +58,10 @@ private: // methods
     void updateMenuOptionsColors();
 
 public: // methods
-    // Constructor
-    MainMenu();
+
+    static MainMenu* getInstance();
+    MainMenu(const MainMenu&) = delete;
+    MainMenu& operator=(const MainMenu&) = delete;
 
     // Control all events happening in Menu and its children
     void handleAllEvents(sf::Event event);
