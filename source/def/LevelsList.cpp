@@ -50,7 +50,7 @@ void LevelsList::show(player newPlayer)
 	// Find the last level this player has finished
 }
 
-void LevelsList::draw(RenderWindow &window)
+void LevelsList::draw(RenderWindow& window)
 {
 	// checkShow(gameEngine.currentPlayer);
 	// cout << level1.finished;
@@ -75,7 +75,7 @@ void LevelsList::draw(RenderWindow &window)
 	}
 }
 
-void LevelsList::catchEvents(Event event, player &newPlayer)
+void LevelsList::catchEvents(Event event, player& newPlayer)
 {
 	if (display || level1.finished || level2.finished)
 	{
@@ -104,7 +104,7 @@ void LevelsList::catchEvents(Event event, player &newPlayer)
 					level1.finished = false;
 					level2.finished = false;
 					level1.start();
-					
+
 					break;
 				case 1:
 					level1.finished = false;
@@ -143,7 +143,8 @@ void LevelsList::catchEvents(Event event, player &newPlayer)
 
 void LevelsList::checkOpendLevels()
 {
-	// maxLevel = stoi(gameEngine.currentPlayer.level);
+
+	maxLevel = stoi(gameEngine.currentPlayer.level);
 	/*int lines = getNumberOfLines();
 	player tempPlayer;
 	maxLevel = 1; // Default to level 1

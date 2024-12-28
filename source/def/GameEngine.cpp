@@ -341,7 +341,6 @@ void GameEngine::updateLifes()
 			lifeStr << "Game Over";
 			gameRunning = false;
 		}
-		character->dead = false;
 		lifeScreen = true;
 	}
 

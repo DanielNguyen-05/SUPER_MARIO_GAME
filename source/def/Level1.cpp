@@ -245,6 +245,7 @@ void Level1::checkEnd()
     }
     else if (charPos.x > levelWidth - space)
     {
+        finished = true;
         gameEngine->character->charSprite.setPosition(levelWidth - space, charPos.y);
         gameEngine->character->speed[0] = 0;
         gameEngine->addPlayerInfo(1);

@@ -127,8 +127,8 @@ void Level2::start()
 void Level2::end()
 {
     display = false;
-    if(finished)
-    gameEngine->currentPlayer.level = "3";
+    if (finished)
+        gameEngine->currentPlayer.level = "3";
     gameEngine->gameRunning = false;
     finished = true;
 }
@@ -212,7 +212,7 @@ void Level2::handleView(RenderWindow& window)
     if (/*!gameEngine->character->stuck*/ !gameEngine->character->dying)
     {
         float fr = (1 / 60.0);
-        screenCenter = {screenCenter.x + (gameEngine->character->charSprite.getPosition().x - screenCenter.x) * fr * 20, 450};
+        screenCenter = { screenCenter.x + (gameEngine->character->charSprite.getPosition().x - screenCenter.x) * fr * 20, 450 };
 
         if (screenCenter.x > WINDOW_WIDTH / 2 && screenCenter.x < levelWidth - (WINDOW_WIDTH / 2))
         {
@@ -234,6 +234,7 @@ void Level2::checkEnd()
     }
     else if (charPos.x > levelWidth - space)
     {
+        finished = true;
         gameEngine->character->charSprite.setPosition(levelWidth - space, charPos.y);
         gameEngine->character->speed[0] = 0;
         gameEngine->addPlayerInfo(2);
