@@ -42,7 +42,7 @@ Characters::Characters(float x, float y)
     dieSound.setBuffer(dieBuffer);
 }
 
-void Characters::draw(RenderWindow &window)
+void Characters::draw(RenderWindow& window)
 {
     if (DEBUG_MODE)
     {
@@ -89,7 +89,7 @@ void Characters::superState()
     charSprite.setTexture(charSuperTexture);
 }
 
-void Characters::catchEvents(Event &event)
+void Characters::catchEvents(Event& event)
 {
     if (!dying)
     {
@@ -242,7 +242,7 @@ void Characters::move()
     }
 }
 
-void Characters::setCharRectForWalk(IntRect &intRect)
+void Characters::setCharRectForWalk(IntRect& intRect)
 {
     int maxLeft = 0, picWidth = 0;
 
@@ -291,7 +291,7 @@ void Characters::standStill()
     }
 }
 
-void Characters::jump(IntRect &intRect, int RectPosition, float waiting)
+void Characters::jump(IntRect& intRect, int RectPosition, float waiting)
 {
     if (onGround)
     {
@@ -310,7 +310,7 @@ void Characters::jump(IntRect &intRect, int RectPosition, float waiting)
     }
 }
 
-void Characters::moveRight(IntRect &intRect)
+void Characters::moveRight(IntRect& intRect)
 {
     // check turnAround
     if (speed[0] <= -1)
@@ -335,7 +335,7 @@ void Characters::moveRight(IntRect &intRect)
         acceleration[0] *= -1;
 }
 
-void Characters::moveLeft(IntRect &intRect)
+void Characters::moveLeft(IntRect& intRect)
 {
     // check turnAround
     if (speed[0] >= 1)

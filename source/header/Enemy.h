@@ -1,53 +1,54 @@
 #pragma once
 #include "DEFINITION.h"
 #include "GameEngine.h"
+#include "Bullet.h"
 
-class Enemy
-{
-    /***			Properties				***/
+class Enemy {
 private:
-    GameEngine *gameEngine;
-    Sprite *minX;
-    Sprite *maxX;
-    RectangleShape *ground;
+    GameEngine* gameEngine;
+    Sprite* minX;
+    Sprite* maxX;
+    RectangleShape* ground;
     EnemyEnum enemyType;
     IntRect enemyRect, blackRect, smashedRect, turtleRect, shellRect;
     Text floatingText;
     Clock timer, textFloatTimer, turtleTimer;
-    int CurrentRect, maxRect, floatingSpeed, killScore;
+    int currentRect, maxRect, floatingSpeed, killScore;
     float speed[2], scale, accSpeed;
     bool faid, isKilled, resetTime, moving, onGround, firstTime;
+
+    // AI-related properties
+    float trackingRange; // Tracking range for Mario
+    enum State { IDLE, MOVING, ATTACKING, KILLED, IN_SHELL } state;
+
+
+    // Thêm mảng hoặc danh sách các viên đạn
+    std::vector<Bullet> bullets;  // Mảng đạn bắn ra
+    bool canShoot;  // Kiểm tra xem kẻ thù có thể bắn đạn hay không
 
 public:
     Sprite enemySprite;
     bool display;
 
-    Enemy(GameEngine &gameEngine, EnemyEnum type, Sprite &minX, Sprite &maxX, RectangleShape &ground, float x, float y);
+    Enemy(GameEngine& gameEngine, EnemyEnum type, Sprite& minX, Sprite& maxX, RectangleShape& ground, float x, float y);
 
-    /***			Methods				***/
+    void draw(RenderWindow& window);
+    void updateAI();
 
-    // Draw enemy on screen
-    void draw(RenderWindow &window);
+    // Thêm phương thức để bắn đạn
+    void shoot();
+
+    // Thêm các phương thức khác nếu cần
+    void updateBullets();
 
 private:
-    // handle animation for the enemy
     void animation();
-
-    // Change direction of motion when face the bounds
     void changeDirection();
-
-    // See if there is ground below the enemy
     void checkGround();
+    void checkKilled();
+    void setKilled();
+    void checkTurtleFaid();
 
     // Text floating Up when kill the enemy
     void TextFloat();
-
-    // Check If mario has Killed this enemy or not
-    void checkKilled();
-
-    // Handle what will happend when enemy is killed
-    void setKilled();
-
-    // Make Turtle faid after 5s
-    void checkTurtleFaid();
 };

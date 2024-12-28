@@ -62,6 +62,7 @@ Level1::Level1(GameEngine& gameEngine)
     }
 
     black.push_back(*new Enemy(gameEngine, BLACK, rock[39].blockSprite, rock[40].blockSprite, groundShape[0], 2500, 200));
+    // black.push_back(*new Enemy(gameEngine, BLACK, rock[11].blockSprite, rock[12].blockSprite, groundShape[0], 200, 200));
     turtle.push_back(*new Enemy(gameEngine, TURTLE, rock[41].blockSprite, rock[42].blockSprite, groundShape[1], 5700, 200));
 }
 

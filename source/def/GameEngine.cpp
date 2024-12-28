@@ -1,5 +1,4 @@
 #include "../header/GameEngine.h"
-#include <memory>
 
 GameEngine::GameEngine() : CHAR_TYPE(CharacterTypeEnum::MARIO)
 {
@@ -103,6 +102,12 @@ GameEngine::GameEngine() : CHAR_TYPE(CharacterTypeEnum::MARIO)
 	for (int i = 0; i < 6; i++)
 	{
 		smashTextures[i].loadFromFile(SMASH_STONE_BLOCK + to_string(i) + ".png");
+	}
+
+	// Tải texture cho bullet
+	if (!bulletTexture.loadFromFile(MUSIC_BALL)) {
+		// Xử lý lỗi nếu không thể tải texture
+		std::cerr << "Error loading bullet texture!" << std::endl;
 	}
 }
 

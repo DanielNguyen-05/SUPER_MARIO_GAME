@@ -19,6 +19,7 @@ private:
     SoundBuffer popUpBuffer, smashBuffer, coinBuffer, powerUpBuffer, powerUpAppearBuffer, killBuffer;
     IntRect coinRect;
 
+
 public:
     bool lifeScreen, gameRunning;
     CharacterTypeEnum CHAR_TYPE;
@@ -28,6 +29,8 @@ public:
     Texture stoneTexture, questionTexture, smashTextures[6], itemTexture, enemyTextrue;
     Sound popUpSound, smashSound, coinSound, powerUpSound, powerUpAppearSound, killSound;
     player currentPlayer;
+    Texture bulletTexture;  // Khai báo bulletTexture
+
 
     /*         Constractar          */
     GameEngine();
