@@ -124,8 +124,7 @@ void GameEngine::updateScore(int IncScore)
 	scoreInt += IncScore;
 	// clear score_str
 	scoreStr.str(string());
-	scoreStr << "SCORE\n"
-			 << setw(6) << setfill('0') << scoreInt;
+	scoreStr << "SCORE\n" << setw(6) << setfill('0') << scoreInt;
 	scoreText.setString(scoreStr.str());
 }
 
@@ -144,7 +143,7 @@ void GameEngine::updateTimer()
 	if (counterTime >= 0)
 	{
 		timerStr << "TIME\n"
-				 << setw(3) << setfill('0') << counterTime;
+			<< setw(3) << setfill('0') << counterTime;
 		timerText.setString(timerStr.str());
 	}
 	else
@@ -194,7 +193,7 @@ void GameEngine::startTimeToScore()
 	remainTime = counterTime;
 }
 
-void GameEngine::draw(RenderWindow &window)
+void GameEngine::draw(RenderWindow& window)
 {
 	coinAnimation();
 	updateTimer();
@@ -210,7 +209,7 @@ void GameEngine::draw(RenderWindow &window)
 		startLifeScreen(window);
 }
 
-void GameEngine::startLifeScreen(RenderWindow &window)
+void GameEngine::startLifeScreen(RenderWindow& window)
 {
 	Clock lifeScreenClock;
 	while (lifeScreenClock.getElapsedTime().asSeconds() < 3)
@@ -236,7 +235,7 @@ void GameEngine::setLevelName(string levelName)
 // level truyền vào là để biết coi nó nên cập nhật điểm của level nào (trường hợp nó chơi xong lv1 mà nó không chơi lv2, nó quay lại chơi lv1 để cải thiện điểm)
 void GameEngine::addPlayerInfo(int level)
 {
-	int currentScore = scoreInt;
+	int currentScore = scoreInt - (levelTime - counterTime) * 100;
 	std::ifstream inputFile(ACCOUNT_FILE);
 	std::ostringstream tempBuffer;
 	bool userFound = false;
@@ -354,8 +353,7 @@ void GameEngine::reset()
 	currentPlayer.lifes = 3;
 
 	scoreStr.str(string());
-	scoreStr << "SCORE\n"
-			 << setw(6) << setfill('0') << scoreInt;
+	scoreStr << "SCORE\n" << setw(6) << setfill('0') << scoreInt;
 	scoreText.setString(scoreStr.str());
 
 	scoreText.setPosition(20, 20);

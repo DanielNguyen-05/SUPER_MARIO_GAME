@@ -50,7 +50,7 @@ void LevelsList::show(player newPlayer)
 	// Find the last level this player has finished
 }
 
-void LevelsList::draw(RenderWindow &window)
+void LevelsList::draw(RenderWindow& window)
 {
 	// checkShow(gameEngine.currentPlayer);
 	// cout << level1.finished;
@@ -75,7 +75,7 @@ void LevelsList::draw(RenderWindow &window)
 	}
 }
 
-void LevelsList::catchEvents(Event event, player &newPlayer)
+void LevelsList::catchEvents(Event event, player& newPlayer)
 {
 	if (display || level1.finished || level2.finished)
 	{
