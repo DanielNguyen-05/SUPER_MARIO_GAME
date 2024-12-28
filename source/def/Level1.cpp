@@ -62,7 +62,6 @@ Level1::Level1(GameEngine& gameEngine)
     }
 
     black.push_back(*new Enemy(gameEngine, BLACK, rock[39].blockSprite, rock[40].blockSprite, groundShape[0], 2500, 200));
-    // black.push_back(*new Enemy(gameEngine, BLACK, rock[11].blockSprite, rock[12].blockSprite, groundShape[0], 200, 200));
     turtle.push_back(*new Enemy(gameEngine, TURTLE, rock[41].blockSprite, rock[42].blockSprite, groundShape[1], 5700, 200));
 }
 
@@ -109,6 +108,8 @@ void Level1::draw(RenderWindow& window)
 
         gameEngine->character->draw(window);
         gameEngine->draw(window);
+        if(gameEngine->gameOverScreen)
+            end();
     }
 }
 
@@ -191,8 +192,10 @@ void Level1::end()
 {
     display = false;
     gameEngine->gameRunning = false;
-    if (finished && stoi(gameEngine->currentPlayer.level) < 2)
+    if (finished && stoi(gameEngine->currentPlayer.level) < 2){
         gameEngine->currentPlayer.level = to_string(2);
+        gameEngine->currentPlayer.level1Score = to_string(gameEngine->getScore());
+    }
     finished = true;
 }
 
@@ -336,18 +339,3 @@ void Level1::arrangeLevelBlocks()
         }
     }
 }
-/*
-void Level1::checkEnemyCollision() {
-    for (int i = 0; i < BLACK_NUM; i++) {
-        if (gameEngine->character->charSprite.getGlobalBounds().intersects(black[i].enemySprite.getGlobalBounds())) {
-            gameEngine->character->dying = true; // Trigger Mario death
-            return; // Stop further checks
-        }
-    }
-    for (int i = 0; i < TURTLE_NUM; i++) {
-        if (gameEngine->character->charSprite.getGlobalBounds().intersects(turtle[i].enemySprite.getGlobalBounds())) {
-            gameEngine->character->dying = true; // Trigger Mario death
-            return;
-        }
-    }
-}*/

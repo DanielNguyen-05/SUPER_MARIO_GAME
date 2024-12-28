@@ -100,6 +100,8 @@ void Level3::draw(RenderWindow& window)
 
         gameEngine->character->draw(window);
         gameEngine->draw(window);
+        if(gameEngine->gameOverScreen)
+            end();
     }
 }
 
@@ -127,8 +129,8 @@ void Level3::start()
 void Level3::end()
 {
     display = false;
-    if (finished)
-        gameEngine->currentPlayer.level = "3";
+    //if (finished)
+     //  gameEngine->currentPlayer.level = "3";
     gameEngine->gameRunning = false;
     finished = true;
 }
@@ -235,6 +237,7 @@ void Level3::checkEnd()
     else if (charPos.x > levelWidth - space)
     {
         finished = true;
+        gameEngine->WinnerScreen = true;
         gameEngine->character->charSprite.setPosition(levelWidth - space, charPos.y);
         gameEngine->character->speed[0] = 0;
         gameEngine->addPlayerInfo(3);

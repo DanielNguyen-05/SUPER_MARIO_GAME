@@ -3,6 +3,8 @@
 #include "Characters.h"
 #include "Mario.h"
 #include "Luigi.h"
+#include "Winner.h"
+#include "GameOver.h"
 
 class GameEngine
 {
@@ -18,10 +20,11 @@ private:
     Sprite coinSprite, charLifeSprite;
     SoundBuffer popUpBuffer, smashBuffer, coinBuffer, powerUpBuffer, powerUpAppearBuffer, killBuffer;
     IntRect coinRect;
-
+    Winner winner;
+    GameOver gameover;
 
 public:
-    bool lifeScreen, gameRunning;
+    bool lifeScreen, gameOverScreen, gameRunning, WinnerScreen;
     CharacterTypeEnum CHAR_TYPE;
     shared_ptr<Characters> character;
     Text timerText, scoreText, coinsText, levelText, lifeText;
@@ -37,6 +40,7 @@ public:
 
     /*          Method         */
 
+    void handleGameOver(RenderWindow& window);
     // Update current score with Increased Score and display it
     void updateScore(int IncScore);
 
@@ -84,7 +88,7 @@ public:
     void reset();
 
     int getScore() {
-        return scoreInt - ((levelTime - currentTime) * 100);
+        return scoreInt - currentTime * 25;
     }
 
     int getTime() {

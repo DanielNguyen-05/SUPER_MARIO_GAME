@@ -1,6 +1,6 @@
 #include "../header/GameEngine.h"
 
-GameEngine::GameEngine() : CHAR_TYPE(CharacterTypeEnum::MARIO)
+GameEngine::GameEngine() : winner(), gameover(), CHAR_TYPE(CharacterTypeEnum::MARIO)
 {
 	// Set initial values
 	levelTime = 300;
@@ -9,7 +9,8 @@ GameEngine::GameEngine() : CHAR_TYPE(CharacterTypeEnum::MARIO)
 	scoreStr << "SCORE\n000000";
 	coinsStr << "x00";
 	fontSize = 40;
-	lifeScreen = gameRunning = false;
+	lifeScreen = gameRunning = gameOverScreen = WinnerScreen = false;
+	currentPlayer.lifes = 3;
 
 	setCharacterType(CHAR_TYPE);
 
@@ -27,7 +28,7 @@ GameEngine::GameEngine() : CHAR_TYPE(CharacterTypeEnum::MARIO)
 	scoreText.setString(scoreStr.str());
 
 	// set Timer Text Properties
-	timerText.setPosition(1220, 5);
+	timerText.setPosition(1400, 5);
 	timerText.setFont(headerFont);
 	timerText.setCharacterSize(fontSize);
 
@@ -147,7 +148,7 @@ void GameEngine::updateTimer()
 
 	if (counterTime >= 0)
 	{
-		timerStr << "TIME\n"
+		timerStr << "TIME\n "
 			<< setw(3) << setfill('0') << counterTime;
 		timerText.setString(timerStr.str());
 	}
@@ -204,14 +205,28 @@ void GameEngine::draw(RenderWindow& window)
 	updateTimer();
 	updateLifes();
 
+	if(WinnerScreen){
+		cout << getScore();
+		int total_score = stoi(currentPlayer.level1Score) + stoi(currentPlayer.level2Score) + getScore();
+		View defaultView(FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
+		window.setView(defaultView);
+		winner.draw(window, total_score, coinsInt);
+	}
+	if(gameOverScreen)
+	{
+		View defaultView(FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
+		window.setView(defaultView);
+		gameover.draw(window, getScore() , coinsInt);
+	} else {
+
 	window.draw(scoreText);
 	window.draw(timerText);
 	window.draw(coinsText);
 	window.draw(levelText);
 	window.draw(coinSprite);
-
 	if (lifeScreen)
 		startLifeScreen(window);
+	}
 }
 
 void GameEngine::startLifeScreen(RenderWindow& window)
@@ -321,7 +336,7 @@ void GameEngine::setHeaderPosition(position screenCenter)
 {
 	float topLeft = screenCenter.x - (WINDOW_WIDTH / 2);
 	scoreText.setPosition(topLeft + 20, 20);   // Score
-	timerText.setPosition(topLeft + 1220, 5);  // Timer
+	timerText.setPosition(topLeft + 1400, 5);  // Timer
 	coinsText.setPosition(topLeft + 700, 5);   // Coins Counter
 	coinSprite.setPosition(topLeft + 675, 38); // Coin sprite
 	levelText.setPosition(topLeft + 1000, 5);  // Level Name
@@ -334,18 +349,20 @@ void GameEngine::updateLifes()
 	lifeStr.str(string());
 	if (character->dead)
 	{
-		if (currentPlayer.lifes > 1)
+		if (currentPlayer.lifes > 3)
 		{
 			currentPlayer.lifes--;
 			lifeStr << "x" << currentPlayer.lifes;
 			character->dead = false;
+			lifeScreen = true;
 		}
 		else
 		{
 			lifeStr << "Game Over";
-			gameRunning = false;
+			gameOverScreen = true;
+			//gameRunning = false;
+			lifeScreen = false;
 		}
-		lifeScreen = true;
 	}
 
 	lifeText.setString(lifeStr.str());
@@ -356,6 +373,7 @@ void GameEngine::reset()
 	scoreInt = 0;
 	coinsInt = 0;
 	currentPlayer.lifes = 3;
+	gameOverScreen = WinnerScreen = false;
 
 	scoreStr.str(string());
 	scoreStr << "SCORE\n" << setw(6) << setfill('0') << scoreInt;
@@ -386,7 +404,7 @@ void GameEngine::reset()
 	coinSprite.setOrigin(coinRect.width / 2, coinRect.height / 2);
 
 	// set Timer Text Properties
-	timerText.setPosition(1220, 5);
+	timerText.setPosition(1400, 5);
 	timerText.setFont(headerFont);
 	timerText.setCharacterSize(fontSize);
 }

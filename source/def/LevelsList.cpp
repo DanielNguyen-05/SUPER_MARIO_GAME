@@ -112,6 +112,8 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 					level2.start();
 					break;
 				case 2:
+					level1.finished = false;
+					level2.finished = false;
 					level3.start();
 					break;
 				default:
@@ -149,31 +151,7 @@ void LevelsList::checkOpendLevels()
 {
 
 	maxLevel = stoi(gameEngine.currentPlayer.level);
-	/*int lines = getNumberOfLines();
-	player tempPlayer;
-	maxLevel = 1; // Default to level 1
-
-	// Mở file
-	playersFile.open(ACCOUNT_FILE);
-	if (!playersFile.is_open())
-	{
-		cerr << "Error: Unable to open file " << ACCOUNT_FILE << endl;
-		return;
-	}
-
-	// Đọc thông tin người chơi từ file
-	for (int i = 0; i < lines; i++)
-	{
-		playersFile >> tempPlayer.username >> tempPlayer.level1Score >> tempPlayer.level2Score >> tempPlayer.level3Score;
-		if (stoi(tempPlayer.level2Score) != -1)
-			maxLevel = 2;
-		if (stoi(tempPlayer.level3Score) != -1)
-			maxLevel = 3;
-	}
-
-	// Đóng file
-	playersFile.close();*/
-
+	
 	// Cập nhật các level đã mở
 	setOpendLevels();
 }
