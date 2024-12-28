@@ -10,7 +10,7 @@ private:
     sf::IntRect itemIntRect, coinIntRect, flowerIntRect, mashroomIntRect, sparklsIntRect;
     sf::Clock timer, textFloatTimer;
     sf::Text floatingText;
-    item_t itemType;
+    ItemEnum itemType;
     int CurrentRect, maxRect, floatingSpeed, takenScore;
     bool faid, isTaken, resetTime;
 
@@ -20,7 +20,7 @@ public:
     float itemHeight;
 
     /***            Constructor             ***/
-    Items(GameEngine &gameEngine, item_t item, float x, float y);
+    Items(GameEngine &gameEngine, ItemEnum item, float x, float y);
 
     /***            Methods                ***/
 

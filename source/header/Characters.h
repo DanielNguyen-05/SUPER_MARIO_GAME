@@ -18,7 +18,7 @@ public:
     bool jumping, onGround, PoweringUpToBig, PoweringUpToSuper, dying, stuck, dead;
     float speed[2];
     Sprite charSprite;
-    characterState_t charState;
+    CharacterStateEnum charState;
 
     Characters(float x, float y);
 

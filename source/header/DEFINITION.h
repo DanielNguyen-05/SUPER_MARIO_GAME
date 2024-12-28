@@ -16,20 +16,20 @@
 using namespace std;
 using namespace sf;
 
-enum characterType_t
+enum CharacterTypeEnum
 {
     MARIO,
     LUIGI
 };
 
-enum characterState_t
+enum CharacterStateEnum
 {
     SMALL,
     BIG,
     SUPER
 };
 
-enum item_t
+enum ItemEnum
 {
     COIN,
     MASHROOM,
@@ -38,7 +38,7 @@ enum item_t
     NONE
 };
 
-enum block_t
+enum BlockEnum
 {
     QUESTION,
     STONE,
@@ -47,7 +47,7 @@ enum block_t
     ROCK
 };
 
-enum enemy_t
+enum EnemyEnum
 {
     BLACK,
     SMASHED,
@@ -117,8 +117,6 @@ struct position
 
 /***						Mario						***/
 #define MARIO_CHARACTER "assets/textures/Mario.png"
-
-#define MARIO "assets/textures/mario2.png"
 
 #define MARIO_SUPER_CHARACTER "assets/textures/MarioSuper.png"
 

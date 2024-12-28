@@ -1,7 +1,9 @@
 #include "../header/GameOver.h"
 
-void GameOver::initializeTexts() {
-    if (!font.loadFromFile("SuperMarioFont.ttf")) {
+void GameOver::initializeTexts()
+{
+    if (!font.loadFromFile("SuperMarioFont.ttf"))
+    {
         throw std::runtime_error("Could not load font");
     }
 
@@ -13,8 +15,7 @@ void GameOver::initializeTexts() {
     gameOverText.setStyle(sf::Text::Bold);
     gameOverText.setPosition(
         (1600 - gameOverText.getGlobalBounds().width) / 2,
-        200
-    );
+        200);
 
     // Score Text
     scoreText.setFont(font);
@@ -24,8 +25,7 @@ void GameOver::initializeTexts() {
     scoreText.setStyle(sf::Text::Italic);
     scoreText.setPosition(
         (1600 - scoreText.getGlobalBounds().width) / 2,
-        400
-    );
+        400);
 
     // Coins Text
     coinsText.setFont(font);
@@ -35,8 +35,7 @@ void GameOver::initializeTexts() {
     coinsText.setStyle(sf::Text::Italic);
     coinsText.setPosition(
         (1600 - coinsText.getGlobalBounds().width) / 2,
-        470
-    );
+        470);
 
     // Continue Text
     continueText.setFont(font);
@@ -45,11 +44,11 @@ void GameOver::initializeTexts() {
     continueText.setFillColor(sf::Color(173, 216, 230)); // Light Blue
     continueText.setPosition(
         (1600 - continueText.getGlobalBounds().width) / 2,
-        700
-    );
+        700);
 }
 
-void GameOver::initializeShapes() {
+void GameOver::initializeShapes()
+{
     // Background with gradient-like effect
     background.setSize(sf::Vector2f(1600, 900));
     background.setFillColor(sf::Color(0, 0, 139)); // Dark Blue
@@ -72,11 +71,13 @@ void GameOver::initializeShapes() {
 
     // Bottom decorations - bricks
     sf::Texture brickTexture;
-    if (!brickTexture.loadFromFile("brick.png")) {
+    if (!brickTexture.loadFromFile("brick.png"))
+    {
         throw std::runtime_error("Could not load brick texture");
     }
 
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 20; i++)
+    {
         sf::RectangleShape brick;
         brick.setSize(sf::Vector2f(32, 32));
         brick.setTexture(&brickTexture);
@@ -88,25 +89,28 @@ void GameOver::initializeShapes() {
 }
 
 // Chỗ này thì lấy cái score và coins của người dùng truyền vô, này tao truyền mặc định 12350 và 47
-GameOver::GameOver(sf::RenderWindow& window, int finalScore = 12350, int finalCoins = 47)
-    : window(window), score(finalScore), coins(finalCoins) {
+GameOver::GameOver(sf::RenderWindow &window, int finalScore = 12350, int finalCoins = 47)
+    : window(window), score(finalScore), coins(finalCoins)
+{
     initializeTexts();
     initializeShapes();
 }
 
-void GameOver::update() {
+void GameOver::update()
+{
     // Blinking effect for continue text
-    if (blinkClock.getElapsedTime().asSeconds() >= 0.5f) {
+    if (blinkClock.getElapsedTime().asSeconds() >= 0.5f)
+    {
         continueText.setFillColor(
             continueText.getFillColor() == sf::Color::White
-            ? sf::Color::Transparent
-            : sf::Color::White
-        );
+                ? sf::Color::Transparent
+                : sf::Color::White);
         blinkClock.restart();
     }
 }
 
-void GameOver::draw() {
+void GameOver::draw()
+{
     window.draw(background);
     window.draw(border);
     window.draw(charHead);
@@ -116,14 +120,17 @@ void GameOver::draw() {
     window.draw(coinsText);
     window.draw(continueText);
 
-    for (const auto& decoration : decorations) {
+    for (const auto &decoration : decorations)
+    {
         window.draw(decoration);
     }
 }
 
-bool GameOver::handleInput() {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        return true;  // Signal to exit game over screen
+bool GameOver::handleInput()
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    {
+        return true; // Signal to exit game over screen
     }
     return false;
 }

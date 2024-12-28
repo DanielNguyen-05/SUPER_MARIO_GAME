@@ -1,6 +1,6 @@
 #include "../header/Enemy.h"
 
-Enemy::Enemy(GameEngine& gameEngine, enemy_t type, Sprite& minX, Sprite& maxX, RectangleShape& ground, float x, float y)
+Enemy::Enemy(GameEngine& gameEngine, EnemyEnum type, Sprite& minX, Sprite& maxX, RectangleShape& ground, float x, float y)
 {
 	// Set initial values
 	this->gameEngine = &gameEngine;

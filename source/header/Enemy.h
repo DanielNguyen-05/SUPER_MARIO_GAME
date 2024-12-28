@@ -10,7 +10,7 @@ private:
     Sprite *minX;
     Sprite *maxX;
     RectangleShape *ground;
-    enemy_t enemyType;
+    EnemyEnum enemyType;
     IntRect enemyRect, blackRect, smashedRect, turtleRect, shellRect;
     Text floatingText;
     Clock timer, textFloatTimer, turtleTimer;
@@ -22,7 +22,7 @@ public:
     Sprite enemySprite;
     bool display;
 
-    Enemy(GameEngine &gameEngine, enemy_t type, Sprite &minX, Sprite &maxX, RectangleShape &ground, float x, float y);
+    Enemy(GameEngine &gameEngine, EnemyEnum type, Sprite &minX, Sprite &maxX, RectangleShape &ground, float x, float y);
 
     /***			Methods				***/
 

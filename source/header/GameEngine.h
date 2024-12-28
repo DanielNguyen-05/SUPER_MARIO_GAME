@@ -21,7 +21,7 @@ private:
 
 public:
     bool lifeScreen, gameRunning;
-    string CHAR_TYPE;
+    CharacterTypeEnum CHAR_TYPE;
     shared_ptr<Characters> character;
     Text timerText, scoreText, coinsText, levelText, lifeText;
     Font floatingTextFont;
@@ -76,7 +76,7 @@ public:
     // Start Life Screen
     void startLifeScreen(RenderWindow &window);
 
-    void setCharacterType(const std::string &type);
+    void setCharacterType(CharacterTypeEnum type);
 
     void reset();
 };
