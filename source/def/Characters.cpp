@@ -158,7 +158,7 @@ void Characters::move()
     IntRect charRect = charSprite.getTextureRect();
 
     // used timer to make motion slower
-    float waitingTime = 0.0; // 0.12s to make whole round
+    float waitingTime = 0.05; // 0.12s to make whole round
     if (timer1.getElapsedTime().asSeconds() > waitingTime)
     {
         // Jump when press arrow up
