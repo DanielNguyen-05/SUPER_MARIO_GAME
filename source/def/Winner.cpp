@@ -1,6 +1,6 @@
-#include "../header/GameOver.h"
+#include "../header/Winner.h"
 
-GameOver::GameOver()
+Winner::Winner()
 {
     display = false;
     // Set Back Text Properties
@@ -20,17 +20,17 @@ GameOver::GameOver()
 	backGroundSprite.setTexture(backGroundTexture);
 
     // Game Over Text
-    gameOverText.setFont(font);
-    gameOverText.setString("GAME OVER");
-    gameOverText.setCharacterSize(100);
-    gameOverText.setFillColor(sf::Color(255, 69, 0)); // Red-Orange
-    gameOverText.setStyle(sf::Text::Bold);
-    gameOverText.setPosition((1600 - gameOverText.getGlobalBounds().width) / 2, 200);
+    WinnerText.setFont(font);
+    WinnerText.setString("Winner");
+    WinnerText.setCharacterSize(100);
+    WinnerText.setFillColor(sf::Color(255, 69, 0)); // Red-Orange
+    WinnerText.setStyle(sf::Text::Bold);
+    WinnerText.setPosition((1600 - WinnerText.getGlobalBounds().width) / 2, 200);
 
-    notification.setPosition((1670 - gameOverText.getGlobalBounds().width) / 2, 350);
+    notification.setPosition((700 - WinnerText.getGlobalBounds().width) / 2, 350);
 	notification.setFont(font);
 	notification.setCharacterSize(50);
-	notification.setString("PLEASE TRY AGAIN");
+	notification.setString("congratulations on the victory");
 
     // Score Text
     scoreText.setFont(font);
@@ -51,22 +51,13 @@ GameOver::GameOver()
 }
 
 
-void GameOver::update(int s, int c)
+void Winner::update(int s, int c)
 {
-    /*// Blinking effect for continue text
-    if (blinkClock.getElapsedTime().asSeconds() >= 0.5f)
-    {
-        continueText.setFillColor(
-            continueText.getFillColor() == sf::Color::White
-            ? sf::Color::Transparent
-            : sf::Color::White);
-        blinkClock.restart();
-    }*/
    // Score Text
    score = s;
    coins = c;
     scoreText.setFont(font);
-    scoreText.setString("YOUR SCORE: " + std::to_string(score));
+    scoreText.setString("Total Score: " + std::to_string(score));
     scoreText.setCharacterSize(50);
     scoreText.setFillColor(sf::Color::Yellow);
     scoreText.setStyle(sf::Text::Italic);
@@ -86,9 +77,8 @@ void GameOver::update(int s, int c)
 
 }
 
-void GameOver::draw(RenderWindow& window, int Score, int Coins)
+void Winner::draw(RenderWindow& window, int Score, int Coins)
 {
-          // Cập nhật thông tin điểm và số xu
     update(Score, Coins);
 
 
@@ -98,10 +88,10 @@ void GameOver::draw(RenderWindow& window, int Score, int Coins)
     while (clock.getElapsedTime().asSeconds() < 5) {
         window.clear(); 
         window.draw(backGroundSprite);
-        window.draw(gameOverText);
+        window.draw(WinnerText);
         window.draw(notification);
         window.draw(scoreText);
-        window.draw(coinsText);
+        //window.draw(coinsText);
         window.display();
     }
 }
