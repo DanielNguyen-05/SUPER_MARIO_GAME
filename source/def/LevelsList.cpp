@@ -201,7 +201,7 @@ void LevelsList::setOpendLevels()
 	}
 }
 
-void LevelsList::moveUp()
+void LevelsList::moveDown()
 {
 	if (selectedLevel >= maxLevel)
 		return;
@@ -209,7 +209,7 @@ void LevelsList::moveUp()
 	updateShadowPosition();
 }
 
-void LevelsList::moveDown()
+void LevelsList::moveUp()
 {
 	if (selectedLevel >= maxLevel)
 		return;

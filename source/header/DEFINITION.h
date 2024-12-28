@@ -163,6 +163,8 @@ struct position
 #define POPUP_SOUND "assets/sounds/pop_up.wav"
 
 #define SMASH_SOUND "assets/sounds/smash.wav"
+
+#define BRICK "assets/textures/brick.png"
 /**********************************************************/
 
 /***						Levels							***/

@@ -50,7 +50,7 @@ public:
     void timeToScore();
 
     // draw GameEngine objects into screen
-    void draw(RenderWindow &window);
+    void draw(RenderWindow& window);
 
     // Increase coins counter by one
     void updateCoins();
@@ -74,9 +74,21 @@ public:
     void setHeaderPosition(position screenCenter);
 
     // Start Life Screen
-    void startLifeScreen(RenderWindow &window);
+    void startLifeScreen(RenderWindow& window);
 
     void setCharacterType(CharacterTypeEnum type);
 
     void reset();
+
+    int getScore() {
+        return scoreInt - ((levelTime - currentTime) * 100);
+    }
+
+    int getTime() {
+        return levelTime - currentTime;
+    }
+
+    int getCoins() {
+        return coinsInt;
+    }
 };
