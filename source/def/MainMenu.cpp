@@ -29,15 +29,16 @@ MainMenu::MainMenu()
     // Helper variables
     float width = 1000;
     float hight = 200;
-    string OptionsTemp[6] = {
+    string OptionsTemp[7] = {
         "   START",
         "  TUTORIAL",
+        " CHARACTERS",
         " LEADERBOARD", // Top 3 players
         "   CREDITS",   // Introduce the team
         "   OPTIONS",   // Music control
-        "    EXIT"};
+        "     EXIT"};
 
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 7; i++)
     {
         // Main text
         menuOptions[i].setFont(menuFont);
@@ -78,7 +79,8 @@ void MainMenu::handleAllEvents(Event event)
 {
     this->catchEvents(event);
     playerOptions.catchEvents(event, newPlayer);
-    howToPlay.catchEvents(event);
+    tutorial.catchEvents(event);
+    characterOptions.catchEvents(event, newPlayer);
     highScore.catchEvents(event);
     credits.catchEvents(event);
     options.catchEvents(event, newPlayer);
@@ -86,7 +88,6 @@ void MainMenu::handleAllEvents(Event event)
 
 void MainMenu::catchEvents(Event event)
 {
-    // updateMenuOptionsColors();
     if (display)
     {
         if (event.type == Event::KeyReleased)
@@ -116,7 +117,8 @@ void MainMenu::drawAll(RenderWindow &window)
 {
     this->draw(window);
     playerOptions.draw(window);
-    howToPlay.draw(window);
+    characterOptions.draw(window);
+    tutorial.draw(window);
     highScore.draw(window);
     credits.draw(window);
     options.draw(window);
@@ -130,7 +132,7 @@ void MainMenu::draw(RenderWindow &window)
     {
         window.draw(backGroundSprite);
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 7; i++)
         {
             window.draw(menuOptionsOutline[i]); // Vẽ viền chữ
             window.draw(menuOptions[i]);        // Vẽ chữ chính
@@ -142,7 +144,7 @@ void MainMenu::checkShow()
 {
     gameRunning = playerOptions.levelsList.gameEngine.gameRunning;
     // Nếu tất cả menu con đóng và không trong trạng thái game, hiển thị lại menu chính
-    if (!playerOptions.display && !playerOptions.levelsList.display && !playerOptions.levelsList.level1.finished && !playerOptions.levelsList.level2.finished && !highScore.display && !howToPlay.display && !options.display && !credits.display && !gameRunning)
+    if (!playerOptions.display && !playerOptions.levelsList.display && !playerOptions.levelsList.level1.finished && !playerOptions.levelsList.level2.finished && !highScore.display && !tutorial.display && !options.display && !credits.display && !gameRunning)
     {
         show();
     }
@@ -151,15 +153,13 @@ void MainMenu::checkShow()
 void MainMenu::moveDown()
 {
     // Di chuyển xuống, quay lại đầu nếu đến cuối
-    selectedOption = (selectedOption + 1) % 6;
-    // updateMenuOptionsColors();
+    selectedOption = (selectedOption + 1) % 7;
 }
 
 void MainMenu::moveUp()
 {
     // Di chuyển lên, quay lại cuối nếu ở đầu
-    selectedOption = (selectedOption - 1 + 6) % 6;
-    // updateMenuOptionsColors();
+    selectedOption = (selectedOption - 1 + 7) % 7;
 }
 
 void MainMenu::mainMenuHandleSelection()
@@ -171,18 +171,21 @@ void MainMenu::mainMenuHandleSelection()
         controlEnemiesSpeed();
         break;
     case 1:
-        howToPlay.show();
+        tutorial.show();
         break;
     case 2:
-        highScore.show();
+        characterOptions.show();
         break;
     case 3:
-        credits.show();
+        highScore.show();
         break;
     case 4:
-        options.show();
+        credits.show();
         break;
     case 5:
+        options.show();
+        break;
+    case 6:
         confirmExit();
         break;
     }
@@ -222,7 +225,7 @@ void MainMenu::controlEnemiesSpeed()
 // Hàm cập nhật màu sắc của các menu options
 void MainMenu::updateMenuOptionsColors()
 {
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 7; i++)
     {
         if (i == selectedOption)
         {

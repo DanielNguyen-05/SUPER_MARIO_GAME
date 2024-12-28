@@ -7,7 +7,7 @@ GameEngine::GameEngine() : CHAR_TYPE(CharacterTypeEnum::MARIO)
 	levelTime = 300;
 	scoreInt = coinsInt = currentTime = counterTime = 0;
 	remainTime = -1;
-	scoreStr << "MARIO:\n000000";
+	scoreStr << "SCORE\n000000";
 	coinsStr << "x00";
 	fontSize = 40;
 	lifeScreen = gameRunning = false;
@@ -124,7 +124,7 @@ void GameEngine::updateScore(int IncScore)
 	scoreInt += IncScore;
 	// clear score_str
 	scoreStr.str(string());
-	scoreStr << "MARIO:\n"
+	scoreStr << "SCORE\n"
 			 << setw(6) << setfill('0') << scoreInt;
 	scoreText.setString(scoreStr.str());
 }
@@ -143,7 +143,8 @@ void GameEngine::updateTimer()
 
 	if (counterTime >= 0)
 	{
-		timerStr << "TIME: " << setw(3) << setfill('0') << counterTime;
+		timerStr << "TIME\n"
+				 << setw(3) << setfill('0') << counterTime;
 		timerText.setString(timerStr.str());
 	}
 	else
@@ -353,7 +354,7 @@ void GameEngine::reset()
 	currentPlayer.lifes = 3;
 
 	scoreStr.str(string());
-	scoreStr << "MARIO:\n"
+	scoreStr << "SCORE\n"
 			 << setw(6) << setfill('0') << scoreInt;
 	scoreText.setString(scoreStr.str());
 

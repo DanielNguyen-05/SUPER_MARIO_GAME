@@ -2,7 +2,8 @@
 #include "DEFINITION.h"
 #include "Menu.h"
 #include "PlayerOptionsMenu.h"
-#include "HowToPlayMenu.h"
+#include "TutorialMenu.h"
+#include "CharacterOptionsMenu.h"
 #include "HighScoreMenu.h"
 #include "OptionsMenu.h"
 #include "CreditsMenu.h"
@@ -11,14 +12,15 @@ class MainMenu : private Menu
 {
 private: // attributes
     PlayerOptionsMenu playerOptions;
-    HowToPlayMenu howToPlay;
+    TutorialMenu tutorial;
+    CharacterOptionsMenu characterOptions;
     HighScoreMenu highScore;
     OptionsMenu options;
     CreditsMenu credits;
     sf::Font menuFont;
-    sf::Text menuOptions[6];
+    sf::Text menuOptions[7];
     sf::Texture optionShadowTexture;
-    sf::Text menuOptionsOutline[6];
+    sf::Text menuOptionsOutline[7];
     int selectedOption;
     sf::Sprite optionShadowSprite;
     CharacterTypeEnum selectedCharacterType;

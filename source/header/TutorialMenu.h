@@ -1,9 +1,9 @@
 #pragma once
 #include "Menu.h"
 
-class HowToPlayMenu : public Menu
+class TutorialMenu : public Menu
 {
 public:
     // Constructor
-    HowToPlayMenu();
+    TutorialMenu();
 };

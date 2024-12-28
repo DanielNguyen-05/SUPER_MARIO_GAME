@@ -1,6 +1,6 @@
-#include "../header/HowToPlayMenu.h"
+#include "../header/TutorialMenu.h"
 
-HowToPlayMenu::HowToPlayMenu()
+TutorialMenu::TutorialMenu()
 {
     display = false;
 
