@@ -132,8 +132,12 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 				newPlayer.username = "";
 				changingOptionSound.play();
 				break;
+			default:
+				break;	// mới thêm
 			}
 			break;
+		default:
+			break; // mới thêm
 		}
 	}
 	level1.catchEvents(event);
