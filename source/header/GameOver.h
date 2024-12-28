@@ -1,33 +1,24 @@
 #pragma once
 #include "DEFINITION.h"
+#include"Menu.h"
 
-class GameOver {
+class GameOver : public Menu {
 private:
-    sf::RenderWindow& window;
     sf::Font font;
     sf::Text gameOverText;
     sf::Text scoreText;
     sf::Text coinsText;
-    sf::Text continueText;
-    sf::RectangleShape background;
-    sf::RectangleShape border;
-    sf::RectangleShape charBody;
-    sf::CircleShape charHead;
-    std::vector<sf::RectangleShape> decorations;
-    sf::Clock blinkClock;
-    int score;
-    int coins;
+    sf::Text notification;
+    int score, coins;
 
-    void initializeTexts();
-
-    void initializeShapes();
 
 public:
-    GameOver(sf::RenderWindow& window, int finalScore, int finalCoins);
+    bool display;
+    GameOver();
 
-    void update();
+    void update(int score, int coins);
 
-    void draw();
+    void draw(RenderWindow& window, int , int);
 
     bool handleInput();
 };

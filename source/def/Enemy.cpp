@@ -266,7 +266,6 @@ void Enemy::checkTurtleFaid() {
 }
 
 // CHo bắn súng
-
 void Enemy::shoot() {
 	// Kiểm tra nếu kẻ thù có thể bắn
 	if (canShoot && state == ATTACKING) {
