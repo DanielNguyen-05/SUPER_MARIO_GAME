@@ -1,6 +1,6 @@
 #include "../header/Level1.h"
 
-Level1::Level1(GameEngine& gameEngine)
+Level1::Level1(GameEngine &gameEngine)
 {
     // Set initial values
     this->gameEngine = &gameEngine;
@@ -65,13 +65,13 @@ Level1::Level1(GameEngine& gameEngine)
     turtle.push_back(*new Enemy(gameEngine, TURTLE, rock[41].blockSprite, rock[42].blockSprite, groundShape[1], 5700, 200));
 }
 
-void Level1::draw(RenderWindow& window)
+void Level1::draw(RenderWindow &window)
 {
     // View defaultView(FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
     // window.setView(camera);
     if (display)
     {
-        if (gameEngine->character.dying)
+        if (gameEngine->character->dying)
         {
             camera.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
             cout << "omar";
@@ -106,7 +106,7 @@ void Level1::draw(RenderWindow& window)
         for (int i = 0; i < TURTLE_NUM; i++)
             turtle[i].draw(window);
 
-        gameEngine->character.draw(window);
+        gameEngine->character->draw(window);
         gameEngine->draw(window);
     }
 }
@@ -115,7 +115,7 @@ void Level1::catchEvents(Event event)
 {
     if (display)
     {
-        gameEngine->character.catchEvents(event);
+        gameEngine->character->catchEvents(event);
 
         if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)
         {
@@ -171,7 +171,10 @@ void Level1::resetLevel()
     black.push_back(*new Enemy(*gameEngine, BLACK, rock[39].blockSprite, rock[40].blockSprite, groundShape[0], 2500, 200));
     turtle.push_back(*new Enemy(*gameEngine, TURTLE, rock[41].blockSprite, rock[42].blockSprite, groundShape[1], 5700, 200));
     // Reset lại trạng thái character*/
-    gameEngine->character.reset();
+    if (gameEngine->character)
+    {
+        gameEngine->character->reset();
+    }
 }
 
 void Level1::start()
@@ -187,40 +190,40 @@ void Level1::end()
 {
     display = false;
     gameEngine->gameRunning = false;
-    if(finished && stoi(gameEngine->currentPlayer.level) < 2)
-    gameEngine->currentPlayer.level = to_string(2);
+    if (finished && stoi(gameEngine->currentPlayer.level) < 2)
+        gameEngine->currentPlayer.level = to_string(2);
     finished = true;
 }
 
 void Level1::checkGround(int num)
 {
-    if (!gameEngine->character.dying)
+    if (!gameEngine->character->dying)
     {
-        if (groundShape[num].getGlobalBounds().intersects(gameEngine->character.charSprite.getGlobalBounds()))
+        if (groundShape[num].getGlobalBounds().intersects(gameEngine->character->charSprite.getGlobalBounds()))
         {
-            gameEngine->character.charSprite.setPosition(gameEngine->character.charSprite.getPosition().x, groundShape[num].getGlobalBounds().top);
-            gameEngine->character.onGround = true;
+            gameEngine->character->charSprite.setPosition(gameEngine->character->charSprite.getPosition().x, groundShape[num].getGlobalBounds().top);
+            gameEngine->character->onGround = true;
             charOnGround[num] = true;
         }
         else
         {
-            if (charOnGround[num] && gameEngine->character.onGround)
+            if (charOnGround[num] && gameEngine->character->onGround)
             {
                 charOnGround[num] = false;
-                gameEngine->character.onGround = false;
-                gameEngine->character.speed[1] = -5;
+                gameEngine->character->onGround = false;
+                gameEngine->character->speed[1] = -5;
             }
         }
     }
 }
 
-void Level1::handleView(RenderWindow& window)
+void Level1::handleView(RenderWindow &window)
 {
     // a + (b - a) * c
-    if (/*!gameEngine->character.stuck*/ !gameEngine->character.dying)
+    if (/*!gameEngine->character->stuck*/ !gameEngine->character->dying)
     {
         float fr = (1 / 50.0);
-        screenCenter = { screenCenter.x + (gameEngine->character.charSprite.getPosition().x - screenCenter.x) * fr * 20, 450 };
+        screenCenter = {screenCenter.x + (gameEngine->character->charSprite.getPosition().x - screenCenter.x) * fr * 20, 450};
 
         if (screenCenter.x > WINDOW_WIDTH / 2 && screenCenter.x < levelWidth - (WINDOW_WIDTH / 2))
         {
@@ -233,18 +236,17 @@ void Level1::handleView(RenderWindow& window)
 
 void Level1::checkEnd()
 {
-    Vector2f charPos = gameEngine->character.charSprite.getPosition();
+    Vector2f charPos = gameEngine->character->charSprite.getPosition();
     int space = 70;
     if (charPos.x < space)
     {
-        gameEngine->character.charSprite.setPosition(space, charPos.y);
-        gameEngine->character.speed[0] = 0;
+        gameEngine->character->charSprite.setPosition(space, charPos.y);
+        gameEngine->character->speed[0] = 0;
     }
     else if (charPos.x > levelWidth - space)
     {
-        finished = true;
-        gameEngine->character.charSprite.setPosition(levelWidth - space, charPos.y);
-        gameEngine->character.speed[0] = 0;
+        gameEngine->character->charSprite.setPosition(levelWidth - space, charPos.y);
+        gameEngine->character->speed[0] = 0;
         gameEngine->addPlayerInfo(1);
         end();
     }
@@ -289,7 +291,7 @@ void Level1::arrangeLevelBlocks()
         {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 2, 2, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 2, 2, 1, 6, 0, 0, 7, 7, 7, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 2, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 2, 3, 2, 0, 0, 0, 0, 0, 0, 2, 3, 2, 0, 0, 0, 0, 0, 2, 4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 3, 2, 2, 3, 2, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0},
         {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0},
         {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 6, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} };
+        {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 6, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
     for (int i = 0; i < ROW_NUM; i++)
     {
@@ -298,31 +300,31 @@ void Level1::arrangeLevelBlocks()
             switch (arr[i][j])
             {
             case 1:
-                stoneCoinPosition[stoneCoinCnt] = { float(31 + j * 62), float(31 + i * 62) };
+                stoneCoinPosition[stoneCoinCnt] = {float(31 + j * 62), float(31 + i * 62)};
                 stoneCoinCnt++;
                 break;
             case 2:
-                stonePosition[stoneCnt] = { float(31 + j * 62), float(31 + i * 62) };
+                stonePosition[stoneCnt] = {float(31 + j * 62), float(31 + i * 62)};
                 stoneCnt++;
                 break;
             case 3:
-                questCoinPosition[quesCoinCnt] = { float(31 + j * 62), float(31 + i * 62) };
+                questCoinPosition[quesCoinCnt] = {float(31 + j * 62), float(31 + i * 62)};
                 quesCoinCnt++;
                 break;
             case 4:
-                questFLowerPosition[quesFlowerCnt] = { float(31 + j * 62), float(31 + i * 62) };
+                questFLowerPosition[quesFlowerCnt] = {float(31 + j * 62), float(31 + i * 62)};
                 quesFlowerCnt++;
                 break;
             case 5:
-                questMashPosition[quesMashCnt] = { float(31 + j * 62), float(31 + i * 62) };
+                questMashPosition[quesMashCnt] = {float(31 + j * 62), float(31 + i * 62)};
                 quesMashCnt++;
                 break;
             case 6:
-                rockPosition[rockCnt] = { float(31 + j * 62), float(31 + i * 62) };
+                rockPosition[rockCnt] = {float(31 + j * 62), float(31 + i * 62)};
                 rockCnt++;
                 break;
             case 7:
-                coinPosition[coinCnt] = { float(31 + j * 62), float(31 + i * 62) };
+                coinPosition[coinCnt] = {float(31 + j * 62), float(31 + i * 62)};
                 coinCnt++;
                 break;
             default:
@@ -331,3 +333,18 @@ void Level1::arrangeLevelBlocks()
         }
     }
 }
+/*
+void Level1::checkEnemyCollision() {
+    for (int i = 0; i < BLACK_NUM; i++) {
+        if (gameEngine->character->charSprite.getGlobalBounds().intersects(black[i].enemySprite.getGlobalBounds())) {
+            gameEngine->character->dying = true; // Trigger Mario death
+            return; // Stop further checks
+        }
+    }
+    for (int i = 0; i < TURTLE_NUM; i++) {
+        if (gameEngine->character->charSprite.getGlobalBounds().intersects(turtle[i].enemySprite.getGlobalBounds())) {
+            gameEngine->character->dying = true; // Trigger Mario death
+            return;
+        }
+    }
+}*/

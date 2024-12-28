@@ -98,7 +98,7 @@ void Level2::draw(RenderWindow& window)
         // for (int i = 0; i < TURTLE_NUM; i++)
         //  turtle[i].draw(window);
 
-        gameEngine->character.draw(window);
+        gameEngine->character->draw(window);
         gameEngine->draw(window);
     }
 }
@@ -107,7 +107,7 @@ void Level2::catchEvents(Event event)
 {
     if (display)
     {
-        gameEngine->character.catchEvents(event);
+        gameEngine->character->catchEvents(event);
 
         if (event.type == Event::KeyReleased && event.key.code == Keyboard::Escape)
         {
@@ -181,26 +181,26 @@ void Level2::resetLevel()
 
     black.push_back(*new Enemy(*gameEngine, BLACK, rock[55].blockSprite, rock[56].blockSprite, groundShape[0], 4062, 200));
     // Reset lại trạng thái character*/
-    gameEngine->character.reset();
+    gameEngine->character->reset();
 }
 
 void Level2::checkGround(int num)
 {
-    if (!gameEngine->character.dying)
+    if (!gameEngine->character->dying)
     {
-        if (groundShape[num].getGlobalBounds().intersects(gameEngine->character.charSprite.getGlobalBounds()))
+        if (groundShape[num].getGlobalBounds().intersects(gameEngine->character->charSprite.getGlobalBounds()))
         {
-            gameEngine->character.charSprite.setPosition(gameEngine->character.charSprite.getPosition().x, groundShape[num].getGlobalBounds().top);
-            gameEngine->character.onGround = true;
+            gameEngine->character->charSprite.setPosition(gameEngine->character->charSprite.getPosition().x, groundShape[num].getGlobalBounds().top);
+            gameEngine->character->onGround = true;
             charOnGround[num] = true;
         }
         else
         {
-            if (charOnGround[num] && gameEngine->character.onGround)
+            if (charOnGround[num] && gameEngine->character->onGround)
             {
                 charOnGround[num] = false;
-                gameEngine->character.onGround = false;
-                gameEngine->character.speed[1] = -5;
+                gameEngine->character->onGround = false;
+                gameEngine->character->speed[1] = -5;
             }
         }
     }
@@ -209,10 +209,10 @@ void Level2::checkGround(int num)
 void Level2::handleView(RenderWindow& window)
 {
     // a + (b - a) * c
-    if (/*!gameEngine->character.stuck*/ !gameEngine->character.dying)
+    if (/*!gameEngine->character->stuck*/ !gameEngine->character->dying)
     {
         float fr = (1 / 60.0);
-        screenCenter = { screenCenter.x + (gameEngine->character.charSprite.getPosition().x - screenCenter.x) * fr * 20, 450 };
+        screenCenter = {screenCenter.x + (gameEngine->character->charSprite.getPosition().x - screenCenter.x) * fr * 20, 450};
 
         if (screenCenter.x > WINDOW_WIDTH / 2 && screenCenter.x < levelWidth - (WINDOW_WIDTH / 2))
         {
@@ -225,18 +225,17 @@ void Level2::handleView(RenderWindow& window)
 
 void Level2::checkEnd()
 {
-    Vector2f charPos = gameEngine->character.charSprite.getPosition();
+    Vector2f charPos = gameEngine->character->charSprite.getPosition();
     int space = 70;
     if (charPos.x < space)
     {
-        gameEngine->character.charSprite.setPosition(space, charPos.y);
-        gameEngine->character.speed[0] = 0;
+        gameEngine->character->charSprite.setPosition(space, charPos.y);
+        gameEngine->character->speed[0] = 0;
     }
     else if (charPos.x > levelWidth - space)
     {
-        finished = true;
-        gameEngine->character.charSprite.setPosition(levelWidth - space, charPos.y);
-        gameEngine->character.speed[0] = 0;
+        gameEngine->character->charSprite.setPosition(levelWidth - space, charPos.y);
+        gameEngine->character->speed[0] = 0;
         gameEngine->addPlayerInfo(2);
         end();
     }

@@ -21,7 +21,8 @@ private:
 
 public:
     bool lifeScreen, gameRunning;
-    Luigi character;
+    string CHAR_TYPE;
+    shared_ptr<Characters> character;
     Text timerText, scoreText, coinsText, levelText, lifeText;
     Font floatingTextFont;
     Texture stoneTexture, questionTexture, smashTextures[6], itemTexture, enemyTextrue;
@@ -74,6 +75,8 @@ public:
 
     // Start Life Screen
     void startLifeScreen(RenderWindow &window);
+
+    void setCharacterType(const std::string &type);
 
     void reset();
 };

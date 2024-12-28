@@ -1,6 +1,7 @@
 #include "../header/GameEngine.h"
+#include <memory>
 
-GameEngine::GameEngine() : character(500, 200)
+GameEngine::GameEngine() : CHAR_TYPE("Mario")
 {
 	// Set initial values
 	levelTime = 300;
@@ -10,6 +11,8 @@ GameEngine::GameEngine() : character(500, 200)
 	coinsStr << "x00";
 	fontSize = 40;
 	lifeScreen = gameRunning = false;
+
+	setCharacterType(CHAR_TYPE);
 
 	// Load font from file
 	if (!headerFont.loadFromFile(GAME_HEADER_FONT))
@@ -63,7 +66,7 @@ GameEngine::GameEngine() : character(500, 200)
 	lifeText.setString(lifeStr.str());
 
 	// Set Mario Sprite Properties
-	charLifeSprite.setTexture(character.charTexture);
+	charLifeSprite.setTexture(character->charTexture);
 	charLifeSprite.setTextureRect(IntRect(0, 96, 28, 32));
 	charLifeSprite.setScale(2, 2);
 	charLifeSprite.setOrigin(14, 16);
@@ -103,6 +106,21 @@ GameEngine::GameEngine() : character(500, 200)
 	}
 }
 
+void GameEngine::setCharacterType(const std::string &type)
+{
+	cout << "Char prepared" << endl;
+	CHAR_TYPE = type;
+	if (CHAR_TYPE == "Mario")
+	{
+		character = std::make_shared<Mario>(500, 200);
+	}
+	else if (CHAR_TYPE == "Luigi")
+	{
+		character = std::make_shared<Luigi>(500, 200);
+	}
+	cout << "Char setted" << endl;
+}
+
 void GameEngine::updateScore(int IncScore)
 {
 	// Increase current score
@@ -136,7 +154,7 @@ void GameEngine::updateTimer()
 	}
 
 	if (counterTime == 0 && remainTime == -1)
-		character.startDie();
+		character->startDie();
 }
 
 void GameEngine::updateCoins()
@@ -312,19 +330,20 @@ void GameEngine::setHeaderPosition(position screenCenter)
 void GameEngine::updateLifes()
 {
 	lifeStr.str(string());
-	if (character.dead)
+	if (character->dead)
 	{
 		if (currentPlayer.lifes > 1)
 		{
 			currentPlayer.lifes--;
 			lifeStr << "x" << currentPlayer.lifes;
-			character.dead = false;
+			character->dead = false;
 		}
 		else
 		{
 			lifeStr << "Game Over";
 			gameRunning = false;
 		}
+		character->dead = false;
 		lifeScreen = true;
 	}
 

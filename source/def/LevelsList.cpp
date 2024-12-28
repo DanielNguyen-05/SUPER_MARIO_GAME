@@ -50,7 +50,7 @@ void LevelsList::show(player newPlayer)
 	// Find the last level this player has finished
 }
 
-void LevelsList::draw(RenderWindow& window)
+void LevelsList::draw(RenderWindow &window)
 {
 	// checkShow(gameEngine.currentPlayer);
 	// cout << level1.finished;
@@ -75,7 +75,7 @@ void LevelsList::draw(RenderWindow& window)
 	}
 }
 
-void LevelsList::catchEvents(Event event, player& newPlayer)
+void LevelsList::catchEvents(Event event, player &newPlayer)
 {
 	if (display || level1.finished || level2.finished)
 	{
@@ -95,12 +95,16 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 			case Keyboard::Enter:
 				this->hide();
 				gameEngine.gameRunning = true;
+				// cout << "A";
+				// gameEngine.setCharacterType("Mario");
+				// cout << "B";
 				switch (selectedLevel)
 				{
 				case 0:
 					level1.finished = false;
 					level2.finished = false;
 					level1.start();
+					
 					break;
 				case 1:
 					level1.finished = false;
@@ -119,7 +123,8 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 			}
 			break;
 		case Event::KeyReleased:
-			switch (event.key.code) {
+			switch (event.key.code)
+			{
 			case Keyboard::Escape:
 				level1.finished = false;
 				level2.finished = false;
@@ -127,12 +132,8 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 				newPlayer.username = "";
 				changingOptionSound.play();
 				break;
-			default:
-				break; // mới thêm
 			}
 			break;
-		default:
-			break; // mới thêm
 		}
 	}
 	level1.catchEvents(event);
@@ -142,7 +143,31 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 
 void LevelsList::checkOpendLevels()
 {
-	maxLevel = stoi(gameEngine.currentPlayer.level);
+	// maxLevel = stoi(gameEngine.currentPlayer.level);
+	/*int lines = getNumberOfLines();
+	player tempPlayer;
+	maxLevel = 1; // Default to level 1
+
+	// Mở file
+	playersFile.open(ACCOUNT_FILE);
+	if (!playersFile.is_open())
+	{
+		cerr << "Error: Unable to open file " << ACCOUNT_FILE << endl;
+		return;
+	}
+
+	// Đọc thông tin người chơi từ file
+	for (int i = 0; i < lines; i++)
+	{
+		playersFile >> tempPlayer.username >> tempPlayer.level1Score >> tempPlayer.level2Score >> tempPlayer.level3Score;
+		if (stoi(tempPlayer.level2Score) != -1)
+			maxLevel = 2;
+		if (stoi(tempPlayer.level3Score) != -1)
+			maxLevel = 3;
+	}
+
+	// Đóng file
+	playersFile.close();*/
 
 	// Cập nhật các level đã mở
 	setOpendLevels();
@@ -175,18 +200,23 @@ void LevelsList::setOpendLevels()
 	}
 }
 
-void LevelsList::moveDown() {
-	if (selectedLevel >= maxLevel) return;
+void LevelsList::moveUp()
+{
+	if (selectedLevel >= maxLevel)
+		return;
 	selectedLevel = (selectedLevel == maxLevel - 1) ? 0 : selectedLevel + 1;
 	updateShadowPosition();
 }
 
-void LevelsList::moveUp() {
-	if (selectedLevel >= maxLevel) return;
+void LevelsList::moveDown()
+{
+	if (selectedLevel >= maxLevel)
+		return;
 	selectedLevel = (selectedLevel == 0) ? maxLevel - 1 : selectedLevel - 1;
 	updateShadowPosition();
 }
 
-void LevelsList::updateShadowPosition() {
+void LevelsList::updateShadowPosition()
+{
 	optionShadowSprite.setPosition(695, 350 + selectedLevel * 120);
 }

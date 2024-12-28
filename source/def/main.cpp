@@ -5,12 +5,13 @@
 
 int main()
 {
+    system("cls");
     /*** Hides the console window when running the game ***/
     RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Super Mario Game", sf::Style::Titlebar | sf::Style::Close);
 
     window.setFramerateLimit(60); // Limit the framerate to 60 FPS.
 
-    MainMenu* menu = MainMenu::getInstance();
+    MainMenu *menu = MainMenu::getInstance();
 
     /*** Game Loop ***/
     while (window.isOpen())

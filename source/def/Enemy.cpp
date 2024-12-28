@@ -188,11 +188,11 @@ void Enemy::checkGround()
 
 void Enemy::checkKilled()
 {
-	if (!gameEngine->character.dying)
+	if (!gameEngine->character->dying)
 	{
-		if (enemySprite.getGlobalBounds().intersects(gameEngine->character.charSprite.getGlobalBounds()) && !faid)
+		if (enemySprite.getGlobalBounds().intersects(gameEngine->character->charSprite.getGlobalBounds()) && !faid)
 		{
-			if (gameEngine->character.speed[1] > 1 || (enemyType == SHELL && firstTime))
+			if (gameEngine->character->speed[1] > 1 || (enemyType == SHELL && firstTime))
 			{ // from above
 				isKilled = true;
 				if (!moving && enemyType == SHELL)
@@ -205,7 +205,7 @@ void Enemy::checkKilled()
 			}
 			else
 			{
-				gameEngine->character.startDie();
+				gameEngine->character->startDie();
 			}
 		}
 		if (isKilled)
