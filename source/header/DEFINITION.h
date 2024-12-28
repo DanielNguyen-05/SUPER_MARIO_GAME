@@ -16,38 +16,44 @@
 using namespace std;
 using namespace sf;
 
-typedef enum
+enum characterType_t
+{
+    MARIO,
+    LUIGI
+};
+
+enum characterState_t
 {
     SMALL,
     BIG,
     SUPER
-} characterState_t;
+};
 
-typedef enum
+enum item_t
 {
     COIN,
     MASHROOM,
     FLOWER,
     SPARKL,
     NONE
-} item_t;
+};
 
-typedef enum
+enum block_t
 {
     QUESTION,
     STONE,
     BRONZE,
     SMASH,
     ROCK
-} block_t;
+};
 
-typedef enum
+enum enemy_t
 {
     BLACK,
     SMASHED,
     TURTLE,
     SHELL
-} enemy_t;
+};
 
 struct player
 {

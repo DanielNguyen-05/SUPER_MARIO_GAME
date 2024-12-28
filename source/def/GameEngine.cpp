@@ -108,7 +108,6 @@ GameEngine::GameEngine() : CHAR_TYPE("Mario")
 
 void GameEngine::setCharacterType(const std::string &type)
 {
-	cout << "Char prepared" << endl;
 	CHAR_TYPE = type;
 	if (CHAR_TYPE == "Mario")
 	{
@@ -118,7 +117,6 @@ void GameEngine::setCharacterType(const std::string &type)
 	{
 		character = std::make_shared<Luigi>(500, 200);
 	}
-	cout << "Char setted" << endl;
 }
 
 void GameEngine::updateScore(int IncScore)
