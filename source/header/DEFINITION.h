@@ -101,7 +101,7 @@ struct position
 
 #define CREDITS_BACKGROUND "assets/textures/Menu/Credits.jpg"
 
-#define GAME_OVER_BACKGROUND "assets/textures/Backgrounds/GameOver.jpg"
+#define FORMAT_BACKGROUND "assets/textures/Backgrounds/FormatScreen.jpg" // làm để winner screen
 
 #define MUSIC_BALL "assets/textures/Menu/musicBall.png"
 

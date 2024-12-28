@@ -89,7 +89,7 @@ void GameOver::initializeShapes()
 }
 
 // Chỗ này thì lấy cái score và coins của người dùng truyền vô, này tao truyền mặc định 12350 và 47
-GameOver::GameOver(sf::RenderWindow &window, int finalScore = 12350, int finalCoins = 47)
+GameOver::GameOver(sf::RenderWindow& window, int finalScore = 12350, int finalCoins = 47)
     : window(window), score(finalScore), coins(finalCoins)
 {
     initializeTexts();
@@ -103,8 +103,8 @@ void GameOver::update()
     {
         continueText.setFillColor(
             continueText.getFillColor() == sf::Color::White
-                ? sf::Color::Transparent
-                : sf::Color::White);
+            ? sf::Color::Transparent
+            : sf::Color::White);
         blinkClock.restart();
     }
 }
@@ -120,7 +120,7 @@ void GameOver::draw()
     window.draw(coinsText);
     window.draw(continueText);
 
-    for (const auto &decoration : decorations)
+    for (const auto& decoration : decorations)
     {
         window.draw(decoration);
     }

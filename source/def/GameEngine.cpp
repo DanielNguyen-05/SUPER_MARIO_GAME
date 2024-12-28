@@ -235,7 +235,7 @@ void GameEngine::setLevelName(string levelName)
 // level truyền vào là để biết coi nó nên cập nhật điểm của level nào (trường hợp nó chơi xong lv1 mà nó không chơi lv2, nó quay lại chơi lv1 để cải thiện điểm)
 void GameEngine::addPlayerInfo(int level)
 {
-	int currentScore = scoreInt - (levelTime - counterTime) * 100;
+	int currentScore = scoreInt - currentTime * 25;
 	std::ifstream inputFile(ACCOUNT_FILE);
 	std::ostringstream tempBuffer;
 	bool userFound = false;
