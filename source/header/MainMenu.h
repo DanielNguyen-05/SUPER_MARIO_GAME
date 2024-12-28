@@ -21,9 +21,10 @@ private: // attributes
     sf::Text menuOptionsOutline[6];
     int selectedOption;
     sf::Sprite optionShadowSprite;
+    CharacterTypeEnum selectedCharacterType;
 
-    //Singleton attribute
-    static MainMenu* instance;
+    // Singleton attribute
+    static MainMenu *instance;
 
     // Constructor
     MainMenu();
@@ -31,7 +32,8 @@ private: // attributes
 public: // attributes
     bool gameRunning;
     player newPlayer;
-    characterState_t characterState;
+    CharacterStateEnum characterState;
+    CharacterTypeEnum getSelectedCharacterType() const;
 
 private: // methods
     // Draw Main Menu contents
@@ -58,10 +60,9 @@ private: // methods
     void updateMenuOptionsColors();
 
 public: // methods
-
-    static MainMenu* getInstance();
-    MainMenu(const MainMenu&) = delete;
-    MainMenu& operator=(const MainMenu&) = delete;
+    static MainMenu *getInstance();
+    MainMenu(const MainMenu &) = delete;
+    MainMenu &operator=(const MainMenu &) = delete;
 
     // Control all events happening in Menu and its children
     void handleAllEvents(sf::Event event);

@@ -1,7 +1,7 @@
 #include "../header/GameEngine.h"
 #include <memory>
 
-GameEngine::GameEngine() : CHAR_TYPE("Mario")
+GameEngine::GameEngine() : CHAR_TYPE(CharacterTypeEnum::MARIO)
 {
 	// Set initial values
 	levelTime = 300;
@@ -106,14 +106,13 @@ GameEngine::GameEngine() : CHAR_TYPE("Mario")
 	}
 }
 
-void GameEngine::setCharacterType(const std::string &type)
+void GameEngine::setCharacterType(CharacterTypeEnum type)
 {
-	CHAR_TYPE = type;
-	if (CHAR_TYPE == "Mario")
+	if (type == CharacterTypeEnum::MARIO)
 	{
 		character = std::make_shared<Mario>(500, 200);
 	}
-	else if (CHAR_TYPE == "Luigi")
+	else if (type == CharacterTypeEnum::LUIGI)
 	{
 		character = std::make_shared<Luigi>(500, 200);
 	}

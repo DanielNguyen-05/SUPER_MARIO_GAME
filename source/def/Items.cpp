@@ -1,6 +1,6 @@
 #include "../header/Items.h"
 
-Items::Items(GameEngine& gameEngine, item_t item, float x, float y)
+Items::Items(GameEngine &gameEngine, ItemEnum item, float x, float y)
 {
     // Set initial values
     this->gameEngine = &gameEngine;
@@ -59,7 +59,7 @@ Items::Items(GameEngine& gameEngine, item_t item, float x, float y)
     floatingText.setString(to_string(takenScore));
 }
 
-void Items::draw(RenderWindow& window)
+void Items::draw(RenderWindow &window)
 {
     if (display && itemType != NONE)
     {
@@ -95,7 +95,7 @@ void Items::animation()
                 itemSprite.setColor(Color::Transparent);
             break;
         default:
-            break; // mới thêm  
+            break; // mới thêm
         }
         itemSprite.setTextureRect(itemIntRect);
         CurrentRect++;

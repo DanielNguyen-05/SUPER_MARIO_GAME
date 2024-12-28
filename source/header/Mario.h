@@ -15,6 +15,9 @@ public:
         {
             std::cout << "Can't load MARIO_SUPER_CHARACTER\n";
         }
+        charTexture.setSmooth(false);
         charSprite.setTexture(charTexture);
+        charSprite.setPosition(x, y);
+        charSprite.setScale(2, 2);
     }
 };

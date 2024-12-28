@@ -1,6 +1,6 @@
 #include "../header/Blocks.h"
 
-Blocks::Blocks(GameEngine &gameEngine, block_t blockType, item_t itemType, float x, float y) : item(gameEngine, itemType, x, y)
+Blocks::Blocks(GameEngine &gameEngine, BlockEnum blockType, ItemEnum itemType, float x, float y) : item(gameEngine, itemType, x, y)
 {
     // Set initial values
     this->gameEngine = &gameEngine;

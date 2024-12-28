@@ -13,15 +13,15 @@ private:
     float blockHight;
     bool display, faid, isPopUp, charOn, stuckOn, popUpBlock;
     position startPos;
-    block_t blockType;
-    item_t itemType;
+    BlockEnum blockType;
+    ItemEnum itemType;
     GameEngine *gameEngine;
     Items item;
 
 public:
     sf::Sprite blockSprite;
 
-    Blocks(GameEngine &gameEngine, block_t blockType, item_t itemType, float x, float y); // Constructor
+    Blocks(GameEngine &gameEngine, BlockEnum blockType, ItemEnum itemType, float x, float y); // Constructor
 
     /***			Methods				***/
 
