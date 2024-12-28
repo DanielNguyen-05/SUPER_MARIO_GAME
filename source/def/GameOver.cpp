@@ -62,9 +62,9 @@ void GameOver::initializeShapes() {
     border.setOutlineColor(sf::Color::White);
 
     // Mario character
-    marioHead.setRadius(50);
-    marioHead.setFillColor(sf::Color::Red);
-    marioHead.setPosition(775, 100);
+    charHead.setRadius(50);
+    charHead.setFillColor(sf::Color::Red);
+    charHead.setPosition(775, 100);
 
     charBody.setSize(sf::Vector2f(120, 25));
     charBody.setFillColor(sf::Color(0, 128, 0)); // Green
@@ -109,7 +109,7 @@ void GameOver::update() {
 void GameOver::draw() {
     window.draw(background);
     window.draw(border);
-    window.draw(marioHead);
+    window.draw(charHead);
     window.draw(charBody);
     window.draw(gameOverText);
     window.draw(scoreText);

@@ -12,7 +12,7 @@ private:
     sf::RectangleShape background;
     sf::RectangleShape border;
     sf::RectangleShape charBody;
-    sf::CircleShape marioHead;
+    sf::CircleShape charHead;
     std::vector<sf::RectangleShape> decorations;
     sf::Clock blinkClock;
     int score;

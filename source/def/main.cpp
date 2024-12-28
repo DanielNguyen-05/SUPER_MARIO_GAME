@@ -41,7 +41,7 @@ int main()
 /*
 class Game
 {
-    Mario mario;
+    Mario char;
     std::vector<Entity> mobs;
     TileMap map;
     GameInfo gameInfo;
@@ -66,7 +66,7 @@ public:
     virtual ~Game();
 
     // functions
-    void intersection(Mario &mario, Entity &entity);
+    void intersection(Mario &char, Entity &entity);
     void updateSFMLEvents();
     void update();
     void render();
