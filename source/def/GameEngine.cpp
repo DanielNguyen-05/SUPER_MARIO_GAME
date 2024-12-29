@@ -48,10 +48,10 @@ GameEngine::GameEngine() : winner(), gameover(), CHAR_TYPE(CharacterTypeEnum::MA
 	coinSprite.setOrigin(coinRect.width / 2, coinRect.height / 2);
 
 	// Set Level name Text Properties
-	levelText.setPosition(1000, 5);
-	levelText.setFont(headerFont);
-	levelText.setCharacterSize(fontSize);
-	levelText.setStyle(Text::Bold);
+	// levelText.setPosition(1000, 5);
+	// levelText.setFont(headerFont);
+	// levelText.setCharacterSize(fontSize);
+	// levelText.setStyle(Text::Bold);
 
 	// Set levels Map values
 	levelsMap["level 1"] = 1;
@@ -125,7 +125,7 @@ void GameEngine::updateScore(int IncScore)
 	// clear score_str
 	scoreStr.str(string());
 	scoreStr << "SCORE\n"
-			 << setw(6) << setfill('0') << scoreInt;
+		<< setw(6) << setfill('0') << scoreInt;
 	scoreText.setString(scoreStr.str());
 }
 
@@ -144,7 +144,7 @@ void GameEngine::updateTimer()
 	if (counterTime >= 0)
 	{
 		timerStr << "TIME\n "
-				 << setw(3) << setfill('0') << counterTime;
+			<< setw(3) << setfill('0') << counterTime;
 		timerText.setString(timerStr.str());
 	}
 	else
@@ -194,7 +194,7 @@ void GameEngine::startTimeToScore()
 	remainTime = counterTime;
 }
 
-void GameEngine::draw(RenderWindow &window)
+void GameEngine::draw(RenderWindow& window)
 {
 	coinAnimation();
 	updateTimer();
@@ -220,14 +220,14 @@ void GameEngine::draw(RenderWindow &window)
 		window.draw(scoreText);
 		window.draw(timerText);
 		window.draw(coinsText);
-		window.draw(levelText);
+		// window.draw(levelText);
 		window.draw(coinSprite);
 		if (lifeScreen)
 			startLifeScreen(window);
 	}
 }
 
-void GameEngine::startLifeScreen(RenderWindow &window)
+void GameEngine::startLifeScreen(RenderWindow& window)
 {
 	Clock lifeScreenClock;
 	while (lifeScreenClock.getElapsedTime().asSeconds() < 3)
@@ -375,7 +375,7 @@ void GameEngine::reset()
 
 	scoreStr.str(string());
 	scoreStr << "SCORE\n"
-			 << setw(6) << setfill('0') << scoreInt;
+		<< setw(6) << setfill('0') << scoreInt;
 	scoreText.setString(scoreStr.str());
 
 	scoreText.setPosition(20, 20);
