@@ -97,7 +97,7 @@ public:
 
     int getScore()
     {
-        return scoreInt - ((levelTime - currentTime) * 100);
+        return scoreInt + currentTime * 25;
     }
 
     int getTime()
