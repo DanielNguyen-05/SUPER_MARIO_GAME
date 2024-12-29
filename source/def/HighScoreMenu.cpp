@@ -7,7 +7,7 @@ HighScoreMenu::HighScoreMenu()
     display = false;
 
     // Load font
-    if (!font.loadFromFile(CAIRO_REGULAR))
+    if (!font.loadFromFile(GAME_HEADER_FONT))
     {
         std::cout << "Failed to load font" << std::endl;
     }
@@ -20,7 +20,7 @@ HighScoreMenu::HighScoreMenu()
     backGroundSprite.setTexture(backGroundTexture);
 
     // Set vị trí của các thành phần high score
-    highScoresPos.x = 518;
+    highScoresPos.x = 480;
     highScoresPos.y = 450;
 
     // Set các thành phần text high score
@@ -36,25 +36,23 @@ HighScoreMenu::HighScoreMenu()
         highScoreText[i][1].setCharacterSize(32);
     }
     // Vị trí text tên và điểm tương ứng
-    highScoreText[1][0].setPosition(highScoresPos.x, highScoresPos.y);
-    highScoreText[1][1].setPosition(highScoresPos.x, highScoresPos.y + 50);
+    highScoreText[1][0].setPosition(highScoresPos.x-10, highScoresPos.y);
+    highScoreText[1][1].setPosition(highScoresPos.x-10, highScoresPos.y + 50);
 
     // Khoảng cách giữa các dòng
-    highScoresPos.x += 225;
+    highScoresPos.x += 265;
 
     // Vị trí text tên và điểm tương ứng
     highScoreText[0][0].setPosition(highScoresPos.x, highScoresPos.y - 125);
     highScoreText[0][1].setPosition(highScoresPos.x, highScoresPos.y - 75);
 
     // Khoảng cách giữa các dòng
-    highScoresPos.x += 300;
+    highScoresPos.x += 258;
 
     // Vị trí text tên và điểm tương ứng
     highScoreText[2][0].setPosition(highScoresPos.x, highScoresPos.y);
     highScoreText[2][1].setPosition(highScoresPos.x, highScoresPos.y + 50);
 
-    // Khoảng cách giữa các dòng
-    highScoresPos.x += 300;
 }
 
 // Hàm vẽ
