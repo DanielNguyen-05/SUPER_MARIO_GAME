@@ -20,6 +20,11 @@ private:
     Sprite coinSprite, charLifeSprite;
     SoundBuffer popUpBuffer, smashBuffer, coinBuffer, powerUpBuffer, powerUpAppearBuffer, killBuffer;
     IntRect coinRect;
+    GameEngine();
+
+    GameEngine(const GameEngine &) = delete;
+    GameEngine &operator=(const GameEngine &) = delete;
+
     Winner winner;
     GameOver gameover;
 
@@ -32,15 +37,17 @@ public:
     Texture stoneTexture, questionTexture, smashTextures[6], itemTexture, enemyTextrue;
     Sound popUpSound, smashSound, coinSound, powerUpSound, powerUpAppearSound, killSound;
     player currentPlayer;
-    Texture bulletTexture;  // Khai báo bulletTexture
-
-
-    /*         Constractar          */
-    GameEngine();
+    Texture bulletTexture; // Khai báo bulletTexture
 
     /*          Method         */
 
-    void handleGameOver(RenderWindow& window);
+    static GameEngine &getInstance()
+    {
+        static GameEngine instance;
+        return instance;
+    }
+
+    void handleGameOver(RenderWindow &window);
     // Update current score with Increased Score and display it
     void updateScore(int IncScore);
 
@@ -57,7 +64,7 @@ public:
     void timeToScore();
 
     // draw GameEngine objects into screen
-    void draw(RenderWindow& window);
+    void draw(RenderWindow &window);
 
     // Increase coins counter by one
     void updateCoins();
@@ -81,21 +88,24 @@ public:
     void setHeaderPosition(position screenCenter);
 
     // Start Life Screen
-    void startLifeScreen(RenderWindow& window);
+    void startLifeScreen(RenderWindow &window);
 
     void setCharacterType(CharacterTypeEnum type);
 
     void reset();
 
-    int getScore() {
-        return scoreInt - currentTime * 25;
+    int getScore()
+    {
+        return scoreInt - ((levelTime - currentTime) * 100);
     }
 
-    int getTime() {
+    int getTime()
+    {
         return levelTime - currentTime;
     }
 
-    int getCoins() {
+    int getCoins()
+    {
         return coinsInt;
     }
 };

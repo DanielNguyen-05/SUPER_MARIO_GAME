@@ -106,7 +106,8 @@ GameEngine::GameEngine() : winner(), gameover(), CHAR_TYPE(CharacterTypeEnum::MA
 	}
 
 	// Tải texture cho bullet
-	if (!bulletTexture.loadFromFile(MUSIC_BALL)) {
+	if (!bulletTexture.loadFromFile(MUSIC_BALL))
+	{
 		// Xử lý lỗi nếu không thể tải texture
 		std::cerr << "Error loading bullet texture!" << std::endl;
 	}
@@ -130,7 +131,8 @@ void GameEngine::updateScore(int IncScore)
 	scoreInt += IncScore;
 	// clear score_str
 	scoreStr.str(string());
-	scoreStr << "SCORE\n" << setw(6) << setfill('0') << scoreInt;
+	scoreStr << "SCORE\n"
+			 << setw(6) << setfill('0') << scoreInt;
 	scoreText.setString(scoreStr.str());
 }
 
@@ -199,7 +201,7 @@ void GameEngine::startTimeToScore()
 	remainTime = counterTime;
 }
 
-void GameEngine::draw(RenderWindow& window)
+void GameEngine::draw(RenderWindow &window)
 {
 	coinAnimation();
 	updateTimer();
@@ -229,7 +231,7 @@ void GameEngine::draw(RenderWindow& window)
 	}
 }
 
-void GameEngine::startLifeScreen(RenderWindow& window)
+void GameEngine::startLifeScreen(RenderWindow &window)
 {
 	Clock lifeScreenClock;
 	while (lifeScreenClock.getElapsedTime().asSeconds() < 3)
@@ -376,7 +378,8 @@ void GameEngine::reset()
 	gameOverScreen = WinnerScreen = false;
 
 	scoreStr.str(string());
-	scoreStr << "SCORE\n" << setw(6) << setfill('0') << scoreInt;
+	scoreStr << "SCORE\n"
+			 << setw(6) << setfill('0') << scoreInt;
 	scoreText.setString(scoreStr.str());
 
 	scoreText.setPosition(20, 20);

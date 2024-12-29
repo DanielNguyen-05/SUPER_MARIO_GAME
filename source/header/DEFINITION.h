@@ -81,6 +81,8 @@ struct position
 #define WINDOW_WIDTH 1600
 #define WINDOW_HEIGHT 900
 
+#define LEGACY_FONT "assets/fonts/legacy.ttf"
+
 #define MAIN_MENU_FONT "assets/fonts/super_mario_256.ttf"
 
 #define CAIRO_REGULAR "assets/fonts/Cairo-Regular.ttf"

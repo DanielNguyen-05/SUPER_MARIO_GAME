@@ -1,12 +1,17 @@
 #pragma once
 #include "DEFINITION.h"
 #include "Menu.h"
+
 #include "PlayerOptionsMenu.h"
 #include "TutorialMenu.h"
 #include "CharacterOptionsMenu.h"
 #include "HighScoreMenu.h"
 #include "OptionsMenu.h"
 #include "CreditsMenu.h"
+
+#include "GameEngine.h"
+
+class GameEngine;
 
 class MainMenu : private Menu
 {
@@ -36,10 +41,12 @@ public: // attributes
     player newPlayer;
     CharacterStateEnum characterState;
     CharacterTypeEnum getSelectedCharacterType() const;
+    void setSelectedCharacterType(CharacterTypeEnum type);
 
 private: // methods
     // Draw Main Menu contents
-    void draw(sf::RenderWindow &window) override;
+    void
+    draw(sf::RenderWindow &window) override;
 
     // Handle all events happening on Main Menu
     void catchEvents(sf::Event event) override;

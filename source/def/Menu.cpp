@@ -4,7 +4,7 @@
 void Menu::setBackText()
 {
     // Tạo font và text
-    if (!this->font.loadFromFile(CAIRO_REGULAR))
+    if (!this->font.loadFromFile(LEGACY_FONT))
     {
         std::cerr << "Error loading font" << "\n";
     }

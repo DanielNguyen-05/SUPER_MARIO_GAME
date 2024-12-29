@@ -1,6 +1,7 @@
 #include "../header/CharacterOptionsMenu.h"
+#include "../header/MainMenu.h"
 
-CharacterOptionsMenu::CharacterOptionsMenu() : user(), levelsList()
+CharacterOptionsMenu::CharacterOptionsMenu()
 {
     display = false;
 
@@ -11,7 +12,8 @@ CharacterOptionsMenu::CharacterOptionsMenu() : user(), levelsList()
     }
 
     newUser = false;
-    selectedPlayerOption = 0;
+
+    selectedCharacterOption = 0;
 
     // Set Back Text Properties
     setBackText();
@@ -22,30 +24,31 @@ CharacterOptionsMenu::CharacterOptionsMenu() : user(), levelsList()
         std::cout << "Can't load PLAYER_NAME_BACKGROUND\n";
     }
     backGroundSprite.setTexture(backGroundTexture);
+
     // Cấu hình tiêu đề
     titleText.setFont(font);
-    titleText.setString("Super Mario Game");
+    titleText.setString("Select Character");
     titleText.setCharacterSize(50);
     titleText.setFillColor(sf::Color::Red);
     titleText.setPosition(800 - titleText.getGlobalBounds().width / 2.f, 200);
 
     // Cấu hình các tùy chọn menu
-    std::vector<std::string> options = {"New Game", "Continue"};
+    std::vector<std::string> options = {"Mario", "Luigi"};
     float startY = 400.0f;
     for (size_t i = 0; i < options.size(); ++i)
     {
-        PlayerOptions[i].setFont(font);
-        PlayerOptions[i].setString(options[i]);
-        PlayerOptions[i].setCharacterSize(50);
-        PlayerOptions[i].setFillColor(sf::Color::White);
-        PlayerOptions[i].setPosition(800 - PlayerOptions[i].getGlobalBounds().width / 2.f, startY);
+        characterOptions[i].setFont(font);
+        characterOptions[i].setString(options[i]);
+        characterOptions[i].setCharacterSize(50);
+        characterOptions[i].setFillColor(sf::Color::White);
+        characterOptions[i].setPosition(800 - characterOptions[i].getGlobalBounds().width / 2.f, startY);
 
-        PlayerOptionsOutline[i].setFont(font);
-        PlayerOptionsOutline[i].setFillColor(sf::Color::Black); // Màu viền
-        PlayerOptionsOutline[i].setCharacterSize(50);
-        PlayerOptionsOutline[i].setStyle(sf::Text::Regular);
-        PlayerOptionsOutline[i].setString(options[i]);
-        PlayerOptionsOutline[i].setPosition(800 - PlayerOptions[i].getGlobalBounds().width / 2.f - 2, startY - 2);
+        characterOptionsOutline[i].setFont(font);
+        characterOptionsOutline[i].setFillColor(sf::Color::Black); // Màu viền
+        characterOptionsOutline[i].setCharacterSize(50);
+        characterOptionsOutline[i].setStyle(sf::Text::Regular);
+        characterOptionsOutline[i].setString(options[i]);
+        characterOptionsOutline[i].setPosition(800 - characterOptions[i].getGlobalBounds().width / 2.f - 2, startY - 2);
         startY += 80.0f;
     }
 }
@@ -57,53 +60,30 @@ void CharacterOptionsMenu::draw(sf::RenderWindow &window)
     {
         window.draw(backGroundSprite);
         window.draw(titleText);
-        for (const auto &option : PlayerOptions)
+        for (const auto &option : characterOptions)
             window.draw(option);
 
         window.draw(backText);
     }
-    user.draw(window);
-    levelsList.draw(window);
 }
 
-void CharacterOptionsMenu::catchEvents(Event event, player &newPlayer)
+void CharacterOptionsMenu::catchEvents(Event event)
 {
     if (display)
     {
         switch (event.type)
         {
         case Event::KeyReleased:
-            handleKeyReleased(event.key.code, newPlayer);
+            handleKeyReleased(event.key.code);
             break;
-
-            /*case Event::MouseButtonReleased:
-                if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-                sf::Vector2i mousePos(event.mouseButton.x, event.mouseButton.y);
-                for (int i = 0; i < 2; ++i) {
-                    if (isHovering(PlayerOptions[i], mousePos)) {
-                        if (i == 0) {
-                            std::cout << "New Game clicked" << std::endl;
-                            // Thêm logic xử lý cho New Game
-                            } else if (i == 1) {
-                                std::cout << "Continue clicked" << std::endl;
-                                // Thêm logic xử lý cho Continue
-                            }
-                        }
-                }
-                }
-                break;*/
         default:
-            break; // mới thêm
+            break;
         }
     }
-    updatePlayerOptionsColors();
-    if (user.display)
-        user.catchEvents(event, newPlayer, levelsList);
-    else
-        levelsList.catchEvents(event, newPlayer);
+    updateCharacterOptionsColors();
 }
 
-void CharacterOptionsMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player &newPlayer)
+void CharacterOptionsMenu::handleKeyReleased(sf::Keyboard::Key keyCode)
 {
     if (!newUser)
     {
@@ -124,12 +104,12 @@ void CharacterOptionsMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player &
         case sf::Keyboard::Enter:
             this->hide();
             newUser = false;
-            handleEnter(newPlayer);
+            handleEnter();
             break;
         case sf::Keyboard::Escape:
             this->hide();
-            selectedPlayerOption = 0;
             newUser = false;
+            selectedCharacterOption = 0;
             changingOptionSound.play();
             break;
         default:
@@ -138,19 +118,15 @@ void CharacterOptionsMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player &
     }
 }
 
-void CharacterOptionsMenu::handleEnter(player &newPlayer)
+void CharacterOptionsMenu::handleEnter()
 {
-    switch (selectedPlayerOption)
+    switch (selectedCharacterOption)
     {
     case 0:
-        user.show(newPlayer);
-        // controlEnemiesSpeed();
+        MainMenu::getInstance()->setSelectedCharacterType(CharacterTypeEnum::MARIO);
         break;
     case 1:
-        handleLevelsList(newPlayer);
-        levelsList.show(newPlayer);
-        selectedPlayerOption = 0;
-        // controlEnemiesSpeed();
+        MainMenu::getInstance()->setSelectedCharacterType(CharacterTypeEnum::LUIGI);
         break;
     }
 }
@@ -158,82 +134,29 @@ void CharacterOptionsMenu::handleEnter(player &newPlayer)
 void CharacterOptionsMenu::moveDown()
 {
     // Di chuyển xuống, quay lại đầu nếu đến cuối
-    selectedPlayerOption = (selectedPlayerOption + 1) % 2;
-    // updateMenuOptionsColors();
+    selectedCharacterOption = (selectedCharacterOption + 1) % 2;
 }
 
 void CharacterOptionsMenu::moveUp()
 {
     // Di chuyển lên, quay lại cuối nếu ở đầu
-    selectedPlayerOption = (selectedPlayerOption - 1 + 2) % 2;
-    // updateMenuOptionsColors();
+    selectedCharacterOption = (selectedCharacterOption - 1 + 2) % 2;
 }
 
 // Hàm cập nhật màu sắc của các menu options
-void CharacterOptionsMenu::updatePlayerOptionsColors()
+void CharacterOptionsMenu::updateCharacterOptionsColors()
 {
     for (int i = 0; i < 2; i++)
     {
-        if (i == selectedPlayerOption)
+        if (i == selectedCharacterOption)
         {
-            PlayerOptions[i].setFillColor(sf::Color::Yellow);     // Màu nổi bật
-            PlayerOptionsOutline[i].setFillColor(sf::Color::Red); // Viền nổi bật
+            characterOptions[i].setFillColor(sf::Color::Yellow);     // Màu nổi bật
+            characterOptionsOutline[i].setFillColor(sf::Color::Red); // Viền nổi bật
         }
         else
         {
-            PlayerOptions[i].setFillColor(sf::Color::White);        // Màu bình thường
-            PlayerOptionsOutline[i].setFillColor(sf::Color::Black); // Viền bình thường
+            characterOptions[i].setFillColor(sf::Color::White);        // Màu bình thường
+            characterOptionsOutline[i].setFillColor(sf::Color::Black); // Viền bình thường
         }
     }
-}
-
-bool CharacterOptionsMenu::isHovering(const sf::Text &text, const sf::Vector2i &mousePos)
-{
-    return text.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
-}
-
-void CharacterOptionsMenu::handleLevelsList(player &newPlayer)
-{
-    // maxLevel = stoi(gameEngine.currentPlayer.level);
-    int lines = getNumberOfLines();
-
-    // Mở file
-    playersFile.open(ACCOUNT_FILE);
-    if (!playersFile.is_open())
-    {
-        cerr << "Error: Unable to open file " << ACCOUNT_FILE << endl;
-        return;
-    }
-
-    // Đọc thông tin người chơi từ file
-    for (int i = 0; i < lines; i++)
-    {
-        playersFile >> newPlayer.username >> newPlayer.level1Score >> newPlayer.level2Score >> newPlayer.level3Score;
-    }
-    int maxLevel = 1;
-    if (newPlayer.level2Score != "-1")
-        maxLevel = 2;
-    if (newPlayer.level3Score != "-1")
-        maxLevel = 3;
-    newPlayer.level = std::to_string(maxLevel);
-
-    // Đóng file
-    playersFile.close();
-}
-
-int CharacterOptionsMenu::getNumberOfLines()
-{
-    // Open the file to read
-    playersFile.open(ACCOUNT_FILE);
-
-    // Count how many lines in the file
-    int cnt = 0;
-    string temp;
-    while (getline(playersFile, temp))
-        cnt++;
-
-    playersFile.close();
-    playersFile.clear();
-
-    return cnt;
 }

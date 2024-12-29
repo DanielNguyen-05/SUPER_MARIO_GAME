@@ -1,20 +1,16 @@
 #pragma once
 #include "DEFINITION.h"
 #include "Menu.h"
-#include "PlayerNameMenu.h"
-#include "LevelsList.h"
 
 class CharacterOptionsMenu : public Menu
 {
 private:
     sf::Font font;
-    sf::Text PlayerOptions[2];
-    sf::Text PlayerOptionsOutline[2];
+    sf::Text characterOptions[2];
+    sf::Text characterOptionsOutline[2];
     sf::Text titleText;
-    int selectedPlayerOption;
+    int selectedCharacterOption;
     bool newUser;
-
-    bool isHovering(const sf::Text &text, const sf::Vector2i &mousePos);
 
     // Move up to the previous option
     void moveUp();
@@ -22,32 +18,18 @@ private:
     // Move to the next option
     void moveDown();
 
-    void updatePlayerOptionsColors();
+    void updateCharacterOptionsColors();
 
 public:
-    PlayerNameMenu user;
-
-    LevelsList levelsList;
-
-    std::fstream playersFile;
-
     CharacterOptionsMenu();
 
     // Vẽ giao diện
     void draw(sf::RenderWindow &window) override;
 
-    // Handle all events happening on Player window
-    void catchEvents(Event event, player &newPlayer);
+    // Handle all events happening on Character window
+    void catchEvents(Event event);
 
-    void handleMouseClick(sf::Vector2i mousePos, player &newPlayer, Event event);
+    void handleKeyReleased(sf::Keyboard::Key keyCode);
 
-    void handleKeyReleased(sf::Keyboard::Key keyCode, player &newPlayer);
-
-    void handleEnter(player &newPlayer);
-
-    // Get how many lines in players file
-    int getNumberOfLines();
-
-    // Search for player name in files to get his last checkpoint
-    void handleLevelsList(player &newPlayer);
+    void handleEnter();
 };

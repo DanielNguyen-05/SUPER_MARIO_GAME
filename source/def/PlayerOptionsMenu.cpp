@@ -30,7 +30,7 @@ PlayerOptionsMenu::PlayerOptionsMenu() : user(), levelsList()
     titleText.setPosition(800 - titleText.getGlobalBounds().width / 2.f, 200);
 
     // Cấu hình các tùy chọn menu
-    std::vector<std::string> options = { "New Game", "Continue" };
+    std::vector<std::string> options = {"New Game", "Continue"};
     float startY = 400.0f;
     for (size_t i = 0; i < options.size(); ++i)
     {
@@ -51,13 +51,13 @@ PlayerOptionsMenu::PlayerOptionsMenu() : user(), levelsList()
 }
 
 // Vẽ giao diện
-void PlayerOptionsMenu::draw(sf::RenderWindow& window)
+void PlayerOptionsMenu::draw(sf::RenderWindow &window)
 {
     if (display)
     {
         window.draw(backGroundSprite);
         window.draw(titleText);
-        for (const auto& option : PlayerOptions)
+        for (const auto &option : PlayerOptions)
             window.draw(option);
 
         window.draw(backText);
@@ -66,7 +66,7 @@ void PlayerOptionsMenu::draw(sf::RenderWindow& window)
     levelsList.draw(window);
 }
 
-void PlayerOptionsMenu::catchEvents(Event event, player& newPlayer)
+void PlayerOptionsMenu::catchEvents(Event event, player &newPlayer)
 {
     if (display)
     {
@@ -103,7 +103,7 @@ void PlayerOptionsMenu::catchEvents(Event event, player& newPlayer)
         levelsList.catchEvents(event, newPlayer);
 }
 
-void PlayerOptionsMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& newPlayer)
+void PlayerOptionsMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player &newPlayer)
 {
     if (!newUser)
     {
@@ -138,7 +138,7 @@ void PlayerOptionsMenu::handleKeyReleased(sf::Keyboard::Key keyCode, player& new
     }
 }
 
-void PlayerOptionsMenu::handleEnter(player& newPlayer)
+void PlayerOptionsMenu::handleEnter(player &newPlayer)
 {
     switch (selectedPlayerOption)
     {
@@ -187,16 +187,15 @@ void PlayerOptionsMenu::updatePlayerOptionsColors()
     }
 }
 
-bool PlayerOptionsMenu::isHovering(const sf::Text& text, const sf::Vector2i& mousePos)
+bool PlayerOptionsMenu::isHovering(const sf::Text &text, const sf::Vector2i &mousePos)
 {
     return text.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
 }
 
-void PlayerOptionsMenu::handleLevelsList(player& newPlayer)
+void PlayerOptionsMenu::handleLevelsList(player &newPlayer)
 {
-    //maxLevel = stoi(gameEngine.currentPlayer.level);
+    // maxLevel = stoi(gameEngine.currentPlayer.level);
     int lines = getNumberOfLines();
-
 
     // Mở file
     playersFile.open(ACCOUNT_FILE);
@@ -220,7 +219,6 @@ void PlayerOptionsMenu::handleLevelsList(player& newPlayer)
 
     // Đóng file
     playersFile.close();
-
 }
 
 int PlayerOptionsMenu::getNumberOfLines()

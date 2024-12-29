@@ -29,6 +29,7 @@ MainMenu::MainMenu()
     // Helper variables
     float width = 1000;
     float hight = 200;
+
     string OptionsTemp[7] = {
         "   START",
         "  TUTORIAL",
@@ -80,10 +81,16 @@ void MainMenu::handleAllEvents(Event event)
     this->catchEvents(event);
     playerOptions.catchEvents(event, newPlayer);
     tutorial.catchEvents(event);
-    characterOptions.catchEvents(event, newPlayer);
+    characterOptions.catchEvents(event);
     highScore.catchEvents(event);
     credits.catchEvents(event);
     options.catchEvents(event, newPlayer);
+}
+
+void MainMenu::setSelectedCharacterType(CharacterTypeEnum type)
+{
+    selectedCharacterType = type;
+    GameEngine::getInstance().setCharacterType(type);
 }
 
 void MainMenu::catchEvents(Event event)
@@ -117,8 +124,8 @@ void MainMenu::drawAll(RenderWindow &window)
 {
     this->draw(window);
     playerOptions.draw(window);
-    characterOptions.draw(window);
     tutorial.draw(window);
+    characterOptions.draw(window);
     highScore.draw(window);
     credits.draw(window);
     options.draw(window);
@@ -142,9 +149,9 @@ void MainMenu::draw(RenderWindow &window)
 
 void MainMenu::checkShow()
 {
-    gameRunning = playerOptions.levelsList.gameEngine.gameRunning;
+    gameRunning = GameEngine::getInstance().gameRunning;
     // Nếu tất cả menu con đóng và không trong trạng thái game, hiển thị lại menu chính
-    if (!playerOptions.display && !playerOptions.levelsList.display && !playerOptions.levelsList.level1.finished && !playerOptions.levelsList.level2.finished && !highScore.display && !tutorial.display && !options.display && !credits.display && !gameRunning)
+    if (!playerOptions.display && !playerOptions.levelsList.display && !playerOptions.levelsList.level1.finished && !playerOptions.levelsList.level2.finished && !characterOptions.display && !highScore.display && !tutorial.display && !options.display && !credits.display && !gameRunning)
     {
         show();
     }
@@ -175,6 +182,7 @@ void MainMenu::mainMenuHandleSelection()
         break;
     case 2:
         characterOptions.show();
+        cout << display;
         break;
     case 3:
         highScore.show();

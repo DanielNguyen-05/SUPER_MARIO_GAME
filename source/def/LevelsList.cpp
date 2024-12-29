@@ -1,6 +1,6 @@
 #include "../header/LevelsList.h"
 
-LevelsList::LevelsList() : level1(gameEngine), level2(gameEngine), level3(gameEngine)
+LevelsList::LevelsList() : level1(*getGameEngine()), level2(*getGameEngine()), level3(*getGameEngine())
 {
 	// Set intial values
 	display = false;
@@ -40,7 +40,7 @@ LevelsList::LevelsList() : level1(gameEngine), level2(gameEngine), level3(gameEn
 
 void LevelsList::show(player newPlayer)
 {
-	gameEngine.currentPlayer = newPlayer;
+	(*getGameEngine()).currentPlayer = newPlayer;
 	checkOpendLevels();
 	display = true;
 
@@ -50,7 +50,7 @@ void LevelsList::show(player newPlayer)
 	// Find the last level this player has finished
 }
 
-void LevelsList::draw(RenderWindow& window)
+void LevelsList::draw(RenderWindow &window)
 {
 	// checkShow(gameEngine.currentPlayer);
 	// cout << level1.finished;
@@ -75,7 +75,7 @@ void LevelsList::draw(RenderWindow& window)
 	}
 }
 
-void LevelsList::catchEvents(Event event, player& newPlayer)
+void LevelsList::catchEvents(Event event, player &newPlayer)
 {
 	if (display || level1.finished || level2.finished)
 	{
@@ -94,10 +94,7 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 				break;
 			case Keyboard::Enter:
 				this->hide();
-				gameEngine.gameRunning = true;
-				// cout << "A";
-				// gameEngine.setCharacterType("Mario");
-				// cout << "B";
+				(*getGameEngine()).gameRunning = true;
 				switch (selectedLevel)
 				{
 				case 0:
@@ -135,7 +132,7 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 				changingOptionSound.play();
 				break;
 			default:
-				break;	// mới thêm
+				break; // mới thêm
 			}
 			break;
 		default:
@@ -150,8 +147,7 @@ void LevelsList::catchEvents(Event event, player& newPlayer)
 void LevelsList::checkOpendLevels()
 {
 
-	maxLevel = stoi(gameEngine.currentPlayer.level);
-	
+	maxLevel = stoi((*getGameEngine()).currentPlayer.level);
 	// Cập nhật các level đã mở
 	setOpendLevels();
 }
