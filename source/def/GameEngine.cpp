@@ -240,7 +240,7 @@ void GameEngine::startLifeScreen(RenderWindow &window)
 		window.draw(scoreText);
 		window.draw(timerText);
 		window.draw(coinsText);
-		window.draw(levelText);
+		// window.draw(levelText);
 		window.draw(coinSprite);
 		window.draw(lifeText);
 		window.draw(charLifeSprite);
@@ -341,7 +341,7 @@ void GameEngine::setHeaderPosition(position screenCenter)
 	timerText.setPosition(topLeft + 1400, 5);  // Timer
 	coinsText.setPosition(topLeft + 700, 5);   // Coins Counter
 	coinSprite.setPosition(topLeft + 675, 38); // Coin sprite
-	levelText.setPosition(topLeft + 1000, 5);  // Level Name
+	// levelText.setPosition(topLeft + 1000, 5);  // Level Name
 	lifeText.setPosition(topLeft + 820, 420);
 	charLifeSprite.setPosition(topLeft + 780, 450);
 }
