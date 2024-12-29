@@ -90,7 +90,7 @@ void MainMenu::handleAllEvents(Event event)
 void MainMenu::setSelectedCharacterType(CharacterTypeEnum type)
 {
     selectedCharacterType = type;
-    GameEngine::getInstance().setCharacterType(type);
+    GameEngine::getInstance().character = CharacterFactory::createCharacter(type);
 }
 
 void MainMenu::catchEvents(Event event)

@@ -12,7 +12,7 @@ GameEngine::GameEngine() : winner(), gameover(), CHAR_TYPE(CharacterTypeEnum::MA
 	lifeScreen = gameRunning = gameOverScreen = WinnerScreen = false;
 	currentPlayer.lifes = 3;
 
-	setCharacterType(CHAR_TYPE);
+	character = CharacterFactory::createCharacter(CHAR_TYPE);
 
 	// Load font from file
 	if (!headerFont.loadFromFile(GAME_HEADER_FONT))
@@ -113,18 +113,6 @@ GameEngine::GameEngine() : winner(), gameover(), CHAR_TYPE(CharacterTypeEnum::MA
 	}
 }
 
-void GameEngine::setCharacterType(CharacterTypeEnum type)
-{
-	if (type == CharacterTypeEnum::MARIO)
-	{
-		character = std::make_shared<Mario>(500, 200);
-	}
-	else if (type == CharacterTypeEnum::LUIGI)
-	{
-		character = std::make_shared<Luigi>(500, 200);
-	}
-}
-
 void GameEngine::updateScore(int IncScore)
 {
 	// Increase current score
@@ -151,7 +139,7 @@ void GameEngine::updateTimer()
 	if (counterTime >= 0)
 	{
 		timerStr << "TIME\n "
-			<< setw(3) << setfill('0') << counterTime;
+				 << setw(3) << setfill('0') << counterTime;
 		timerText.setString(timerStr.str());
 	}
 	else
@@ -207,27 +195,30 @@ void GameEngine::draw(RenderWindow &window)
 	updateTimer();
 	updateLifes();
 
-	if(WinnerScreen){
+	if (WinnerScreen)
+	{
 		cout << getScore();
 		int total_score = stoi(currentPlayer.level1Score) + stoi(currentPlayer.level2Score) + getScore();
 		View defaultView(FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
 		window.setView(defaultView);
 		winner.draw(window, total_score, coinsInt);
 	}
-	if(gameOverScreen)
+	if (gameOverScreen)
 	{
 		View defaultView(FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
 		window.setView(defaultView);
-		gameover.draw(window, getScore() , coinsInt);
-	} else {
+		gameover.draw(window, getScore(), coinsInt);
+	}
+	else
+	{
 
-	window.draw(scoreText);
-	window.draw(timerText);
-	window.draw(coinsText);
-	window.draw(levelText);
-	window.draw(coinSprite);
-	if (lifeScreen)
-		startLifeScreen(window);
+		window.draw(scoreText);
+		window.draw(timerText);
+		window.draw(coinsText);
+		window.draw(levelText);
+		window.draw(coinSprite);
+		if (lifeScreen)
+			startLifeScreen(window);
 	}
 }
 
@@ -362,7 +353,7 @@ void GameEngine::updateLifes()
 		{
 			lifeStr << "Game Over";
 			gameOverScreen = true;
-			//gameRunning = false;
+			// gameRunning = false;
 			lifeScreen = false;
 		}
 	}

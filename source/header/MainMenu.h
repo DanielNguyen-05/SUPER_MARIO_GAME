@@ -10,6 +10,7 @@
 #include "CreditsMenu.h"
 
 #include "GameEngine.h"
+#include "CharacterFactory.h"
 
 class GameEngine;
 

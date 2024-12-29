@@ -5,6 +5,7 @@
 #include "Luigi.h"
 #include "Winner.h"
 #include "GameOver.h"
+#include "CharacterFactory.h"
 
 class GameEngine
 {
@@ -89,8 +90,6 @@ public:
 
     // Start Life Screen
     void startLifeScreen(RenderWindow &window);
-
-    void setCharacterType(CharacterTypeEnum type);
 
     void reset();
 
