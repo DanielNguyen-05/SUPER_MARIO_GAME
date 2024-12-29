@@ -225,10 +225,10 @@ void Level1::checkGround(int num)
 void Level1::handleView(RenderWindow &window)
 {
     // a + (b - a) * c
-    if (/*!gameEngine->character->stuck*/ !gameEngine->character->dying)
+    if (!gameEngine->character->dying)
     {
         float fr = (1 / 50.0);
-        screenCenter = {screenCenter.x + (gameEngine->character->charSprite.getPosition().x - screenCenter.x) * fr * 20, 450};
+        screenCenter = {screenCenter.x + (gameEngine->character->charSprite.getPosition().x - screenCenter.x) * fr * 20 * 0.15f, 450};
 
         if (screenCenter.x > WINDOW_WIDTH / 2 && screenCenter.x < levelWidth - (WINDOW_WIDTH / 2))
         {

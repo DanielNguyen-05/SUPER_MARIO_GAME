@@ -1,6 +1,7 @@
 #include "../header/Enemy.h"
 
-Enemy::Enemy(GameEngine& gameEngine, EnemyEnum type, Sprite& minX, Sprite& maxX, RectangleShape& ground, float x, float y) {
+Enemy::Enemy(GameEngine &gameEngine, EnemyEnum type, Sprite &minX, Sprite &maxX, RectangleShape &ground, float x, float y)
+{
 	this->gameEngine = &gameEngine;
 	this->minX = &minX;
 	this->maxX = &maxX;
@@ -23,7 +24,8 @@ Enemy::Enemy(GameEngine& gameEngine, EnemyEnum type, Sprite& minX, Sprite& maxX,
 	enemySprite.setTexture(gameEngine.enemyTextrue);
 	enemySprite.setPosition(x, y);
 
-	switch (enemyType) {
+	switch (enemyType)
+	{
 	case BLACK:
 		enemyRect = blackRect;
 		killScore = 100;
@@ -52,8 +54,10 @@ Enemy::Enemy(GameEngine& gameEngine, EnemyEnum type, Sprite& minX, Sprite& maxX,
 	floatingText.setString(std::to_string(killScore));
 }
 
-void Enemy::draw(RenderWindow& window) {
-	if (display) {
+void Enemy::draw(RenderWindow &window)
+{
+	if (display)
+	{
 		updateAI();
 		animation();
 		if (faid)
@@ -61,17 +65,19 @@ void Enemy::draw(RenderWindow& window) {
 		window.draw(enemySprite);
 
 		// Vẽ các viên đạn
-		for (size_t i = 0; i < bullets.size(); i++) {
+		for (size_t i = 0; i < bullets.size(); i++)
+		{
 			window.draw(bullets[i].bulletSprite);
 		}
 	}
 }
 
-
-void Enemy::updateAI() {
+void Enemy::updateAI()
+{
 	float distance = abs(enemySprite.getPosition().x - gameEngine->character->charSprite.getPosition().x);
 
-	switch (state) {
+	switch (state)
+	{
 	case IDLE:
 		if (distance < 100)
 			state = MOVING;
@@ -83,7 +89,7 @@ void Enemy::updateAI() {
 			state = KILLED;
 		break;
 	case ATTACKING:
-		shoot();  // Gọi phương thức để bắn đạn
+		shoot(); // Gọi phương thức để bắn đạn
 		if (distance > 100)
 			state = MOVING;
 		if (isKilled)
@@ -100,10 +106,12 @@ void Enemy::updateAI() {
 	}
 }
 
-
-void Enemy::animation() {
-	if (timer.getElapsedTime().asSeconds() > 0.2f) {
-		switch (enemyType) {
+void Enemy::animation()
+{
+	if (timer.getElapsedTime().asSeconds() > 0.2f)
+	{
+		switch (enemyType)
+		{
 		case BLACK:
 			enemyRect.left = blackRect.left + currentRect * blackRect.width;
 			break;
@@ -188,42 +196,60 @@ void Enemy::TextFloat()
 	}
 }
 
-void Enemy::changeDirection() {
-	if (enemySprite.getGlobalBounds().intersects(maxX->getGlobalBounds())) {
+void Enemy::changeDirection()
+{
+	if (enemySprite.getGlobalBounds().intersects(maxX->getGlobalBounds()))
+	{
 		enemySprite.setScale(-scale, abs(scale));
 		speed[0] = -gameEngine->currentPlayer.enemiesSpeed * accSpeed;
 	}
-	if (enemySprite.getGlobalBounds().intersects(minX->getGlobalBounds())) {
+	if (enemySprite.getGlobalBounds().intersects(minX->getGlobalBounds()))
+	{
 		enemySprite.setScale(scale, abs(scale));
 		speed[0] = gameEngine->currentPlayer.enemiesSpeed * accSpeed;
 	}
 }
 
-void Enemy::checkGround() {
-	if (enemySprite.getGlobalBounds().intersects(ground->getGlobalBounds())) {
+void Enemy::checkGround()
+{
+	if (enemySprite.getGlobalBounds().intersects(ground->getGlobalBounds()))
+	{
 		speed[1] = 0;
 		if (!onGround)
 			enemySprite.setPosition(enemySprite.getPosition().x, ground->getGlobalBounds().top);
 		onGround = true;
 	}
-	else {
+	else
+	{
 		speed[1] = 70;
 		onGround = false;
 	}
 }
 
-void Enemy::checkKilled() {
-	if (!gameEngine->character->dying) {
-		if (enemySprite.getGlobalBounds().intersects(gameEngine->character->charSprite.getGlobalBounds()) && !faid) {
-			if (gameEngine->character->speed[1] > 1 || (enemyType == SHELL)) {
+void Enemy::checkKilled()
+{
+	if (!gameEngine->character->dying)
+	{
+		if (enemySprite.getGlobalBounds().intersects(gameEngine->character->charSprite.getGlobalBounds()) && !faid)
+		{
+			if (gameEngine->character->speed[1] > 1 || (enemyType == SHELL && !moving))
+			{
 				isKilled = true;
-				if (enemyType == SHELL && !moving) {
+				gameEngine->character->speed[1] = -25;
+				if (enemyType == SHELL && !moving)
+				{
 					moving = true;
 					turtleTimer.restart();
 				}
-				else moving = false;
+				else
+					moving = false;
 			}
-			else {
+			else if (enemyType == SHELL && moving)
+			{
+				gameEngine->character->startDie();
+			}
+			else
+			{
 				gameEngine->character->startDie();
 			}
 		}
@@ -232,10 +258,13 @@ void Enemy::checkKilled() {
 	}
 }
 
-void Enemy::setKilled() {
-	if (isKilled) {
+void Enemy::setKilled()
+{
+	if (isKilled)
+	{
 		gameEngine->killSound.play();
-		switch (enemyType) {
+		switch (enemyType)
+		{
 		case BLACK:
 			enemyType = SMASHED;
 			enemyRect = smashedRect;
@@ -260,36 +289,44 @@ void Enemy::setKilled() {
 	}
 }
 
-void Enemy::checkTurtleFaid() {
+void Enemy::checkTurtleFaid()
+{
 	if (moving && turtleTimer.getElapsedTime().asSeconds() > 10)
 		display = false;
 }
 
 // CHo bắn súng
-void Enemy::shoot() {
+void Enemy::shoot()
+{
 	// Kiểm tra nếu kẻ thù có thể bắn
-	if (canShoot && state == ATTACKING) {
+	if (canShoot && state == ATTACKING)
+	{
 		// Kiểm tra gameEngine đã được khởi tạo chưa
-		if (gameEngine != nullptr) {
+		if (gameEngine != nullptr)
+		{
 			// Tạo một viên đạn mới và thiết lập vị trí bắn
 			Bullet bullet(gameEngine, enemySprite.getPosition().x, enemySprite.getPosition().y);
 			bullets.push_back(bullet);
-			canShoot = false;  // Chỉ bắn một viên đạn một lần trong mỗi chu kỳ tấn công
+			canShoot = false; // Chỉ bắn một viên đạn một lần trong mỗi chu kỳ tấn công
 		}
-		else {
+		else
+		{
 			std::cerr << "GameEngine chưa được khởi tạo!" << std::endl;
 		}
 	}
 }
 
-void Enemy::updateBullets() {
+void Enemy::updateBullets()
+{
 	// Cập nhật các viên đạn
-	for (size_t i = 0; i < bullets.size(); i++) {
-		bullets[i].update();  // Cập nhật vị trí viên đạn
-		if (bullets[i].getBounds().intersects(gameEngine->character->charSprite.getGlobalBounds())) {
+	for (size_t i = 0; i < bullets.size(); i++)
+	{
+		bullets[i].update(); // Cập nhật vị trí viên đạn
+		if (bullets[i].getBounds().intersects(gameEngine->character->charSprite.getGlobalBounds()))
+		{
 			// Nếu viên đạn va chạm với Mario
-			gameEngine->character->startDie();  // Gọi hàm để Mario chết
-			bullets.erase(bullets.begin() + i);  // Xóa viên đạn sau khi va chạm
+			gameEngine->character->startDie();	// Gọi hàm để Mario chết
+			bullets.erase(bullets.begin() + i); // Xóa viên đạn sau khi va chạm
 			break;
 		}
 	}

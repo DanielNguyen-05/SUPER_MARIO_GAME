@@ -1,6 +1,6 @@
 #include "../header/Level3.h"
 
-Level3::Level3(GameEngine& gameEngine)
+Level3::Level3(GameEngine &gameEngine)
 {
     // Set initial values
     this->gameEngine = &gameEngine;
@@ -71,7 +71,7 @@ Level3::Level3(GameEngine& gameEngine)
     turtle.push_back(*new Enemy(gameEngine, TURTLE, rock[62].blockSprite, rock[63].blockSprite, groundShape[1], 5500, 250));
 }
 
-void Level3::draw(RenderWindow& window)
+void Level3::draw(RenderWindow &window)
 {
     if (display)
     {
@@ -134,8 +134,8 @@ void Level3::start()
 void Level3::end()
 {
     display = false;
-    //if (finished)
-     //  gameEngine->currentPlayer.level = "3";
+    // if (finished)
+    //   gameEngine->currentPlayer.level = "3";
     gameEngine->gameRunning = false;
     finished = true;
 }
@@ -213,13 +213,13 @@ void Level3::checkGround(int num)
     }
 }
 
-void Level3::handleView(RenderWindow& window)
+void Level3::handleView(RenderWindow &window)
 {
     // a + (b - a) * c
     if (/*!gameEngine->character->stuck*/ !gameEngine->character->dying)
     {
         float fr = (1 / 60.0);
-        screenCenter = { screenCenter.x + (gameEngine->character->charSprite.getPosition().x - screenCenter.x) * fr * 20, 450 };
+        screenCenter = {screenCenter.x + (gameEngine->character->charSprite.getPosition().x - screenCenter.x) * fr * 20 * 0.15f, 450};
 
         if (screenCenter.x > WINDOW_WIDTH / 2 && screenCenter.x < levelWidth - (WINDOW_WIDTH / 2))
         {
@@ -289,8 +289,7 @@ void Level3::arrangeLevelBlocks()
         {2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 7, 7, 6, 7, 0, 0, 0, 2, 2, 6, 6, 6, 6, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 6, 2, 2, 2, 2, 6, 0, 0, 2, 2, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 2, 2, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 3, 2, 2, 3, 2, 6, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 6, 2, 6, 2, 6, 2, 7, 7, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0},
         {2, 6, 6, 6, 6, 6, 6, 6, 6, 2, 2, 7, 0, 0, 0, 0, 0, 2, 2, 6, 0, 0, 6, 6, 6, 0, 0, 6, 6, 6, 6, 6, 6, 2, 2, 2, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6, 0, 0, 0, 7, 0, 0, 7, 0, 0, 0, 0, 0, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 6, 6, 0, 0, 0, 0, 0, 0, 6, 2, 2, 6, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 6, 2, 6, 2, 6, 2, 7, 7, 0, 0, 0, 0, 0, 6, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0},
         {2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 2, 2, 7, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6, 6, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6, 6, 0, 0, 7, 0, 0, 0, 0, 7, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 2, 6, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 2, 6, 2, 6, 2, 6, 2, 6, 2, 7, 7, 0, 0, 7, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 2, 2, 2, 7, 7, 0, 0, 0, 6, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 6, 6, 6, 6, 6, 6, 6, 2, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6, 6, 6, 0, 7, 0, 0, 0, 0, 0, 0, 7, 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 7, 7, 7, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    };
+        {2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 2, 2, 2, 7, 7, 0, 0, 0, 6, 0, 0, 0, 0, 7, 7, 7, 7, 7, 7, 6, 6, 6, 6, 6, 6, 6, 2, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6, 6, 6, 0, 7, 0, 0, 0, 0, 0, 0, 7, 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 7, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 7, 7, 7, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
     for (int i = 0; i < ROW_NUM; i++)
     {
@@ -299,31 +298,31 @@ void Level3::arrangeLevelBlocks()
             switch (arr[i][j])
             {
             case 1:
-                stoneCoinPosition[stoneCoinCnt] = { float(31 + j * 62), float(31 + i * 62) };
+                stoneCoinPosition[stoneCoinCnt] = {float(31 + j * 62), float(31 + i * 62)};
                 stoneCoinCnt++;
                 break;
             case 2:
-                stonePosition[stoneCnt] = { float(31 + j * 62), float(31 + i * 62) };
+                stonePosition[stoneCnt] = {float(31 + j * 62), float(31 + i * 62)};
                 stoneCnt++;
                 break;
             case 3:
-                questCoinPosition[quesCoinCnt] = { float(31 + j * 62), float(31 + i * 62) };
+                questCoinPosition[quesCoinCnt] = {float(31 + j * 62), float(31 + i * 62)};
                 quesCoinCnt++;
                 break;
             case 4:
-                questFLowerPosition[quesFlowerCnt] = { float(31 + j * 62), float(31 + i * 62) };
+                questFLowerPosition[quesFlowerCnt] = {float(31 + j * 62), float(31 + i * 62)};
                 quesFlowerCnt++;
                 break;
             case 5:
-                questMashPosition[quesMashCnt] = { float(31 + j * 62), float(31 + i * 62) };
+                questMashPosition[quesMashCnt] = {float(31 + j * 62), float(31 + i * 62)};
                 quesMashCnt++;
                 break;
             case 6:
-                rockPosition[rockCnt] = { float(31 + j * 62), float(31 + i * 62) };
+                rockPosition[rockCnt] = {float(31 + j * 62), float(31 + i * 62)};
                 rockCnt++;
                 break;
             case 7:
-                coinPosition[coinCnt] = { float(31 + j * 62), float(31 + i * 62) };
+                coinPosition[coinCnt] = {float(31 + j * 62), float(31 + i * 62)};
                 coinCnt++;
                 break;
             default:
