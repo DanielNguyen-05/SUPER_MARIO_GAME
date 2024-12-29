@@ -52,7 +52,6 @@ public:
     // Close the Level
     void end();
 
-    void resetLevel();
     // Check if Mario is on the ground
     void checkGround(int num);
 
@@ -68,4 +67,6 @@ private:
 
     // Set Positions for all blocks in the level
     void arrangeLevelBlocks();
+
+    void resetLevel();
 };
