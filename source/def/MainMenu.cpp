@@ -91,6 +91,7 @@ void MainMenu::setSelectedCharacterType(CharacterTypeEnum type)
 {
     selectedCharacterType = type;
     GameEngine::getInstance().character = CharacterFactory::createCharacter(type);
+    GameEngine::getInstance().updateCharLifeSprite();
 }
 
 void MainMenu::catchEvents(Event event)

@@ -108,7 +108,7 @@ void Level1::draw(RenderWindow &window)
 
         gameEngine->character->draw(window);
         gameEngine->draw(window);
-        if(gameEngine->gameOverScreen)
+        if (gameEngine->gameOverScreen)
             end();
     }
 }
@@ -192,7 +192,8 @@ void Level1::end()
 {
     display = false;
     gameEngine->gameRunning = false;
-    if (finished && stoi(gameEngine->currentPlayer.level) < 2){
+    if (finished && stoi(gameEngine->currentPlayer.level) < 2)
+    {
         gameEngine->currentPlayer.level = to_string(2);
         gameEngine->currentPlayer.level1Score = to_string(gameEngine->getScore());
     }

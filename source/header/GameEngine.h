@@ -91,6 +91,8 @@ public:
     // Start Life Screen
     void startLifeScreen(RenderWindow &window);
 
+    void updateCharLifeSprite();
+
     void reset();
 
     int getScore()

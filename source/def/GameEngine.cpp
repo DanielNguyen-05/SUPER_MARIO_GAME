@@ -66,11 +66,7 @@ GameEngine::GameEngine() : winner(), gameover(), CHAR_TYPE(CharacterTypeEnum::MA
 	lifeText.setString(lifeStr.str());
 
 	// Set Mario Sprite Properties
-	charLifeSprite.setTexture(character->charTexture);
-	charLifeSprite.setTextureRect(IntRect(0, 96, 28, 32));
-	charLifeSprite.setScale(2, 2);
-	charLifeSprite.setOrigin(14, 16);
-	charLifeSprite.setPosition(780, 450);
+	updateCharLifeSprite();
 
 	// Load Game Sound Effects
 	popUpBuffer.loadFromFile(POPUP_SOUND);
@@ -111,6 +107,15 @@ GameEngine::GameEngine() : winner(), gameover(), CHAR_TYPE(CharacterTypeEnum::MA
 		// Xử lý lỗi nếu không thể tải texture
 		std::cerr << "Error loading bullet texture!" << std::endl;
 	}
+}
+
+void GameEngine::updateCharLifeSprite()
+{
+	charLifeSprite.setTexture(character->charTexture);
+	charLifeSprite.setTextureRect(IntRect(0, 96, 28, 32));
+	charLifeSprite.setScale(2, 2);
+	charLifeSprite.setOrigin(14, 16);
+	charLifeSprite.setPosition(780, 450);
 }
 
 void GameEngine::updateScore(int IncScore)
