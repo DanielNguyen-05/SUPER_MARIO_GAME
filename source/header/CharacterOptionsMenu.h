@@ -27,7 +27,7 @@ public:
     void draw(sf::RenderWindow &window) override;
 
     // Handle all events happening on Character window
-    void catchEvents(Event event);
+    void catchEvents(Event event) override;
 
     void handleKeyReleased(sf::Keyboard::Key keyCode);
 
