@@ -34,6 +34,7 @@ Characters::Characters(float x, float y)
 
 Characters::~Characters()
 {
+    delete inputHandler;
     delete state;
     state = nullptr;
 }

@@ -56,7 +56,7 @@ protected:
     area charArea;
     SoundBuffer jumpBuffer, damageBuffer, dieBuffer;
     Sound jumpSound, damageSound, dieSound;
-
+    InputHandler *inputHandler;
     CharacterState *state = nullptr;
 
 public:
