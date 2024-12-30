@@ -1,5 +1,6 @@
 #pragma once
 #include "DEFINITION.h"
+#include "CharecterCommand.h"
 
 class Characters;
 
@@ -59,6 +60,11 @@ protected:
     CharacterState *state = nullptr;
 
 public:
+    friend class MoveRightCommand;
+    friend class MoveLeftCommand;
+    friend class JumpCommand;
+    friend class CrouchCommand;
+    friend class InputHandler;
     Texture charTexture, charSuperTexture;
     bool jumping, onGround, PoweringUpToBig, PoweringUpToSuper, dying, stuck, dead;
     float speed[2];

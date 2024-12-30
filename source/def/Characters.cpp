@@ -17,6 +17,7 @@ Characters::Characters(float x, float y)
     changeStateCounter = 0;
     goRight = goUp = goLeft = jumping = onGround = false;
     PoweringUpToSuper = PoweringUpToBig = damaging = dying = stuck = dead = false;
+    inputHandler = new InputHandler();
 
     // Set Sound effect Properties
     jumpBuffer.loadFromFile(JUMP_SOUND);
@@ -82,57 +83,55 @@ void Characters::superState()
 
 void Characters::catchEvents(Event &event)
 {
-    if (!dying)
+    /*switch (event.type)
     {
-        switch (event.type)
+    case Event::KeyPressed:
+        switch (event.key.code)
         {
-        case Event::KeyPressed:
-            switch (event.key.code)
-            {
-            case Keyboard::Key::D:
-            case Keyboard::Key::Right:
-                goRight = true;
-                break;
-
-            case Keyboard::Key::A:
-            case Keyboard::Key::Left:
-                goLeft = true;
-                break;
-
-            case Keyboard::Key::W:
-            case Keyboard::Key::Up:
-            case Keyboard::Key::Space:
-                goUp = true;
-                break;
-
-            case Keyboard::Key::Z:
-                // startDie();
-                break;
-            default:
-                break; // mới thêm
-            }
+        case Keyboard::Key::D:
+        case Keyboard::Key::Right:
+            goRight = true;
             break;
 
-        case Event::KeyReleased:
-            switch (event.key.code)
-            {
-            case Keyboard::Key::D:
-            case Keyboard::Key::Right:
-                goRight = false;
-                break;
+        case Keyboard::Key::A:
+        case Keyboard::Key::Left:
+            goLeft = true;
+            break;
 
-            case Keyboard::Key::A:
-            case Keyboard::Key::Left:
-                goLeft = false;
-                break;
-            default:
-                break; // mới thêm
-            }
+        case Keyboard::Key::W:
+        case Keyboard::Key::Up:
+        case Keyboard::Key::Space:
+            goUp = true;
+            break;
+
+        case Keyboard::Key::Z:
+            // startDie();
             break;
         default:
             break; // mới thêm
         }
-    }
+        break;
+
+    case Event::KeyReleased:
+        switch (event.key.code)
+        {
+        case Keyboard::Key::D:
+        case Keyboard::Key::Right:
+            goRight = false;
+            break;
+
+        case Keyboard::Key::A:
+        case Keyboard::Key::Left:
+            goLeft = false;
+            break;
+        default:
+            break; // mới thêm
+        }
+        break;
+    default:
+        break; // mới thêm
+    }*/
+    inputHandler->handleInput(event, *this);
 }
 
 void Characters::move()
