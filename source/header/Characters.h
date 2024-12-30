@@ -1,6 +1,41 @@
 #pragma once
 #include "DEFINITION.h"
 
+class Characters;
+
+class CharacterState
+{
+public:
+    virtual ~CharacterState() = default;
+    virtual void handleInput(Characters &character, sf::Event &event) = 0;
+    virtual void update(Characters &character) = 0;
+    virtual CharacterStateEnum getState() = 0;
+};
+
+class SmallState : public CharacterState
+{
+public:
+    void handleInput(Characters &character, sf::Event &event) override;
+    void update(Characters &character) override;
+    virtual CharacterStateEnum getState() override;
+};
+
+class BigState : public CharacterState
+{
+public:
+    void handleInput(Characters &character, sf::Event &event) override;
+    void update(Characters &character) override;
+    virtual CharacterStateEnum getState() override;
+};
+
+class SuperState : public CharacterState
+{
+public:
+    void handleInput(Characters &character, sf::Event &event) override;
+    void update(Characters &character) override;
+    virtual CharacterStateEnum getState() override;
+};
+
 class Characters
 {
 protected:
@@ -12,7 +47,6 @@ protected:
     area charArea;
     SoundBuffer jumpBuffer, damageBuffer, dieBuffer;
     Sound jumpSound, damageSound, dieSound;
-    sf::RectangleShape debugBox;
 
 public:
     Texture charTexture, charSuperTexture;
