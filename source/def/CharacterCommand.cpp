@@ -151,6 +151,7 @@ void CharacterMovement::handleHorizontalMovement(Characters& character, sf::IntR
 void MoveCommand::checkDeathBoundary(Characters& character) {
     if (character.charSprite.getPosition().y >= character.deathBoundaryY) {
         character.dead = true;
+        character.dieSound.play();
         character.dying = character.goLeft = character.goRight = false;
         character.speed[0] = character.speed[1] = 0;
         character.charSprite.setPosition(500, 200);
