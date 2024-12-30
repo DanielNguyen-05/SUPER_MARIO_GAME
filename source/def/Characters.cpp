@@ -2,8 +2,6 @@
 
 const float deathBoundaryY = 1100;
 
-bool DEBUG_MODE = false;
-
 // [0] đại diện cho x.
 // [1] đại diện cho y.
 
@@ -24,15 +22,6 @@ Characters::Characters(float x, float y)
     // Set Characters Sprite Properties
     smallState();
 
-    if (DEBUG_MODE)
-    {
-        debugBox.setSize(sf::Vector2f(50, 100));       // Set box size
-        debugBox.setFillColor(sf::Color::Transparent); // Transparent fill
-        debugBox.setOutlineThickness(2);               // Outline thickness
-        debugBox.setOutlineColor(sf::Color::Red);      // Outline color
-        debugBox.setPosition(x, y);                    // Initial position
-    }
-
     // Set Sound effect Properties
     jumpBuffer.loadFromFile(JUMP_SOUND);
     jumpSound.setBuffer(jumpBuffer);
@@ -46,10 +35,6 @@ Characters::Characters(float x, float y)
 
 void Characters::draw(RenderWindow &window)
 {
-    if (DEBUG_MODE)
-    {
-        window.draw(debugBox);
-    }
     window.draw(charSprite);
     animation();
 }
@@ -219,12 +204,6 @@ void Characters::move()
         }
 
         charSprite.move(speed[0], speed[1]);
-
-        if (DEBUG_MODE)
-        {
-            debugBox.setPosition(charSprite.getPosition());
-        }
-
         timer1.restart();
     }
     if (charSprite.getPosition().y >= deathBoundaryY)
@@ -492,10 +471,6 @@ void Characters::reset()
     // Reset Characters's position and scale
     charSprite.setPosition(500, 200);
     charSprite.setScale(2, 2);
-    if (DEBUG_MODE)
-    {
-        debugBox.setPosition(500, 200);
-    }
     // Reset to small state by default
     smallState();
 }
