@@ -1,6 +1,6 @@
 #pragma once
 #include "DEFINITION.h"
-#include "CharecterCommand.h"
+#include "CharacterCommand.h"
 
 class Characters;
 
