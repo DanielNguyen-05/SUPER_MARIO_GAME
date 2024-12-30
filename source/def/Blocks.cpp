@@ -241,7 +241,7 @@ void Blocks::checkIntersection()
                 float charRight = charPos.x + (charBounds.width / 2);
                 float charLeft = charPos.x - (charBounds.width / 2);
                 if ((charRight > blockLeft && charLeft < blockRight) &&
-                    (charPos.y > (blockPos.y + 5) && charPos.y < blockPos.y + blockBounds.height))
+                    (charPos.y > blockPos.y && charPos.y < blockPos.y + blockBounds.height))
                 {
 
                     if (charPos.x > blockPos.x)
@@ -255,7 +255,6 @@ void Blocks::checkIntersection()
                     gameEngine->character->speed[0] = 0;
                     gameEngine->character->stuck = true;
                     stuckOn = true;
-
                 }
             }
         }
@@ -286,7 +285,7 @@ void Blocks::handleHitBlock()
     switch (blockType)
     {
     case STONE:
-        switch (gameEngine->character->charState)
+        switch (gameEngine->character->getState())
         {
         case SMALL:
             startPopUp();

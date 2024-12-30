@@ -7,33 +7,41 @@ class CharacterState
 {
 public:
     virtual ~CharacterState() = default;
-    virtual void handleInput(Characters &character, sf::Event &event) = 0;
-    virtual void update(Characters &character) = 0;
+    // virtual void jump() = 0;
+    virtual void handleIntRect(IntRect &intRect) = 0;
+    virtual int getJumpRectPosition() = 0;
+    virtual void setCharRectForWalk(IntRect &intRect) = 0;
     virtual CharacterStateEnum getState() = 0;
 };
 
 class SmallState : public CharacterState
 {
 public:
-    void handleInput(Characters &character, sf::Event &event) override;
-    void update(Characters &character) override;
-    virtual CharacterStateEnum getState() override;
+    // void jump() override;
+    void handleIntRect(IntRect &intRect) override;
+    int getJumpRectPosition() override;
+    void setCharRectForWalk(IntRect &intRect) override;
+    CharacterStateEnum getState() override;
 };
 
 class BigState : public CharacterState
 {
 public:
-    void handleInput(Characters &character, sf::Event &event) override;
-    void update(Characters &character) override;
-    virtual CharacterStateEnum getState() override;
+    // void jump() override;
+    void handleIntRect(IntRect &intRect) override;
+    int getJumpRectPosition() override;
+    void setCharRectForWalk(IntRect &intRect) override;
+    CharacterStateEnum getState() override;
 };
 
 class SuperState : public CharacterState
 {
 public:
-    void handleInput(Characters &character, sf::Event &event) override;
-    void update(Characters &character) override;
-    virtual CharacterStateEnum getState() override;
+    // void jump() override;
+    void handleIntRect(IntRect &intRect) override;
+    int getJumpRectPosition() override;
+    void setCharRectForWalk(IntRect &intRect) override;
+    CharacterStateEnum getState() override;
 };
 
 class Characters
@@ -41,35 +49,38 @@ class Characters
 protected:
     int changeStateCounter;
     Clock timer1, timer2, changeStateTimer;
-    bool goRight, goUp, goLeft, goDown, damaging;
+    bool goRight, goUp, goLeft, damaging;
     float acceleration[2], startJumpPosition;
     int facingDirection;
     area charArea;
     SoundBuffer jumpBuffer, damageBuffer, dieBuffer;
     Sound jumpSound, damageSound, dieSound;
 
+    CharacterState *state = nullptr;
+
 public:
     Texture charTexture, charSuperTexture;
     bool jumping, onGround, PoweringUpToBig, PoweringUpToSuper, dying, stuck, dead;
     float speed[2];
     Sprite charSprite;
-    CharacterStateEnum charState;
 
     Characters(float x, float y);
+    ~Characters();
 
-    // Methods
     virtual void draw(RenderWindow &window);
     virtual void catchEvents(Event &event);
     virtual void startDamage();
     virtual void startDie();
     virtual void reset();
 
+    void setState(CharacterStateEnum state_enum);
+    CharacterStateEnum getState() const;
+
 protected:
     virtual void smallState();
     virtual void bigState();
     virtual void superState();
     virtual void move();
-    virtual void setCharRectForWalk(IntRect &intRect);
     virtual void standStill();
     virtual void jump(IntRect &intRect, int RectPosition, float waiting);
     virtual void moveRight(IntRect &intRect);

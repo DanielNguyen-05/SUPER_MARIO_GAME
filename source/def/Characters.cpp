@@ -15,10 +15,8 @@ Characters::Characters(float x, float y)
     facingDirection = 1; // 0 = left, 1 = right
     startJumpPosition = 500;
     changeStateCounter = 0;
-    goRight = goUp = goLeft = goDown = jumping = onGround = false;
+    goRight = goUp = goLeft = jumping = onGround = false;
     PoweringUpToSuper = PoweringUpToBig = damaging = dying = stuck = dead = false;
-    // Set Characters Sprite Properties
-    smallState();
 
     // Set Sound effect Properties
     jumpBuffer.loadFromFile(JUMP_SOUND);
@@ -29,6 +27,14 @@ Characters::Characters(float x, float y)
 
     dieBuffer.loadFromFile(DIE_SOUND);
     dieSound.setBuffer(dieBuffer);
+
+    smallState();
+}
+
+Characters::~Characters()
+{
+    delete state;
+    state = nullptr;
 }
 
 void Characters::draw(RenderWindow &window)
@@ -50,7 +56,7 @@ void Characters::animation()
 void Characters::smallState()
 {
     charSprite.setTexture(charTexture);
-    charState = SMALL;
+    setState(SMALL);
     charArea.width = 28;
     charArea.height = 32;
     charSprite.setTextureRect(IntRect(0, 96, charArea.width, charArea.height));
@@ -60,7 +66,7 @@ void Characters::smallState()
 void Characters::bigState()
 {
     charSprite.setTexture(charTexture);
-    charState = BIG;
+    setState(BIG);
     charArea.width = 31;
     charArea.height = 60;
     charSprite.setTextureRect(IntRect(0, 36, charArea.width, charArea.height));
@@ -70,7 +76,7 @@ void Characters::bigState()
 void Characters::superState()
 {
     bigState();
-    charState = SUPER;
+    setState(SUPER);
     charSprite.setTexture(charSuperTexture);
 }
 
@@ -97,11 +103,6 @@ void Characters::catchEvents(Event &event)
             case Keyboard::Key::Up:
             case Keyboard::Key::Space:
                 goUp = true;
-                break;
-
-            case Keyboard::Key::S:
-            case Keyboard::Key::Down:
-                goDown = true;
                 break;
 
             case Keyboard::Key::Z:
@@ -147,9 +148,7 @@ void Characters::move()
     if (timer1.getElapsedTime().asSeconds() > waitingTime)
     {
         // Jump when press arrow up
-        int jumpRectPosition = 161; // Big and Super position = 161
-        if (charState == SMALL)
-            jumpRectPosition += 1.5; // Small position = 162.5
+        int jumpRectPosition = state->getJumpRectPosition();
 
         if (goUp)
         {
@@ -185,19 +184,13 @@ void Characters::move()
                 // acceleration movement when release keyboard
                 if (speed[0] >= 1 || speed[0] <= -1)
                 {
-                    setCharRectForWalk(charRect);
+                    state->setCharRectForWalk(charRect);
                     if (!jumping)
                         charSprite.setTextureRect(charRect);
 
                     // Calculate Characters Speed - X axis
                     speed[0] = speed[0] + acceleration[0] * waitingTime;
                 }
-            }
-
-            // set down when press arrow down
-            if (goDown && charState != SMALL)
-            {
-                goDown = false;
             }
 
             timer2.restart();
@@ -221,40 +214,10 @@ void Characters::move()
     }
 }
 
-void Characters::setCharRectForWalk(IntRect &intRect)
-{
-    int maxLeft = 0, picWidth = 0;
-
-    if (charState == SMALL)
-    {
-        maxLeft = 99;
-        picWidth = 33;
-    }
-    else if (charState == BIG || charState == SUPER)
-    {
-        maxLeft = 96;
-        picWidth = 32;
-    }
-    else
-    { /* Do Nothing */
-    }
-
-    if (intRect.left >= maxLeft)
-    {
-        intRect.left = picWidth;
-    }
-    else
-    {
-        intRect.left += picWidth;
-    }
-
-    return;
-}
-
 void Characters::standStill()
 {
     speed[0] = 0;
-    switch (charState)
+    switch (state->getState())
     {
     case SMALL:
         smallState();
@@ -294,13 +257,11 @@ void Characters::moveRight(IntRect &intRect)
     // check turnAround
     if (speed[0] <= -1)
     {
-        intRect.left = 129; // Big and Super position
-        if (charState == SMALL)
-            intRect.left = 132; // Small Position
+        state->handleIntRect(intRect);
     }
     else
     {
-        setCharRectForWalk(intRect);
+        state->setCharRectForWalk(intRect);
     }
 
     if (!jumping)
@@ -321,13 +282,11 @@ void Characters::moveLeft(IntRect &intRect)
     // check turnAround
     if (speed[0] >= 1)
     {
-        intRect.left = 129; // Big and Super position
-        if (charState == SMALL)
-            intRect.left = 132; // Small Position
+        state->handleIntRect(intRect);
     }
     else
     {
-        setCharRectForWalk(intRect);
+        state->setCharRectForWalk(intRect);
     }
 
     if (!jumping)
@@ -465,7 +424,7 @@ void Characters::reset()
     speed[1] = 70;
     startJumpPosition = 500;
     changeStateCounter = 0;
-    goRight = goUp = goLeft = goDown = jumping = onGround = false;
+    goRight = goUp = goLeft = jumping = onGround = false;
     PoweringUpToSuper = PoweringUpToBig = damaging = dying = stuck = dead = false;
 
     // Reset Characters's position and scale
@@ -473,4 +432,140 @@ void Characters::reset()
     charSprite.setScale(2, 2);
     // Reset to small state by default
     smallState();
+}
+
+void Characters::setState(CharacterStateEnum state_enum)
+{
+
+    if (state != nullptr)
+    {
+        delete state;
+    }
+
+    CharacterState *newState = nullptr;
+
+    switch (state_enum)
+    {
+    case CharacterStateEnum::SMALL:
+        newState = new SmallState();
+        break;
+    case CharacterStateEnum::BIG:
+        newState = new BigState();
+        break;
+    case CharacterStateEnum::SUPER:
+        newState = new SuperState();
+        break;
+    default:
+        break;
+    }
+    state = newState;
+}
+
+///////////////////////////////////////////////
+
+CharacterStateEnum Characters::getState() const
+{
+    return state->getState();
+}
+
+//////////////// SMALL STATE /////////////////////
+
+CharacterStateEnum SmallState::getState()
+{
+    return CharacterStateEnum::SMALL;
+}
+
+void SmallState::handleIntRect(IntRect &intRect)
+{
+    intRect.left = 132;
+}
+
+void SmallState::setCharRectForWalk(IntRect &intRect)
+{
+    int maxLeft = 0, picWidth = 0;
+
+    maxLeft = 99;
+    picWidth = 33;
+
+    if (intRect.left >= maxLeft)
+    {
+        intRect.left = picWidth;
+    }
+    else
+    {
+        intRect.left += picWidth;
+    }
+}
+
+int SmallState::getJumpRectPosition()
+{
+    return 162.5;
+}
+
+//////////////// BIG STATE /////////////////////
+
+CharacterStateEnum BigState::getState()
+{
+    return CharacterStateEnum::BIG;
+}
+
+void BigState::handleIntRect(IntRect &intRect)
+{
+    intRect.left = 129;
+}
+
+void BigState::setCharRectForWalk(IntRect &intRect)
+{
+    int maxLeft = 0, picWidth = 0;
+
+    maxLeft = 96;
+    picWidth = 32;
+
+    if (intRect.left >= maxLeft)
+    {
+        intRect.left = picWidth;
+    }
+    else
+    {
+        intRect.left += picWidth;
+    }
+}
+
+int BigState::getJumpRectPosition()
+{
+    return 161;
+}
+
+//////////////// SUPER STATE /////////////////////
+
+CharacterStateEnum SuperState::getState()
+{
+    return CharacterStateEnum::SUPER;
+}
+
+void SuperState::handleIntRect(IntRect &intRect)
+{
+    intRect.left = 129;
+}
+
+void SuperState::setCharRectForWalk(IntRect &intRect)
+{
+    int maxLeft = 0, picWidth = 0;
+
+    maxLeft = 96;
+    picWidth = 32;
+
+    if (intRect.left >= maxLeft)
+    {
+        intRect.left = picWidth;
+    }
+    else
+    {
+        intRect.left += picWidth;
+    }
+}
+
+int SuperState::getJumpRectPosition()
+{
+    return 161;
 }
