@@ -3,7 +3,7 @@
 GameEngine::GameEngine() : winner(), gameover(), CHAR_TYPE(CharacterTypeEnum::MARIO)
 {
 	// Set initial values
-	levelTime = 300;
+	levelTime = 10;
 	scoreInt = coinsInt = currentTime = counterTime = 0;
 	remainTime = -1;
 	scoreStr << "SCORE\n000000";
@@ -151,8 +151,10 @@ void GameEngine::updateTimer()
 	{ /* Do Nothing */
 	}
 
-	if (counterTime == 0 && remainTime == -1)
+	if (counterTime == 0 && remainTime == -1){
+		gameOverScreen = true;
 		character->startDie();
+	}
 }
 
 void GameEngine::updateCoins()
@@ -254,6 +256,7 @@ void GameEngine::setLevelName(string levelName)
 void GameEngine::addPlayerInfo(int level)
 {
 	int currentScore = scoreInt + currentTime * 25;
+	cout << currentTime;
 	std::ifstream inputFile(ACCOUNT_FILE);
 	std::ostringstream tempBuffer;
 	bool userFound = false;
@@ -347,7 +350,7 @@ void GameEngine::updateLifes()
 	lifeStr.str(string());
 	if (character->dead)
 	{
-		if (currentPlayer.lifes > 3)
+		if (currentPlayer.lifes > 1)
 		{
 			currentPlayer.lifes--;
 			lifeStr << "x" << currentPlayer.lifes;
