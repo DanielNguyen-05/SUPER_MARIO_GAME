@@ -14,6 +14,7 @@ Characters::Characters(float x, float y)
     acceleration[1] = 80;
     speed[0] = 0;
     speed[1] = 70;
+    facingDirection = 1; // 0 = left, 1 = right
     startJumpPosition = 500;
     changeStateCounter = 0;
     goRight = goUp = goLeft = goDown = jumping = onGround = false;
@@ -185,12 +186,12 @@ void Characters::move()
         if (timer2.getElapsedTime().asSeconds() > waitingTime)
         {
 
-            if (goRight)
+            if (goRight && (!stuck || facingDirection == 0))
             { // Move to right
                 moveRight(charRect);
             }
 
-            else if (goLeft)
+            else if (goLeft && (!stuck || facingDirection == 1))
             { // Move to left
                 moveLeft(charRect);
             }
@@ -327,6 +328,8 @@ void Characters::moveRight(IntRect &intRect)
         charSprite.setTextureRect(intRect);
     charSprite.setScale(2, 2);
 
+    if (facingDirection != 1)
+        facingDirection = 1;
     speed[0] = 21;
 
     // Make acceleration work in the opposite side
@@ -352,6 +355,8 @@ void Characters::moveLeft(IntRect &intRect)
         charSprite.setTextureRect(intRect);
     charSprite.setScale(-2, 2);
 
+    if (facingDirection != 0)
+        facingDirection = 0;
     speed[0] = -21;
 
     // Make acceleration work in the oppsite side

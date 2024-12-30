@@ -209,7 +209,7 @@ void Blocks::checkIntersection()
           blockLeftPoint = blockPos.x - (blockBounds.width / 2);
 
     // In the block bounds
-    if (blockBounds.intersects(charBounds))
+    if (blockBounds.intersects(charBounds) && !gameEngine->character->dying)
     {
         if (charPos.x >= blockLeftPoint && charPos.x <= blockRightPoint)
         {

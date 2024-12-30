@@ -8,6 +8,7 @@ protected:
     Clock timer1, timer2, changeStateTimer;
     bool goRight, goUp, goLeft, goDown, damaging;
     float acceleration[2], startJumpPosition;
+    int facingDirection;
     area charArea;
     SoundBuffer jumpBuffer, damageBuffer, dieBuffer;
     Sound jumpSound, damageSound, dieSound;
