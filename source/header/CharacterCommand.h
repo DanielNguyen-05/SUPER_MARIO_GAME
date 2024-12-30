@@ -35,7 +35,7 @@ public:
 
 class MoveCommand {
 protected:
-    float waitingTime = 0.05;
+    float waitingTime;
     Clock timer1, timer2;
 public:
     virtual void update(Characters& character);

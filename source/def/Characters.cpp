@@ -48,7 +48,7 @@ void Characters::draw(RenderWindow &window)
 void Characters::animation()
 {
     if ((!PoweringUpToBig && !PoweringUpToSuper) && !damaging)
-        move();
+        inputHandler->update(*this);
     changeToBig();
     changeToSuper();
     damage();
@@ -87,7 +87,7 @@ void Characters::catchEvents(Event &event)
     inputHandler->handleInput(event, *this);
 }
 
-void Characters::move()
+/*void Characters::move()
 {
     if (onGround)
     {
@@ -165,7 +165,7 @@ void Characters::move()
         standStill();
     }
 }
-
+*/
 void Characters::standStill()
 {
     speed[0] = 0;
@@ -218,10 +218,12 @@ void Characters::moveRight(IntRect &intRect)
 
     if (!jumping)
         charSprite.setTextureRect(intRect);
-    charSprite.setScale(2, 2);
 
-    if (facingDirection != 1)
+
+    if (facingDirection != 1){
         facingDirection = 1;
+        charSprite.setScale(2, 2);
+    }
     speed[0] = 21;
 
     // Make acceleration work in the opposite side
@@ -243,10 +245,13 @@ void Characters::moveLeft(IntRect &intRect)
 
     if (!jumping)
         charSprite.setTextureRect(intRect);
-    charSprite.setScale(-2, 2);
 
-    if (facingDirection != 0)
+    //charSprite.setScale(-2, 2);
+
+    if (facingDirection != 0){
         facingDirection = 0;
+        charSprite.setScale(-2, 2);
+    }
     speed[0] = -21;
 
     // Make acceleration work in the oppsite side
@@ -375,6 +380,7 @@ void Characters::reset()
     speed[0] = 0;
     speed[1] = 70;
     startJumpPosition = 500;
+    facingDirection = 1;
     changeStateCounter = 0;
     goRight = goUp = goLeft = jumping = onGround = false;
     PoweringUpToSuper = PoweringUpToBig = damaging = dying = stuck = dead = false;
@@ -449,9 +455,9 @@ void SmallState::setCharRectForWalk(IntRect &intRect)
     }
 }
 
-int SmallState::getJumpRectPosition()
+float SmallState::getJumpRectPosition()
 {
-    return 162;
+    return 162.5;
 }
 
 //////////////// BIG STATE /////////////////////
@@ -483,7 +489,7 @@ void BigState::setCharRectForWalk(IntRect &intRect)
     }
 }
 
-int BigState::getJumpRectPosition()
+float BigState::getJumpRectPosition()
 {
     return 161;
 }
@@ -517,7 +523,7 @@ void SuperState::setCharRectForWalk(IntRect &intRect)
     }
 }
 
-int SuperState::getJumpRectPosition()
+float SuperState::getJumpRectPosition()
 {
     return 161;
 }

@@ -2,7 +2,7 @@
 #include "../header/Characters.h"
 #include "../header/CharacterCommand.h"
 
-void MoveRightCommand::execute(Characters& character)
+void MoveRightCommand::execute(Characters &character)
 {
     if (!character.dying && (!character.stuck || character.facingDirection == 0))
     {
@@ -10,7 +10,7 @@ void MoveRightCommand::execute(Characters& character)
     }
 }
 
-void MoveLeftCommand::execute(Characters& character)
+void MoveLeftCommand::execute(Characters &character)
 {
     if (!character.dying && (!character.stuck || character.facingDirection == 1))
     {
@@ -18,9 +18,9 @@ void MoveLeftCommand::execute(Characters& character)
     }
 }
 
-void JumpCommand::execute(Characters& character)
+void JumpCommand::execute(Characters &character)
 {
-    if (!character.dying && !character.jumping)
+    if (!character.dying)
     {
         character.goUp = true;
     }
@@ -42,7 +42,7 @@ InputHandler::~InputHandler()
     delete movement;
 }
 
-void InputHandler::handleInput(Event& event, Characters& character)
+void InputHandler::handleInput(Event &event, Characters &character)
 {
     if (event.type == Event::KeyPressed)
     {
@@ -88,10 +88,7 @@ void InputHandler::handleInput(Event& event, Characters& character)
 }
 
 void MoveCommand::update(Characters& character) {
-    if (timer1.getElapsedTime().asSeconds() > waitingTime) {
-        updateMovement(character);
-        timer1.restart();
-    }
+    updateMovement(character);
     checkDeathBoundary(character);
     checkStandStill(character);
 }
@@ -100,26 +97,28 @@ void CharacterMovement::updateMovement(Characters& character) {
     if (character.onGround) {
         character.jumping = false;
     }
-
+    
     sf::IntRect charRect = character.charSprite.getTextureRect();
-    handleJump(character, charRect);
-
-    waitingTime += 0.07;
-    if (timer2.getElapsedTime().asSeconds() > waitingTime) {
-        handleHorizontalMovement(character, charRect);
-        timer2.restart();
+    waitingTime = 0.05;
+    if (timer1.getElapsedTime().asSeconds() > waitingTime) {
+        handleJump(character, charRect);
+        waitingTime += 0.07;
+        if (timer2.getElapsedTime().asSeconds() > waitingTime) {
+            handleHorizontalMovement(character, charRect);
+            timer2.restart();
+        }
+        character.charSprite.move(character.speed[0], character.speed[1]);
+        timer1.restart();
     }
-
-    character.charSprite.move(character.speed[0], character.speed[1]);
 }
 
 void CharacterMovement::handleJump(Characters& character, sf::IntRect& charRect) {
-    int jumpRectPosition = character.state->getJumpRectPosition();
-
+    float jumpRectPosition = character.state->getJumpRectPosition();
+    
     if (character.goUp) {
         charRect.left = jumpRectPosition;
         character.charSprite.setTextureRect(charRect);
-
+        
         if (!character.jumping) {
             character.jumpSound.play();
             character.startJumpPosition = character.charSprite.getPosition().y;
@@ -133,7 +132,7 @@ void CharacterMovement::handleJump(Characters& character, sf::IntRect& charRect)
 }
 
 void CharacterMovement::handleHorizontalMovement(Characters& character, sf::IntRect& charRect) {
-    /*if (character.goRight && (!character.stuck || character.facingDirection == 0)) {
+    if (character.goRight && (!character.stuck || character.facingDirection == 0)) {
         character.moveRight(charRect);
     }
     else if (character.goLeft && (!character.stuck || character.facingDirection == 1)) {
@@ -145,61 +144,9 @@ void CharacterMovement::handleHorizontalMovement(Characters& character, sf::IntR
             character.charSprite.setTextureRect(charRect);
         }
         character.speed[0] += character.acceleration[0] * waitingTime;
-    }*/
-    // Add small buffer for collision detection
-    /*const float MIN_SPEED = 0.1f;
-
-    if (character.goRight && (!character.stuck || character.facingDirection == 0)) {
-        character.moveRight(charRect);
-        character.speed[0] = std::max(character.speed[0], MIN_SPEED);
-    }
-    else if (character.goLeft && (!character.stuck || character.facingDirection == 1)) {
-        character.moveLeft(charRect);
-        character.speed[0] = std::min(character.speed[0], -MIN_SPEED);
-    }
-    else if (std::abs(character.speed[0]) >= 1) {
-        character.state->setCharRectForWalk(charRect);
-        if (!character.jumping) {
-            character.charSprite.setTextureRect(charRect);
-        }
-        // Smoother deceleration
-        character.speed[0] += character.acceleration[0] * waitingTime * 0.8f;
-    }
-
-    // Reset stuck flag each frame
-    character.stuck = false;*/
-    // Giảm độ bám của collision
-    if (character.stuck) {
-        // Nếu đang bị kẹt, cho phép movement ngay lập tức khi đổi hướng
-        if ((character.goRight && character.facingDirection == 0) ||
-            (character.goLeft && character.facingDirection == 1)) {
-            character.stuck = false;
-        }
-        // Reset stuck sau một khoảng thời gian ngắn
-        if (timer2.getElapsedTime().asSeconds() > 0.1f) {
-            character.stuck = false;
-        }
-    }
-
-    if (character.goRight && (!character.stuck || character.facingDirection == 0)) {
-        character.moveRight(charRect);
-        // Tăng tốc độ movement để thoát khỏi collision nhanh hơn
-        character.speed[0] = std::max(character.speed[0], 2.0f);
-    }
-    else if (character.goLeft && (!character.stuck || character.facingDirection == 1)) {
-        character.moveLeft(charRect);
-        // Tăng tốc độ movement để thoát khỏi collision nhanh hơn
-        character.speed[0] = std::min(character.speed[0], -2.0f);
-    }
-    else if (std::abs(character.speed[0]) >= 1) {
-        character.state->setCharRectForWalk(charRect);
-        if (!character.jumping) {
-            character.charSprite.setTextureRect(charRect);
-        }
-        // Giảm độ trơn của movement
-        character.speed[0] += character.acceleration[0] * waitingTime * 1.2f;
     }
 }
+
 
 void MoveCommand::checkDeathBoundary(Characters& character) {
     if (character.charSprite.getPosition().y >= character.deathBoundaryY) {
@@ -216,6 +163,6 @@ void MoveCommand::checkStandStill(Characters& character) {
     }
 }
 
-void InputHandler::update(Characters& character) {
-    movement->update(character);
-}
+    void InputHandler::update(Characters& character) {
+        movement->update(character);
+    }

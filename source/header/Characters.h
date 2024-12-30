@@ -10,7 +10,7 @@ public:
     virtual ~CharacterState() = default;
     // virtual void jump() = 0;
     virtual void handleIntRect(IntRect &intRect) = 0;
-    virtual int getJumpRectPosition() = 0;
+    virtual float getJumpRectPosition() = 0;
     virtual void setCharRectForWalk(IntRect &intRect) = 0;
     virtual CharacterStateEnum getState() = 0;
 };
@@ -20,7 +20,7 @@ class SmallState : public CharacterState
 public:
     // void jump() override;
     void handleIntRect(IntRect &intRect) override;
-    int getJumpRectPosition() override;
+    float getJumpRectPosition() override;
     void setCharRectForWalk(IntRect &intRect) override;
     CharacterStateEnum getState() override;
 };
@@ -30,7 +30,7 @@ class BigState : public CharacterState
 public:
     // void jump() override;
     void handleIntRect(IntRect &intRect) override;
-    int getJumpRectPosition() override;
+    float getJumpRectPosition() override;
     void setCharRectForWalk(IntRect &intRect) override;
     CharacterStateEnum getState() override;
 };
@@ -40,7 +40,7 @@ class SuperState : public CharacterState
 public:
     // void jump() override;
     void handleIntRect(IntRect &intRect) override;
-    int getJumpRectPosition() override;
+    float getJumpRectPosition() override;
     void setCharRectForWalk(IntRect &intRect) override;
     CharacterStateEnum getState() override;
 };
@@ -89,7 +89,7 @@ protected:
     virtual void smallState();
     virtual void bigState();
     virtual void superState();
-    virtual void move();
+   // virtual void move();
     virtual void standStill();
     virtual void jump(IntRect &intRect, int RectPosition, float waiting);
     virtual void moveRight(IntRect &intRect);
