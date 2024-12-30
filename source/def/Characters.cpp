@@ -19,6 +19,8 @@ Characters::Characters(float x, float y)
     changeStateCounter = 0;
     goRight = goUp = goLeft = goDown = jumping = onGround = false;
     PoweringUpToSuper = PoweringUpToBig = damaging = dying = stuck = dead = false;
+    inputHandler = new InputHandler();
+
     // Set Characters Sprite Properties
     smallState();
 
@@ -91,9 +93,7 @@ void Characters::superState()
 
 void Characters::catchEvents(Event &event)
 {
-    if (!dying)
-    {
-        switch (event.type)
+        /*switch (event.type)
         {
         case Event::KeyPressed:
             switch (event.key.code)
@@ -145,8 +145,8 @@ void Characters::catchEvents(Event &event)
             break;
         default:
             break; // mới thêm
-        }
-    }
+        }*/
+       inputHandler->handleInput(event, *this);
 }
 
 void Characters::move()

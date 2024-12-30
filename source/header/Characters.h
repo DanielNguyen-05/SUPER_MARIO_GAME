@@ -1,5 +1,6 @@
 #pragma once
 #include "DEFINITION.h"
+#include "CharecterCommand.h"
 
 class Characters
 {
@@ -13,8 +14,15 @@ protected:
     SoundBuffer jumpBuffer, damageBuffer, dieBuffer;
     Sound jumpSound, damageSound, dieSound;
     sf::RectangleShape debugBox;
+    InputHandler* inputHandler;
+
 
 public:
+    friend class MoveRightCommand;
+    friend class MoveLeftCommand;
+    friend class JumpCommand;
+    friend class CrouchCommand;
+    friend class InputHandler;
     Texture charTexture, charSuperTexture;
     bool jumping, onGround, PoweringUpToBig, PoweringUpToSuper, dying, stuck, dead;
     float speed[2];
@@ -22,6 +30,10 @@ public:
     CharacterStateEnum charState;
 
     Characters(float x, float y);
+
+    ~Characters() {
+        delete inputHandler;
+    }
 
     // Methods
     virtual void draw(RenderWindow &window);

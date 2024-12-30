@@ -3,7 +3,7 @@
 GameEngine::GameEngine() : winner(), gameover(), CHAR_TYPE(CharacterTypeEnum::MARIO)
 {
 	// Set initial values
-	levelTime = 10;
+	levelTime = 300;
 	scoreInt = coinsInt = currentTime = counterTime = 0;
 	remainTime = -1;
 	scoreStr << "SCORE\n000000";
