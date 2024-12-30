@@ -26,14 +26,6 @@ void JumpCommand::execute(Characters &character)
     }
 }
 
-void CrouchCommand::execute(Characters &character)
-{
-    if (!character.dying && character.charState != SMALL)
-    {
-        character.goDown = true;
-    }
-}
-
 InputHandler::InputHandler()
 {
     buttonD = new MoveRightCommand();
