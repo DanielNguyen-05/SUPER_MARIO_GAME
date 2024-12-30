@@ -117,7 +117,7 @@ struct position
 
 /**********************************************************/
 
-/***						Mario						***/
+/***						Character						***/
 #define MARIO_CHARACTER "assets/textures/Mario.png"
 
 #define MARIO_SUPER_CHARACTER "assets/textures/MarioSuper.png"
@@ -136,8 +136,11 @@ struct position
 
 /***					GameEngine						***/
 #define PLAYERS_FILE "Files/Players.txt"
+
 #define ACCOUNT_FILE "Files/users.txt"
+
 #define GAME_HEADER_FONT "assets/fonts/legacy.ttf"
+
 #define GAME_FONT "assets/fonts/legacy.ttf"
 
 /**********************************************************/
@@ -167,6 +170,7 @@ struct position
 #define SMASH_SOUND "assets/sounds/smash.wav"
 
 #define BRICK "assets/textures/brick.png"
+
 /**********************************************************/
 
 /***						Levels							***/

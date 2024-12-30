@@ -1,6 +1,6 @@
 #include "../header/Blocks.h"
 
-Blocks::Blocks(GameEngine &gameEngine, BlockEnum blockType, ItemEnum itemType, float x, float y) : item(gameEngine, itemType, x, y)
+Blocks::Blocks(GameEngine& gameEngine, BlockEnum blockType, ItemEnum itemType, float x, float y) : item(gameEngine, itemType, x, y)
 {
     // Set initial values
     this->gameEngine = &gameEngine;
@@ -49,7 +49,7 @@ Blocks::Blocks(GameEngine &gameEngine, BlockEnum blockType, ItemEnum itemType, f
     blockHight = blockSprite.getGlobalBounds().height;
 }
 
-void Blocks::draw(RenderWindow &window)
+void Blocks::draw(RenderWindow& window)
 {
     item.draw(window);
     if (display)
@@ -199,14 +199,15 @@ void Blocks::popUp()
 void Blocks::checkIntersection()
 {
     // Calculate Mario and Block bounds
-    FloatRect charBounds = gameEngine->character->charSprite.getGlobalBounds(),
-              blockBounds = blockSprite.getGlobalBounds();
-    Vector2f charPos = gameEngine->character->charSprite.getPosition(), blockPos = blockSprite.getPosition();
+    FloatRect charBounds = gameEngine->character->charSprite.getGlobalBounds();
+    FloatRect blockBounds = blockSprite.getGlobalBounds();
+    Vector2f charPos = gameEngine->character->charSprite.getPosition();
+    Vector2f blockPos = blockSprite.getPosition();
 
-    float blockTopPoint = blockPos.y - (blockBounds.height / 2),
-          blockBottomPoint = blockPos.y + (blockBounds.height / 2),
-          blockRightPoint = blockPos.x + (blockBounds.width / 2),
-          blockLeftPoint = blockPos.x - (blockBounds.width / 2);
+    float blockTopPoint = blockPos.y - (blockBounds.height / 2);
+    float blockBottomPoint = blockPos.y + (blockBounds.height / 2);
+    float blockRightPoint = blockPos.x + (blockBounds.width / 2);
+    float blockLeftPoint = blockPos.x - (blockBounds.width / 2);
 
     // In the block bounds
     if (blockBounds.intersects(charBounds) && !gameEngine->character->dying)

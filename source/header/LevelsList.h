@@ -5,6 +5,9 @@
 #include "Level1.h"
 #include "Level2.h"
 #include "Level3.h"
+#include "Level1MapStrategy.h"
+#include "Level2MapStrategy.h"
+#include "Level3MapStrategy.h"
 
 #define NUMBER_OF_LEVELS 3
 
@@ -23,16 +26,16 @@ public:
 	Level2 level2;
 	Level3 level3;
 
-	GameEngine *getGameEngine() { return &GameEngine::getInstance(); }
+	GameEngine* getGameEngine() { return &GameEngine::getInstance(); }
 
 	// Constructor
 	LevelsList();
 
 	// Draw LevelList Menu
-	void draw(RenderWindow &window) override;
+	void draw(RenderWindow& window) override;
 
 	// Handle all event happend on Levels List window
-	void catchEvents(Event event, player &newPlayer);
+	void catchEvents(Event event, player& newPlayer);
 
 	// Make LevelList Menu display
 	void show(player newPlayer);

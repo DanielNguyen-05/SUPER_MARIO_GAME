@@ -36,8 +36,8 @@ HighScoreMenu::HighScoreMenu()
         highScoreText[i][1].setCharacterSize(32);
     }
     // Vị trí text tên và điểm tương ứng
-    highScoreText[1][0].setPosition(highScoresPos.x-10, highScoresPos.y);
-    highScoreText[1][1].setPosition(highScoresPos.x-10, highScoresPos.y + 50);
+    highScoreText[1][0].setPosition(highScoresPos.x - 10, highScoresPos.y);
+    highScoreText[1][1].setPosition(highScoresPos.x - 10, highScoresPos.y + 50);
 
     // Khoảng cách giữa các dòng
     highScoresPos.x += 265;
@@ -56,7 +56,7 @@ HighScoreMenu::HighScoreMenu()
 }
 
 // Hàm vẽ
-void HighScoreMenu::draw(RenderWindow &window)
+void HighScoreMenu::draw(RenderWindow& window)
 {
     if (display)
     {
@@ -68,7 +68,7 @@ void HighScoreMenu::draw(RenderWindow &window)
             window.draw(rankSprites[i]);
         }
 */
-        // Vẽ thông tin xếp hạng (tên + điểm)
+// Vẽ thông tin xếp hạng (tên + điểm)
         for (int i = 0; i < 3; i++)
         {
             window.draw(highScoreText[i][0]);
@@ -125,7 +125,7 @@ void HighScoreMenu::arrangePlayersInfo()
         int level;
         playersFile >> tempPlayer.username >> tempPlayer.level1Score >> tempPlayer.level2Score >> tempPlayer.level3Score;
         int totalScore = stoi(tempPlayer.level1Score);
-        if (tempPlayer.level2Score != to_string(-1)){
+        if (tempPlayer.level2Score != to_string(-1)) {
             totalScore += stoi(tempPlayer.level2Score);
             level = 2;
         }
@@ -134,7 +134,7 @@ void HighScoreMenu::arrangePlayersInfo()
             totalScore += stoi(tempPlayer.level3Score);
             level = 3;
         }
-        players.push_back({totalScore, {level, tempPlayer.username}});
+        players.push_back({ totalScore, {level, tempPlayer.username} });
     }
     playersFile.close();
     playersFile.clear();

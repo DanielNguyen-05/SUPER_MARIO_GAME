@@ -125,7 +125,7 @@ void GameEngine::updateScore(int IncScore)
 	// clear score_str
 	scoreStr.str(string());
 	scoreStr << "SCORE\n"
-			 << setw(6) << setfill('0') << scoreInt;
+		<< setw(6) << setfill('0') << scoreInt;
 	scoreText.setString(scoreStr.str());
 }
 
@@ -144,15 +144,14 @@ void GameEngine::updateTimer()
 	if (counterTime >= 0)
 	{
 		timerStr << "TIME\n "
-				 << setw(3) << setfill('0') << counterTime;
+			<< setw(3) << setfill('0') << counterTime;
 		timerText.setString(timerStr.str());
 	}
 	else
 	{ /* Do Nothing */
 	}
 
-	if (counterTime == 0 && remainTime == -1)
-	{
+	if (counterTime == 0 && remainTime == -1) {
 		gameOverScreen = true;
 		character->startDie();
 	}
@@ -197,7 +196,7 @@ void GameEngine::startTimeToScore()
 	remainTime = counterTime;
 }
 
-void GameEngine::draw(RenderWindow &window)
+void GameEngine::draw(RenderWindow& window)
 {
 	coinAnimation();
 	updateTimer();
@@ -230,7 +229,7 @@ void GameEngine::draw(RenderWindow &window)
 	}
 }
 
-void GameEngine::startLifeScreen(RenderWindow &window)
+void GameEngine::startLifeScreen(RenderWindow& window)
 {
 	Clock lifeScreenClock;
 	while (lifeScreenClock.getElapsedTime().asSeconds() < 3)
@@ -379,7 +378,7 @@ void GameEngine::reset()
 
 	scoreStr.str(string());
 	scoreStr << "SCORE\n"
-			 << setw(6) << setfill('0') << scoreInt;
+		<< setw(6) << setfill('0') << scoreInt;
 	scoreText.setString(scoreStr.str());
 
 	scoreText.setPosition(20, 20);

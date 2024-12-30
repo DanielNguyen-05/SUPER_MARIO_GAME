@@ -50,14 +50,14 @@ void LevelsList::show(player newPlayer)
 	// Find the last level this player has finished
 }
 
-void LevelsList::draw(RenderWindow &window)
+void LevelsList::draw(RenderWindow& window)
 {
 	// checkShow(gameEngine.currentPlayer);
 	// cout << level1.finished;
 	if (display || level1.finished || level2.finished)
 	{
 		checkOpendLevels();
-		View defaultView(FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
+		sf::View defaultView(FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
 		window.setView(defaultView);
 		window.draw(backGroundSprite);
 		window.draw(optionShadowSprite);
@@ -75,7 +75,7 @@ void LevelsList::draw(RenderWindow &window)
 	}
 }
 
-void LevelsList::catchEvents(Event event, player &newPlayer)
+void LevelsList::catchEvents(Event event, player& newPlayer)
 {
 	if (display || level1.finished || level2.finished)
 	{
