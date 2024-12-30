@@ -39,7 +39,7 @@ Characters::~Characters()
     state = nullptr;
 }
 
-void Characters::draw(RenderWindow &window)
+void Characters::draw(RenderWindow& window)
 {
     window.draw(charSprite);
     animation();
@@ -82,7 +82,7 @@ void Characters::superState()
     charSprite.setTexture(charSuperTexture);
 }
 
-void Characters::catchEvents(Event &event)
+void Characters::catchEvents(Event& event)
 {
     /*switch (event.type)
     {
@@ -233,7 +233,7 @@ void Characters::standStill()
     }
 }
 
-void Characters::jump(IntRect &intRect, int RectPosition, float waiting)
+void Characters::jump(IntRect& intRect, int RectPosition, float waiting)
 {
     if (onGround)
     {
@@ -252,7 +252,7 @@ void Characters::jump(IntRect &intRect, int RectPosition, float waiting)
     }
 }
 
-void Characters::moveRight(IntRect &intRect)
+void Characters::moveRight(IntRect& intRect)
 {
     // check turnAround
     if (speed[0] <= -1)
@@ -277,7 +277,7 @@ void Characters::moveRight(IntRect &intRect)
         acceleration[0] *= -1;
 }
 
-void Characters::moveLeft(IntRect &intRect)
+void Characters::moveLeft(IntRect& intRect)
 {
     // check turnAround
     if (speed[0] >= 1)
@@ -442,7 +442,7 @@ void Characters::setState(CharacterStateEnum state_enum)
         delete state;
     }
 
-    CharacterState *newState = nullptr;
+    CharacterState* newState = nullptr;
 
     switch (state_enum)
     {
@@ -475,12 +475,12 @@ CharacterStateEnum SmallState::getState()
     return CharacterStateEnum::SMALL;
 }
 
-void SmallState::handleIntRect(IntRect &intRect)
+void SmallState::handleIntRect(IntRect& intRect)
 {
     intRect.left = 132;
 }
 
-void SmallState::setCharRectForWalk(IntRect &intRect)
+void SmallState::setCharRectForWalk(IntRect& intRect)
 {
     int maxLeft = 0, picWidth = 0;
 
@@ -499,7 +499,7 @@ void SmallState::setCharRectForWalk(IntRect &intRect)
 
 int SmallState::getJumpRectPosition()
 {
-    return 162.5;
+    return 162;
 }
 
 //////////////// BIG STATE /////////////////////
@@ -509,12 +509,12 @@ CharacterStateEnum BigState::getState()
     return CharacterStateEnum::BIG;
 }
 
-void BigState::handleIntRect(IntRect &intRect)
+void BigState::handleIntRect(IntRect& intRect)
 {
     intRect.left = 129;
 }
 
-void BigState::setCharRectForWalk(IntRect &intRect)
+void BigState::setCharRectForWalk(IntRect& intRect)
 {
     int maxLeft = 0, picWidth = 0;
 
@@ -543,12 +543,12 @@ CharacterStateEnum SuperState::getState()
     return CharacterStateEnum::SUPER;
 }
 
-void SuperState::handleIntRect(IntRect &intRect)
+void SuperState::handleIntRect(IntRect& intRect)
 {
     intRect.left = 129;
 }
 
-void SuperState::setCharRectForWalk(IntRect &intRect)
+void SuperState::setCharRectForWalk(IntRect& intRect)
 {
     int maxLeft = 0, picWidth = 0;
 

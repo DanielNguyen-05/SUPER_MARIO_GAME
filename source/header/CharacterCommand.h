@@ -1,7 +1,6 @@
 // header/CharacterCommand.h
 #pragma once
-#include <SFML/Graphics.hpp>
-using namespace sf;
+#include "DEFINITION.h"
 
 // Forward declaration
 class Characters;
@@ -29,18 +28,12 @@ public:
     void execute(Characters& character) override;
 };
 
-class CrouchCommand : public Command {
-public:
-    void execute(Characters& character) override;
-};
-
 // Input Handler class
 class InputHandler {
 private:
     Command* buttonD;
     Command* buttonA;
     Command* buttonW;
-    Command* buttonS;
 
 public:
     InputHandler();

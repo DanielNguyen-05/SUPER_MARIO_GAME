@@ -1,8 +1,8 @@
 // CharacterCommand.cpp
 #include "../header/Characters.h"
-#include "../header/CharecterCommand.h"
+#include "../header/CharacterCommand.h"
 
-void MoveRightCommand::execute(Characters &character)
+void MoveRightCommand::execute(Characters& character)
 {
     if (!character.dying && (!character.stuck || character.facingDirection == 0))
     {
@@ -10,7 +10,7 @@ void MoveRightCommand::execute(Characters &character)
     }
 }
 
-void MoveLeftCommand::execute(Characters &character)
+void MoveLeftCommand::execute(Characters& character)
 {
     if (!character.dying && (!character.stuck || character.facingDirection == 1))
     {
@@ -18,7 +18,7 @@ void MoveLeftCommand::execute(Characters &character)
     }
 }
 
-void JumpCommand::execute(Characters &character)
+void JumpCommand::execute(Characters& character)
 {
     if (!character.dying && !character.jumping)
     {
@@ -31,7 +31,6 @@ InputHandler::InputHandler()
     buttonD = new MoveRightCommand();
     buttonA = new MoveLeftCommand();
     buttonW = new JumpCommand();
-    buttonS = new CrouchCommand();
 }
 
 InputHandler::~InputHandler()
@@ -39,10 +38,9 @@ InputHandler::~InputHandler()
     delete buttonD;
     delete buttonA;
     delete buttonW;
-    delete buttonS;
 }
 
-void InputHandler::handleInput(Event &event, Characters &character)
+void InputHandler::handleInput(Event& event, Characters& character)
 {
     if (event.type == Event::KeyPressed)
     {
@@ -64,9 +62,7 @@ void InputHandler::handleInput(Event &event, Characters &character)
             buttonW->execute(character);
             break;
 
-        case Keyboard::Key::S:
-        case Keyboard::Key::Down:
-            buttonS->execute(character);
+        default:
             break;
         }
     }
@@ -82,6 +78,9 @@ void InputHandler::handleInput(Event &event, Characters &character)
         case Keyboard::Key::A:
         case Keyboard::Key::Left:
             character.goLeft = false;
+            break;
+
+        default:
             break;
         }
     }
