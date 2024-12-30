@@ -237,13 +237,26 @@ void Blocks::checkIntersection()
             if (gameEngine->character->speed[1] > 1 && !gameEngine->character->onGround || gameEngine->character->speed[1] < 1)
             {
                 float blockRight = blockBounds.left + blockBounds.width;
-                if (charPos.x > blockPos.x)
-                    gameEngine->character->charSprite.setPosition(blockRight + (charBounds.width / 2), charPos.y);
-                else
-                    gameEngine->character->charSprite.setPosition(blockBounds.left - (charBounds.width / 2), charPos.y);
-                gameEngine->character->speed[0] = 0;
-                gameEngine->character->stuck = true;
-                stuckOn = true;
+                float blockLeft = blockBounds.left;
+                float charRight = charPos.x + (charBounds.width / 2);
+                float charLeft = charPos.x - (charBounds.width / 2);
+                if ((charRight > blockLeft && charLeft < blockRight) &&
+                    (charPos.y > (blockPos.y + 5) && charPos.y < blockPos.y + blockBounds.height))
+                {
+
+                    if (charPos.x > blockPos.x)
+                    {
+                        gameEngine->character->charSprite.setPosition(blockRight + (charBounds.width / 2), charPos.y);
+                    }
+                    else
+                    {
+                        gameEngine->character->charSprite.setPosition(blockBounds.left - (charBounds.width / 2), charPos.y);
+                    }
+                    gameEngine->character->speed[0] = 0;
+                    gameEngine->character->stuck = true;
+                    stuckOn = true;
+
+                }
             }
         }
     }
