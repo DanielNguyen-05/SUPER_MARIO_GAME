@@ -451,7 +451,7 @@ void SmallState::setCharRectForWalk(IntRect &intRect)
 
 int SmallState::getJumpRectPosition()
 {
-    return 162.5;
+    return 162;
 }
 
 //////////////// BIG STATE /////////////////////

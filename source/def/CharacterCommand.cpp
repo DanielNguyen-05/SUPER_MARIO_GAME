@@ -2,7 +2,7 @@
 #include "../header/Characters.h"
 #include "../header/CharacterCommand.h"
 
-void MoveRightCommand::execute(Characters &character)
+void MoveRightCommand::execute(Characters& character)
 {
     if (!character.dying && (!character.stuck || character.facingDirection == 0))
     {
@@ -10,7 +10,7 @@ void MoveRightCommand::execute(Characters &character)
     }
 }
 
-void MoveLeftCommand::execute(Characters &character)
+void MoveLeftCommand::execute(Characters& character)
 {
     if (!character.dying && (!character.stuck || character.facingDirection == 1))
     {
@@ -18,7 +18,7 @@ void MoveLeftCommand::execute(Characters &character)
     }
 }
 
-void JumpCommand::execute(Characters &character)
+void JumpCommand::execute(Characters& character)
 {
     if (!character.dying && !character.jumping)
     {
@@ -42,7 +42,7 @@ InputHandler::~InputHandler()
     delete movement;
 }
 
-void InputHandler::handleInput(Event &event, Characters &character)
+void InputHandler::handleInput(Event& event, Characters& character)
 {
     if (event.type == Event::KeyPressed)
     {
@@ -63,6 +63,9 @@ void InputHandler::handleInput(Event &event, Characters &character)
         case Keyboard::Key::Space:
             buttonW->execute(character);
             break;
+
+        default:
+            break;
         }
     }
     else if (event.type == Event::KeyReleased)
@@ -77,6 +80,8 @@ void InputHandler::handleInput(Event &event, Characters &character)
         case Keyboard::Key::A:
         case Keyboard::Key::Left:
             character.goLeft = false;
+            break;
+        default:
             break;
         }
     }
@@ -95,26 +100,26 @@ void CharacterMovement::updateMovement(Characters& character) {
     if (character.onGround) {
         character.jumping = false;
     }
-    
+
     sf::IntRect charRect = character.charSprite.getTextureRect();
     handleJump(character, charRect);
-    
+
     waitingTime += 0.07;
     if (timer2.getElapsedTime().asSeconds() > waitingTime) {
         handleHorizontalMovement(character, charRect);
         timer2.restart();
     }
-    
+
     character.charSprite.move(character.speed[0], character.speed[1]);
 }
 
 void CharacterMovement::handleJump(Characters& character, sf::IntRect& charRect) {
     int jumpRectPosition = character.state->getJumpRectPosition();
-    
+
     if (character.goUp) {
         charRect.left = jumpRectPosition;
         character.charSprite.setTextureRect(charRect);
-        
+
         if (!character.jumping) {
             character.jumpSound.play();
             character.startJumpPosition = character.charSprite.getPosition().y;
@@ -143,7 +148,7 @@ void CharacterMovement::handleHorizontalMovement(Characters& character, sf::IntR
     }*/
     // Add small buffer for collision detection
     /*const float MIN_SPEED = 0.1f;
-    
+
     if (character.goRight && (!character.stuck || character.facingDirection == 0)) {
         character.moveRight(charRect);
         character.speed[0] = std::max(character.speed[0], MIN_SPEED);
@@ -160,13 +165,13 @@ void CharacterMovement::handleHorizontalMovement(Characters& character, sf::IntR
         // Smoother deceleration
         character.speed[0] += character.acceleration[0] * waitingTime * 0.8f;
     }
-    
+
     // Reset stuck flag each frame
     character.stuck = false;*/
-       // Giảm độ bám của collision
+    // Giảm độ bám của collision
     if (character.stuck) {
         // Nếu đang bị kẹt, cho phép movement ngay lập tức khi đổi hướng
-        if ((character.goRight && character.facingDirection == 0) || 
+        if ((character.goRight && character.facingDirection == 0) ||
             (character.goLeft && character.facingDirection == 1)) {
             character.stuck = false;
         }
@@ -211,6 +216,6 @@ void MoveCommand::checkStandStill(Characters& character) {
     }
 }
 
-    void InputHandler::update(Characters& character) {
-        movement->update(character);
-    }
+void InputHandler::update(Characters& character) {
+    movement->update(character);
+}
