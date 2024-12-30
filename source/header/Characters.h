@@ -58,6 +58,7 @@ protected:
     Sound jumpSound, damageSound, dieSound;
     InputHandler *inputHandler;
     CharacterState *state = nullptr;
+    float deathBoundaryY;
 
 public:
     friend class MoveRightCommand;
@@ -65,6 +66,8 @@ public:
     friend class JumpCommand;
     friend class CrouchCommand;
     friend class InputHandler;
+    friend class CharacterMovement;
+    friend class MoveCommand;
     Texture charTexture, charSuperTexture;
     bool jumping, onGround, PoweringUpToBig, PoweringUpToSuper, dying, stuck, dead;
     float speed[2];
