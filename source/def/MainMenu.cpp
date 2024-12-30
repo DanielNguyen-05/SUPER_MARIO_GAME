@@ -1,6 +1,6 @@
 #include "../header/MainMenu.h"
 
-MainMenu *MainMenu::instance = nullptr;
+MainMenu* MainMenu::instance = nullptr;
 
 MainMenu::MainMenu()
 {
@@ -37,7 +37,7 @@ MainMenu::MainMenu()
         " LEADERBOARD", // Top 3 players
         "   CREDITS",   // Introduce the team
         "   OPTIONS",   // Music control
-        "     EXIT"};
+        "     EXIT" };
 
     for (int i = 0; i < 7; i++)
     {
@@ -67,7 +67,7 @@ CharacterTypeEnum MainMenu::getSelectedCharacterType() const
     return selectedCharacterType;
 }
 
-MainMenu *MainMenu::getInstance()
+MainMenu* MainMenu::getInstance()
 {
     if (instance == nullptr)
     {
@@ -121,7 +121,7 @@ void MainMenu::catchEvents(Event event)
     updateMenuOptionsColors();
 }
 
-void MainMenu::drawAll(RenderWindow &window)
+void MainMenu::drawAll(RenderWindow& window)
 {
     this->draw(window);
     playerOptions.draw(window);
@@ -132,7 +132,7 @@ void MainMenu::drawAll(RenderWindow &window)
     options.draw(window);
 }
 
-void MainMenu::draw(RenderWindow &window)
+void MainMenu::draw(RenderWindow& window)
 {
     checkShow();
     controlMusic();
@@ -152,7 +152,11 @@ void MainMenu::checkShow()
 {
     gameRunning = GameEngine::getInstance().gameRunning;
     // Nếu tất cả menu con đóng và không trong trạng thái game, hiển thị lại menu chính
-    if (!playerOptions.display && !playerOptions.levelsList.display && !playerOptions.levelsList.level1.finished && !playerOptions.levelsList.level2.finished && !characterOptions.display && !highScore.display && !tutorial.display && !options.display && !credits.display && !gameRunning)
+    if (!playerOptions.display && !playerOptions.levelsList.display &&
+        !playerOptions.levelsList.level1.finished &&
+        !playerOptions.levelsList.level2.finished &&
+        !characterOptions.display && !highScore.display &&
+        !tutorial.display && !options.display && !credits.display && !gameRunning)
     {
         show();
     }
@@ -277,12 +281,12 @@ void MainMenu::confirmExit() // chưa có đẹp, nữa chỉnh lại dùm tao
 
     sf::Text yesText("Yes", font, 20);
     yesText.setPosition(yesButton.getPosition().x + (yesButton.getSize().x - yesText.getGlobalBounds().width) / 2,
-                        yesButton.getPosition().y + (yesButton.getSize().y - yesText.getGlobalBounds().height) / 2);
+        yesButton.getPosition().y + (yesButton.getSize().y - yesText.getGlobalBounds().height) / 2);
     yesText.setFillColor(sf::Color::White);
 
     sf::Text noText("No", font, 20);
     noText.setPosition(noButton.getPosition().x + (noButton.getSize().x - noText.getGlobalBounds().width) / 2,
-                       noButton.getPosition().y + (noButton.getSize().y - noText.getGlobalBounds().height) / 2);
+        noButton.getPosition().y + (noButton.getSize().y - noText.getGlobalBounds().height) / 2);
     noText.setFillColor(sf::Color::White);
 
     // Vòng lặp xử lý sự kiện cho cửa sổ xác nhận

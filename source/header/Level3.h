@@ -1,5 +1,6 @@
 #pragma once
 #include "DEFINITION.h"
+#include "Level3MapStrategy.h"
 #include "Blocks.h"
 #include "Enemy.h"
 
@@ -35,6 +36,9 @@ private:
     View camera;
     position screenCenter = { 0, 0 };
 
+    // Strategy Pattern
+    MapStrategy* mapStrategy;
+
 public:
     bool finished;
     Level3(GameEngine& gameEngine);
@@ -60,6 +64,10 @@ public:
 
     // Check end of the level
     void checkEnd();
+
+    ~Level3() {
+        delete mapStrategy;
+    }
 
 private:
     // Arrange Array for Grounds Properties on screen
