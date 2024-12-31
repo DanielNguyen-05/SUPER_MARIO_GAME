@@ -1,6 +1,5 @@
 #include "../header/Characters.h"
 
-
 // [0] đại diện cho x.
 // [1] đại diện cho y.
 
@@ -219,8 +218,8 @@ void Characters::moveRight(IntRect &intRect)
     if (!jumping)
         charSprite.setTextureRect(intRect);
 
-
-    if (facingDirection != 1){
+    if (facingDirection != 1)
+    {
         facingDirection = 1;
         charSprite.setScale(2, 2);
     }
@@ -246,9 +245,10 @@ void Characters::moveLeft(IntRect &intRect)
     if (!jumping)
         charSprite.setTextureRect(intRect);
 
-    //charSprite.setScale(-2, 2);
+    // charSprite.setScale(-2, 2);
 
-    if (facingDirection != 0){
+    if (facingDirection != 0)
+    {
         facingDirection = 0;
         charSprite.setScale(-2, 2);
     }
